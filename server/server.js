@@ -6,6 +6,7 @@ import mongoose from "mongoose";
 import userRoutes from "./routes/userRoutes.js";
 import topicRoutes from "./routes/topicRoutes.js";
 import commentRoutes from "./routes/commentRoutes.js";
+import cloudinaryConfig from "./config/cloudinaryConfig.js"
 
 const app = express(); //initialising our app
 
@@ -32,7 +33,7 @@ const loadRoutes = () => {
 const startServer = () => {
   app.listen(port, () => {
     console.log("Server is running on " + port + " port"); // OR --> (`...: ${port}`)
-    console.log("something");
+    // console.log("something");
   });
 };
 
@@ -51,9 +52,10 @@ const addMiddlewares = () => {
   };
 
   app.use(cors(corsOptions)); //middleware: cors
+  cloudinaryConfig()
 };
 
-// *** Hepsini 'zarf' fonksiyon "controller" içerisinde "call" edebiliriz. Daha sonra sadece "controller" "call" edilir bu durumda...
+// *** One can call all in an "envelope" function called "controller". Then one only needs to call the controller.
 // const controller = async () => {
 //   await mongoDBConnection();
 //   addMiddlewares();
@@ -63,7 +65,7 @@ const addMiddlewares = () => {
 
 // controller();
 
-// *** IIFE (Immediate Invoke Function Expressions) - Bu da diger bir yolu: daha sik... (yeni teknik) (bir tanesi await aldigindan ana fonksiyon async..)
+// *** IIFE (Immediate Invoke Function Expressions) - This is the other, more modern way: Schick! (Note that it is "async", because one inside takes an "await".)
 
 (async function controller() {
   await mongoDBConnection();

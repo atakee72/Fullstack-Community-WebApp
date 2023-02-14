@@ -1,4 +1,26 @@
 import userModel from "../models/userModel.js";
+import { v2 as cloudinary } from "cloudinary";
+
+const imageUpload = async (req, res) => {
+  console.log("🚀 ~ ~ req.file", req.file);
+
+  try {
+    console.log("something");
+    const pictureUpload = await cloudinary.uploader.upload(req.file.path, {
+      folder: "communityWebApp",
+    });
+    console.log("🚀 ~  ~ pictureUpload>>>>>>>>>", pictureUpload);
+
+    res.status(200).json({
+      msg: "Hurray, the image has been successfully uploaded!",
+      userPicture: pictureUpload.url,
+    });
+  } catch (error) {
+    res.status(500).json({
+      errorMsg: "Sorry, something went wrong with the upload!",
+    });
+  }
+};
 
 const getAllUsers = async (req, res) => {
   try {
@@ -72,4 +94,4 @@ const getUsersByRoleBadge = async (req, res) => {
   }
 };
 
-export { getAllUsers, getUsersByRoleBadge };
+export { imageUpload, getAllUsers, getUsersByRoleBadge };
