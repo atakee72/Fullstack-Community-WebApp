@@ -3,10 +3,14 @@ import cors from "cors";
 import * as dotenv from "dotenv";
 dotenv.config();
 import mongoose from "mongoose";
+import passport from "passport";
 import userRoutes from "./routes/userRoutes.js";
 import topicRoutes from "./routes/topicRoutes.js";
 import commentRoutes from "./routes/commentRoutes.js";
-import cloudinaryConfig from "./config/cloudinaryConfig.js"
+import announcementRoutes from "./routes/announcementRoutes.js";
+import recommendationRoutes from "./routes/recommendationRoutes.js";
+import cloudinaryConfig from "./config/cloudinaryConfig.js";
+import { jwtStrategy } from "./config/passport.js";
 
 const app = express(); //initialising our app
 
@@ -23,11 +27,12 @@ const mongoDBConnection = async () => {
 };
 
 const loadRoutes = () => {
-  // after reaching the api going to the router (test)
-  // app.use("/api", router);
+  // after reaching the api going to the relevant router
   app.use("/api/users", userRoutes);
   app.use("/api/topics", topicRoutes);
   app.use("/api/comments", commentRoutes);
+  app.use("/api/recommendations", recommendationRoutes);
+  app.use("/api/announcements", announcementRoutes);
 };
 
 const startServer = () => {
@@ -52,7 +57,10 @@ const addMiddlewares = () => {
   };
 
   app.use(cors(corsOptions)); //middleware: cors
-  cloudinaryConfig()
+  cloudinaryConfig();
+
+  app.use(passport.initialize());
+  passport.use(jwtStrategy);
 };
 
 // *** One can call all in an "envelope" function called "controller". Then one only needs to call the controller.

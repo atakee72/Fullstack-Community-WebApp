@@ -1,20 +1,47 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 
 function LandingPage() {
+  const [windowWidth, setWindowWidth] = useState(window.innerWidth);
+  const [windowHeight, setWindowHeight] = useState(window.innerHeight);
+
+  const handleResize = () => {
+    setWindowWidth(window.innerWidth);
+    setWindowHeight(window.innerHeight);
+  };
+
+  useEffect(() => {
+    window.addEventListener("resize", handleResize);
+
+    return () => {
+      window.removeEventListener("resize", handleResize);
+    };
+  }, []);
   return (
     <div>
       <header></header>
 
-      <section id="hero">
-        <h2>Connect with Your Community</h2>
+      <section
+        className="hero"
+        style={{ display: "flex", alignItems: "center" }}
+      >
+        <h1 style={{ writingMode: "vertical-lr" }} className="text-center mb-4">
+          Connect with <br /> Your Community
+        </h1>
         <p>
           Our app helps you connect with people in your local area, discover new
           events, and join local groups.
         </p>
       </section>
 
-      <section id="about">
-        <h2>About Our App</h2>
+      <section
+        className="about"
+        style={{
+          display: "flex",
+          flexDirection: "row-reverse",
+          alignItems: "center",
+        }}
+      >
+        <h2 style={{ writingMode: "vertical-lr" }}>About Our App</h2>
         <p>
           Our app is designed to help people connect with their local community.
           With features such as event discovery, group creation, and community
@@ -23,8 +50,15 @@ function LandingPage() {
         </p>
       </section>
 
-      <section id="features">
-        <h2>Features</h2>
+      <section
+        className="features"
+        style={{
+          display: "flex",
+          alignItems: "center",
+          backgroundColor: "gray",
+        }}
+      >
+        <h2 style={{ writingMode: "vertical-lr" }}>Features</h2>
         <ul>
           <li>Event Discovery</li>
           <li>Group Creation</li>
@@ -32,11 +66,11 @@ function LandingPage() {
         </ul>
       </section>
 
-      <section id="call-to-action">
+      <section className="call-to-action">
         <h2>Join Our Community</h2>
         <p>
-          <a href="/">Sign Up</a> today to start connecting with your local
-          community.
+          <a href="./register">Sign Up</a> today to start connecting with your
+          local community.
         </p>
       </section>
 

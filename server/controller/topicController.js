@@ -5,7 +5,8 @@ const getAllTopics = async (req, res) => {
     const requestedTopics = await topicModel
       .find({})
       .populate("comments")
-      .populate("author");
+      // .populate("author");
+      .populate({ path: "author", select: "userName" });
     // .exec();
     res.status(200).json({
       number: requestedTopics.length,

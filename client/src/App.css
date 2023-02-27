@@ -1,3 +1,5 @@
+/* Landing Page */
+
 header {
   background-color: #333;
   color: #fff;
@@ -17,18 +19,18 @@ nav a {
   text-decoration: none;
   margin-right: 20px;
 }
-#hero {
+.hero {
   background-color: #eee;
   padding: 20px;
   text-align: center;
 }
-#about {
+.about {
   padding: 20px;
 }
-#features {
+.features {
   padding: 20px;
 }
-#call-to-action {
+.call-to-action {
   background-color: #333;
   color: #fff;
   padding: 20px;
@@ -40,3 +42,217 @@ footer {
   padding: 20px;
   text-align: center;
 }
+
+/*********************************************************************/
+
+* {
+	box-sizing: border-box;
+}
+
+body {
+	font-family: 'Segoe UI', sans-serif;
+	margin: 0;
+}
+
+/* .header {
+	background-color: #fff;
+	padding: 20px;
+	box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1);
+} */
+
+.main {
+	padding: 50px 20px;
+	background-color: #f9f9f9;
+}
+
+.container {
+	max-width: 600px;
+	margin: 0 auto;
+}
+
+/* h1 {
+	font-size: 2rem;
+	margin-bottom: 30px;
+} */
+
+.form-group {
+	margin-bottom: 30px;
+}
+
+label {
+	display: block;
+	margin-bottom: 10px;
+	font-weight: 600;
+	color: #555;
+}
+
+input {
+	display: block;
+	width: 100%;
+	padding: 10px;
+	border-radius: 5px;
+	border: 1px solid #ccc;
+	font-size: 1rem;
+}
+
+input[type="submit"] {
+	background-color: #6c757d;
+	color: #fff;
+	font-size: 1.2rem;
+	padding: 10px 0;
+	border: none;
+	border-radius: 5px;
+	cursor: pointer;
+}
+
+input[type="submit"]:hover {
+	background-color: #5a6268;
+}
+
+.footer {
+	background-color: #444;
+	color: #fff;
+	padding: 20px;
+}
+
+.footer p {
+	margin: 0;
+	font-size: 1rem;
+}
+
+@media (min-width: 768px) {
+	.main {
+		padding: 80px;
+	}
+	
+	/* h1 {
+		font-size: 2.5rem;
+		margin-bottom: 40px;
+	} */
+	
+	.container {
+		max-width: 800px;
+	}
+}
+
+/* User profile form page styles */
+form {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px;
+  background-color: #f4f4f4;
+  border-radius: 5px;
+  box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.2);
+  margin-bottom: 20px;
+}
+
+input[type="text"],
+input[type="email"],
+input[type="date"],
+select,
+textarea {
+  width: 100%;
+  padding: 10px;
+  border-radius: 5px;
+  border: none;
+  margin-bottom: 20px;
+  box-shadow: 0px 0px 5px 0px rgba(0, 0, 0, 0.1);
+}
+
+/* input[type="submit"],
+button {
+  background-color: #0077cc;
+  color: #fff;
+  padding: 10px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: all 0.2s ease-in-out;
+} */
+
+/* input[type="submit"]:hover,
+button:hover {
+  background-color: #005fa3;
+} */
+
+label {
+  font-size: 16px;
+  font-weight: bold;
+  margin-bottom: 10px;
+}
+
+.list-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px;
+  background-color: #f4f4f4;
+  border-radius: 5px;
+  box-shadow: 0px 0px 5px 0px rgba(0, 0, 0, 0.1);
+  margin-bottom: 10px;
+}
+
+/* .list-item:last-child {
+  margin-bottom: 0;
+}
+
+.list-item-remove {
+  color: #cc0000;
+  font-size: 18px;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.list-item-remove:hover {
+  color: #990000;
+} */
+
+/* User profile picture upload styles */
+.user-picture-form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 20px;
+  background-color: #f4f4f4;
+  border-radius: 5px;
+  box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.2);
+}
+
+.userPicture {
+  padding: 20px;
+  background-color: #f4f4f4;
+  border-radius: 5px;
+  box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.2);
+}
+
+/* .user-picture-form label {
+  font-size: 16px;
+  font-weight: bold;
+  margin-bottom: 10px;
+}
+
+.user-picture-form input[type="file"] {
+  margin-bottom: 20px;
+}
+
+.user-picture-form button[type="submit"] {
+  background-color: #5764c6;
+}
+
+.user-picture-form button[type="submit"]:hover {
+  background-color: #4e5abb;
+} */
+
+/* .user-picture-container {
+  width: 100%;
+  margin-top: 20px;
+  display: flex;
+  justify-content: center;
+} */
+
+/* .user-picture-container img {
+  max-width: 100%;
+  border-radius: 5px;
+} */

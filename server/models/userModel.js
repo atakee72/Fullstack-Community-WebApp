@@ -1,26 +1,25 @@
 import mongoose from "mongoose";
 
 const userSchema = new mongoose.Schema({
-  username: {
+  userName: {
     type: String,
     required: true,
     unique: true,
   },
 
-  firstname: {
+  firstName: {
     type: String,
   },
 
-  surname: {
+  surName: {
     type: String,
   },
 
-  birthdate: {
+  birthDate: {
     type: Number,
-    hidden: Boolean,
   },
 
-  email: {
+  eMail: {
     type: String,
     required: true,
     unique: true,
@@ -30,13 +29,22 @@ const userSchema = new mongoose.Schema({
     type: String,
   },
 
-  hobbies: [{ type: String }],
+  passWord: {
+    type: String,
+    required: true,
+  },
+
+  userPicture: {
+    type: String,
+  },
+
+  hobbies: { type: Array },
 
   comments: [{ type: mongoose.Schema.Types.ObjectId, ref: "comment" }],
 
   topics: [{ type: mongoose.Schema.Types.ObjectId, ref: "topic" }],
 
-  likes: { type: Number },
+  likes: [{ type: String }],
 });
 
 const userModel = mongoose.model("user", userSchema);

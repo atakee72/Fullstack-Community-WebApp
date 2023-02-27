@@ -1,43 +1,79 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { NavLink } from "react-router-dom";
+import Logout from "./Logout";
+// import "../../public/assets/logo.png";
 
 function Navbar() {
+  const [windowWidth, setWindowWidth] = useState(window.innerWidth);
+  const [windowHeight, setWindowHeight] = useState(window.innerHeight);
+
+  const handleResize = () => {
+    setWindowWidth(window.innerWidth);
+    setWindowHeight(window.innerHeight);
+  };
+
+  useEffect(() => {
+    window.addEventListener("resize", handleResize);
+
+    return () => {
+      window.removeEventListener("resize", handleResize);
+    };
+  }, []);
+
   return (
     <nav>
-      <h1 className="logo">
-        <span className="aNormal">
-          <a className="aNormal" href="/">
-            <h1>Local Community Web App</h1>
-          </a>
-        </span>
-      </h1>
-      <ul>
-        <li>
-          <NavLink to="/">
-            <span>About</span>
-          </NavLink>{" "}
-        </li>
-        <li>
-          <NavLink to="login">
-            <span>Login</span>
-          </NavLink>{" "}
-        </li>
-        <li>
-          <NavLink to="register">
-            <span>Register</span>
-          </NavLink>{" "}
-        </li>
-        <li>
-          <NavLink to="userProfile">
-            <span>User Profile</span>
-          </NavLink>{" "}
-        </li>
-        <li>
-          <NavLink to="landingPage">
-            <span>(Landing Page)</span>
-          </NavLink>{" "}
-        </li>
-      </ul>
+      <div style={{ position: "absolute", right: "10px" }}>
+        W: {windowWidth} & H: {windowHeight}
+      </div>
+      <div
+        style={{
+          display: "flex",
+          alignItems: "flex-end",
+          justifyContent: "space-between",
+        }}
+      >
+        <a className="aNormal" href="/">
+          <img
+            style={{
+              maxWidth: "15vw",
+              minWidth: "150px",
+              borderRadius: "50px",
+            }}
+            src="https://res.cloudinary.com/djgxiadrc/image/upload/v1677334203/communityWebApp/Beige_und_Grau_Minimalistisch_Zitat_Instagram-Beitrag_Kopyas%C4%B1_6_g2r1na.png"
+            alt="logo"
+          />
+        </a>
+        <ul>
+          <li>
+            <NavLink to="/">
+              <span>Home</span>
+            </NavLink>{" "}
+          </li>
+          <li>
+            <NavLink to="login">
+              <span>Login</span>
+            </NavLink>{" "}
+          </li>
+          <li>
+            <NavLink to="register">
+              <span>Register</span>
+            </NavLink>{" "}
+          </li>
+          <li>
+            <NavLink to="userProfile">
+              <span>User Profile</span>
+            </NavLink>{" "}
+          </li>
+          {/* <li>
+            <NavLink to="landingPage">
+              <span>(Landing Page)</span>
+            </NavLink>{" "}
+          </li> */}
+          <li>
+            <Logout />
+          </li>
+        </ul>
+      </div>
     </nav>
   );
 }
