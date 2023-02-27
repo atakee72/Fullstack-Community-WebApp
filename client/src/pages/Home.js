@@ -6,9 +6,10 @@ import Cards from "../components/Cards";
 
 function About() {
   // const [activeTab, setActiveTab] = useState("Topics");
-  const [collectionType, setCollectionType] = useState("Discussions");
-  const [topics, setTopics] = useState([]);
-  const [comments, setComments] = useState([]);
+  const [collectionType, setCollectionType] = useState("topics");
+  // const [topics, setTopics] = useState([]);
+  // const [comments, setComments] = useState([]);
+  const [items, setItems] = useState([]);
   const [filteredData, setFilteredData] = useState([]);
   const [inputValue, setInputValue] = useState("");
   const inputRef = useRef(null);
@@ -26,21 +27,35 @@ function About() {
 
     try {
       const response = await fetch(
-        "http://localhost:5000/api/topics/all",
-        requestOptions
-        // `http://localhost:5000/api/${collectionType}/all`,
+        // "http://localhost:5000/api/topics/all",
         // requestOptions
+        `http://localhost:5000/api/${collectionType}/all`,
+        requestOptions
       );
       const result = await response.json();
       console.log("result: >>>>", result);
-      setTopics(result.requestedTopics);
-      setFilteredData(result.requestedTopics);
-      setComments(result.requestedTopics.comments);
-      // if (activeTab === "Topics") {
-      //   setItems(topics);
-      // } else if (activeTab === "Comments") {
-      //   setItems(comments);
-      // }
+      // // //! ================================================
+      // setTopics(result.requestedTopics); //* Bu ve altindaki silinecek
+      // // setFilteredData(result.requestedTopics);
+      // // setComments(result.requestedTopics.comments); //?  Buna gerek var mi acaba?
+      // // //! ================================================
+      // // if (activeTab === "Topics") {
+      // //   setItems(topics);
+      // // } else if (activeTab === "Comments") {
+      // //   setItems(comments);
+      // // }
+      // // //! =============================================
+
+      if (collectionType === "topics") {
+        setItems(result.requestedTopics);
+        setFilteredData(result.requestedTopics);
+      } else if (collectionType === "announcements") {
+        setItems(result.requestedAnnouncements);
+        setFilteredData(result.requestedAnnouncements);
+      } else if (collectionType === "recommendations") {
+        setItems(result.requestedRecommendations);
+        setFilteredData(result.requestedRecommendations);
+      }
     } catch (error) {
       console.log("error", error);
     }
@@ -55,15 +70,16 @@ function About() {
 
   const handleFilter = () => {
     setInputValue(inputRef.current.value.toLowerCase());
-    const filtered = topics.filter(
-      (topic) =>
-        topic.title.toLowerCase().includes(inputValue) ||
-        topic.body.toLowerCase().includes(inputValue)
+    const filtered = items.filter(
+      (item) =>
+        item.title.toLowerCase().includes(inputValue) ||
+        item.body.toLowerCase().includes(inputValue)
     );
     setFilteredData(filtered);
     console.log("🚀 ~ setFilteredData:", filteredData);
   };
 
+  //! WARNING: BUNA BIR BAKMAK LAZIM !!!
   function textMarker(text, searchTerm) {
     const regex = new RegExp(searchTerm, "gi");
     return text.prototype.replace(regex, (match) => `<mark>${match}</mark>`);
@@ -71,7 +87,7 @@ function About() {
 
   return (
     <div>
-      {collectionType === "Discussions" && (
+      {collectionType === "topics" && (
         <>
           <Card
             style={{
@@ -93,20 +109,20 @@ function About() {
                 <Nav.Item>
                   <Button
                     variant="light"
-                    onClick={() => setCollectionType("Discussions")}
+                    onClick={() => setCollectionType("topics")}
                     active
                   >
                     Discussions
                   </Button>
                   <Button
                     variant="light"
-                    onClick={() => setCollectionType("Announcements")}
+                    onClick={() => setCollectionType("announcements")}
                   >
                     Announcements
                   </Button>
                   <Button
                     variant="light"
-                    onClick={() => setCollectionType("Recommendations")}
+                    onClick={() => setCollectionType("recommendations")}
                   >
                     Recommendations{" "}
                   </Button>
@@ -138,21 +154,22 @@ function About() {
               </Form>
               {/* //! =========CARDS===================== */}
               {filteredData.length > 0 ? (
-                filteredData.map((topic, i) => (
-                  <Cards key={i} topic={topic} comments={topic.comments} />
+                filteredData.map((item, i) => (
+                  <Cards key={i} post={item} comments={item.comments} />
                 ))
               ) : (
                 <h5 className="text-center mb-5 pt-4">
                   Your search brings no result.
                 </h5>
               )}
-              {() => textMarker(topics, inputValue)}
+              {() => textMarker(items, inputValue)}
+              {/* //! WARNING bunu unutma burda!!*/}
             </Card.Body>
           </Card>
         </>
       )}
-
-      {collectionType === "Announcements" && (
+      {/* //! ===================================================================== */}
+      {collectionType === "announcements" && (
         <>
           <Card
             style={{
@@ -174,20 +191,20 @@ function About() {
                 <Nav.Item>
                   <Button
                     variant="light"
-                    onClick={() => setCollectionType("Discussions")}
+                    onClick={() => setCollectionType("topics")}
                   >
                     Discussions
                   </Button>
                   <Button
                     variant="light"
-                    onClick={() => setCollectionType("Announcements")}
+                    onClick={() => setCollectionType("announcements")}
                     active
                   >
                     Announcements
                   </Button>
                   <Button
                     variant="light"
-                    onClick={() => setCollectionType("Recommendations")}
+                    onClick={() => setCollectionType("recommendations")}
                   >
                     Recommendations{" "}
                   </Button>
@@ -195,6 +212,7 @@ function About() {
               </Nav>
             </Card.Header>
             <Card.Body>
+              {/* //! ================================================== */}
               <Form style={{ display: "flex" }}>
                 <Form.Group
                   className="mb-3 w-100 text-center"
@@ -210,15 +228,21 @@ function About() {
                   />
                 </Form.Group>
               </Form>
-              {topics.map((topic, i) => (
-                <Cards key={i} topic={topic} comments={topic.comments} />
-              ))}
+              {filteredData.length > 0 ? (
+                filteredData.map((item, i) => (
+                  <Cards key={i} post={item} comments={item.comments} />
+                ))
+              ) : (
+                <h5 className="text-center mb-5 pt-4">
+                  Your search brings no result.
+                </h5>
+              )}
             </Card.Body>
           </Card>
         </>
       )}
-
-      {collectionType === "Recommendations" && (
+      {/* //! =============================================================== */}
+      {collectionType === "recommendations" && (
         <>
           <Card
             style={{
@@ -240,19 +264,19 @@ function About() {
                 <Nav.Item>
                   <Button
                     variant="light"
-                    onClick={() => setCollectionType("Discussions")}
+                    onClick={() => setCollectionType("topics")}
                   >
                     Discussions
                   </Button>
                   <Button
                     variant="light"
-                    onClick={() => setCollectionType("Announcements")}
+                    onClick={() => setCollectionType("announcements")}
                   >
                     Announcements
                   </Button>
                   <Button
                     variant="light"
-                    onClick={() => setCollectionType("Recommendations")}
+                    onClick={() => setCollectionType("recommendations")}
                     active
                   >
                     Recommendations{" "}
@@ -261,6 +285,7 @@ function About() {
               </Nav>
             </Card.Header>
             <Card.Body>
+              {/* //! =================================================== */}
               <Form style={{ display: "flex" }}>
                 <Form.Group
                   className="mb-3 w-100 text-center"
@@ -276,9 +301,16 @@ function About() {
                   />
                 </Form.Group>
               </Form>
-              {topics.map((topic, i) => (
-                <Cards key={i} topic={topic} comments={topic.comments} />
-              ))}
+              {/* //! ===================================================== */}
+              {filteredData.length > 0 ? (
+                filteredData.map((item, i) => (
+                  <Cards key={i} post={item} comments={item.comments} />
+                ))
+              ) : (
+                <h5 className="text-center mb-5 pt-4">
+                  Your search brings no result.
+                </h5>
+              )}
             </Card.Body>
           </Card>
         </>

@@ -5,9 +5,9 @@ import Card from "react-bootstrap/Card";
 import Nav from "react-bootstrap/Nav";
 import transformDate from "../utils/transformDate";
 
-function Cards({ topic, comments }) {
-  const [activeTab, setActiveTab] = useState("Topics");
-  const inputRef = useRef(null);
+function Cards({ post, comments }) {
+  const [activeTab, setActiveTab] = useState("Posts");
+  // const inputRef = useRef(null);
   return (
     <Card
       style={{
@@ -25,19 +25,19 @@ function Cards({ topic, comments }) {
       }}
     >
       <Card.Header>
-        <Nav variant="tabs" defaultActiveKey="Topics">
+        <Nav variant="tabs" defaultActiveKey="Posts">
           <Nav.Item>
-            {activeTab === "Topics" ? (
+            {activeTab === "Posts" ? (
               <Button
                 variant="light"
-                onClick={() => setActiveTab("Topics")}
+                onClick={() => setActiveTab("Posts")}
                 active
               >
-                Topics
+                Posts
               </Button>
             ) : (
-              <Button variant="light" onClick={() => setActiveTab("Topics")}>
-                Topics
+              <Button variant="light" onClick={() => setActiveTab("Posts")}>
+                Posts
               </Button>
             )}
           </Nav.Item>
@@ -65,24 +65,24 @@ function Cards({ topic, comments }) {
                 onClick={() => setActiveTab("newComment")}
                 active
               >
-                Join the discussion
+                Write a comment
               </Button>
             ) : (
               <Button
                 variant="light"
                 onClick={() => setActiveTab("newComment")}
               >
-                Join the discussion
+                Write a comment
               </Button>
             )}
           </Nav.Item>
         </Nav>
       </Card.Header>
       {/* >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>TOPICS TAB */}
-      {activeTab === "Topics" && topic && (
+      {activeTab === "Posts" && post && (
         <Card.Body>
-          <Card.Title>{topic.title}</Card.Title>
-          <Card.Text>{topic.body}</Card.Text>
+          <Card.Title>{post.title}</Card.Title>
+          <Card.Text>{post.body}</Card.Text>
         </Card.Body>
       )}
       {/* >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>COMMENTS TAB */}
