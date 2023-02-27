@@ -5,19 +5,13 @@ import Form from "react-bootstrap/Form";
 import Cards from "../components/Cards";
 
 function About() {
-  // const [activeTab, setActiveTab] = useState("Topics");
   const [collectionType, setCollectionType] = useState("topics");
   // const [topics, setTopics] = useState([]);
-  // const [comments, setComments] = useState([]);
+  const [comments, setComments] = useState([]);
   const [items, setItems] = useState([]);
   const [filteredData, setFilteredData] = useState([]);
   const [inputValue, setInputValue] = useState("");
   const inputRef = useRef(null);
-
-  const handleInput = (e) => {
-    e.preventDefault();
-    console.log(inputRef.current.value);
-  };
 
   const fetchData = async () => {
     const requestOptions = {
@@ -34,10 +28,9 @@ function About() {
       );
       const result = await response.json();
       console.log("result: >>>>", result);
-      // // //! ================================================
       // setTopics(result.requestedTopics); //* Bu ve altindaki silinecek
       // // setFilteredData(result.requestedTopics);
-      // // setComments(result.requestedTopics.comments); //?  Buna gerek var mi acaba?
+      // setComments(result.requestedTopics.comments);
       // // //! ================================================
       // // if (activeTab === "Topics") {
       // //   setItems(topics);
@@ -49,12 +42,15 @@ function About() {
       if (collectionType === "topics") {
         setItems(result.requestedTopics);
         setFilteredData(result.requestedTopics);
+        // setComments(result.requestedTopics.comments);
       } else if (collectionType === "announcements") {
         setItems(result.requestedAnnouncements);
         setFilteredData(result.requestedAnnouncements);
+        // setComments(result.requestedTopics.comments);
       } else if (collectionType === "recommendations") {
         setItems(result.requestedRecommendations);
         setFilteredData(result.requestedRecommendations);
+        // setComments(result.requestedTopics.comments);
       }
     } catch (error) {
       console.log("error", error);
@@ -68,6 +64,11 @@ function About() {
     };
   }, [collectionType]);
 
+  const handleInput = (e) => {
+    e.preventDefault();
+    console.log(inputRef.current.value);
+  };
+
   const handleFilter = () => {
     setInputValue(inputRef.current.value.toLowerCase());
     const filtered = items.filter(
@@ -78,12 +79,6 @@ function About() {
     setFilteredData(filtered);
     console.log("🚀 ~ setFilteredData:", filteredData);
   };
-
-  //! WARNING: BUNA BIR BAKMAK LAZIM !!!
-  function textMarker(text, searchTerm) {
-    const regex = new RegExp(searchTerm, "gi");
-    return text.prototype.replace(regex, (match) => `<mark>${match}</mark>`);
-  }
 
   return (
     <div>
@@ -162,8 +157,6 @@ function About() {
                   Your search brings no result.
                 </h5>
               )}
-              {() => textMarker(items, inputValue)}
-              {/* //! WARNING bunu unutma burda!!*/}
             </Card.Body>
           </Card>
         </>
@@ -187,7 +180,7 @@ function About() {
             }}
           >
             <Card.Header>
-              <Nav variant="tabs" defaultActiveKey="Topics">
+              <Nav variant="tabs" defaultActiveKey="topics">
                 <Nav.Item>
                   <Button
                     variant="light"
@@ -213,7 +206,11 @@ function About() {
             </Card.Header>
             <Card.Body>
               {/* //! ================================================== */}
-              <Form style={{ display: "flex" }}>
+              <Form
+                className="align-items-center"
+                onChange={handleInput}
+                style={{ display: "flex" }}
+              >
                 <Form.Group
                   className="mb-3 w-100 text-center"
                   controlId="formBasicEmail"
@@ -225,6 +222,8 @@ function About() {
                     className="w-100 text-center"
                     type="text"
                     placeholder="Search in announcements"
+                    onChange={handleFilter}
+                    ref={inputRef}
                   />
                 </Form.Group>
               </Form>
@@ -260,7 +259,7 @@ function About() {
             }}
           >
             <Card.Header>
-              <Nav variant="tabs" defaultActiveKey="Topics">
+              <Nav variant="tabs" defaultActiveKey="topics">
                 <Nav.Item>
                   <Button
                     variant="light"
@@ -286,7 +285,11 @@ function About() {
             </Card.Header>
             <Card.Body>
               {/* //! =================================================== */}
-              <Form style={{ display: "flex" }}>
+              <Form
+                className="align-items-center"
+                onChange={handleInput}
+                style={{ display: "flex" }}
+              >
                 <Form.Group
                   className="mb-3 w-100 text-center"
                   controlId="formBasicEmail"
@@ -298,6 +301,8 @@ function About() {
                     className="w-100 text-center"
                     type="text"
                     placeholder="Search in recommendations"
+                    onChange={handleFilter}
+                    ref={inputRef}
                   />
                 </Form.Group>
               </Form>

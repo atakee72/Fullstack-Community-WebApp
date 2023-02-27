@@ -1,8 +1,14 @@
+import { urlencoded } from "express";
 import React, { useState } from "react";
 
 function PostComment() {
   const [comment, setComment] = useState("");
+
+  const { loggedInUser } = useContext(AuthContex);
   const submitComment = () => {
+    const message = new urlencoded();
+    message.append("authorName", loggedInUser.userName);
+    message.append("text", comment);
     fetch("someServerURL");
   };
   return (

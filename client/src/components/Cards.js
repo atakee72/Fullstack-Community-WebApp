@@ -1,4 +1,4 @@
-import { useRef, useState } from "react";
+import { useState } from "react";
 import { Form } from "react-bootstrap";
 import Button from "react-bootstrap/Button";
 import Card from "react-bootstrap/Card";
@@ -118,10 +118,10 @@ function Cards({ post, comments }) {
                     }}
                   >
                     Date: {transformDate(comment?.date)} - Upvotes:{" "}
-                    {comment?.upvotes} - Author: {comment.author}
+                    {comment?.upvotes} - Author: {comment?.author}
                   </h6>
                 </i>
-                <Card.Text>{comment.body}</Card.Text>
+                <Card.Text>{comment?.body}</Card.Text>
               </div>
             </div>
           ))}
