@@ -7,7 +7,6 @@ import transformDate from "../utils/transformDate";
 
 function Cards({ post, comments }) {
   const [activeTab, setActiveTab] = useState("Posts");
-  // const inputRef = useRef(null);
   return (
     <Card
       style={{
@@ -118,7 +117,7 @@ function Cards({ post, comments }) {
                     }}
                   >
                     Date: {transformDate(comment?.date)} - Upvotes:{" "}
-                    {comment?.upvotes} - Author: {comment?.author}
+                    {comment?.upvotes} - Author: {comment?.userName}
                   </h6>
                 </i>
                 <Card.Text>{comment?.body}</Card.Text>
@@ -132,9 +131,9 @@ function Cards({ post, comments }) {
         <Card.Body style={{ display: "inline-flex", gap: "10vw" }}>
           <div style={{ display: "inline-flex", gap: "10vw" }}>
             <div>
-              <Card.Title>Write a comment!</Card.Title>
+              <Card.Title>No comments?</Card.Title>
               <Card.Text>
-                Be the first one to Write a comment for this topic!
+                Be the first one to write a comment for this topic!
               </Card.Text>
             </div>
 

@@ -6,8 +6,6 @@ import Cards from "../components/Cards";
 
 function About() {
   const [collectionType, setCollectionType] = useState("topics");
-  // const [topics, setTopics] = useState([]);
-  const [comments, setComments] = useState([]);
   const [items, setItems] = useState([]);
   const [filteredData, setFilteredData] = useState([]);
   const [inputValue, setInputValue] = useState("");
@@ -21,36 +19,21 @@ function About() {
 
     try {
       const response = await fetch(
-        // "http://localhost:5000/api/topics/all",
-        // requestOptions
         `http://localhost:5000/api/${collectionType}/all`,
         requestOptions
       );
       const result = await response.json();
       console.log("result: >>>>", result);
-      // setTopics(result.requestedTopics); //* Bu ve altindaki silinecek
-      // // setFilteredData(result.requestedTopics);
-      // setComments(result.requestedTopics.comments);
-      // // //! ================================================
-      // // if (activeTab === "Topics") {
-      // //   setItems(topics);
-      // // } else if (activeTab === "Comments") {
-      // //   setItems(comments);
-      // // }
-      // // //! =============================================
 
       if (collectionType === "topics") {
         setItems(result.requestedTopics);
         setFilteredData(result.requestedTopics);
-        // setComments(result.requestedTopics.comments);
       } else if (collectionType === "announcements") {
         setItems(result.requestedAnnouncements);
         setFilteredData(result.requestedAnnouncements);
-        // setComments(result.requestedTopics.comments);
       } else if (collectionType === "recommendations") {
         setItems(result.requestedRecommendations);
         setFilteredData(result.requestedRecommendations);
-        // setComments(result.requestedTopics.comments);
       }
     } catch (error) {
       console.log("error", error);

@@ -33,9 +33,9 @@ function Logout() {
         </Modal.Header>
         <Modal.Body>You have logged out successfully!</Modal.Body>
         <Modal.Footer>
-          <Button variant="success" onClick={handleClose}>
+          {/* <Button variant="success" onClick={handleClose}>
             Close
-          </Button>
+          </Button> */}
         </Modal.Footer>
       </Modal>
     </>
