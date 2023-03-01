@@ -1,70 +1,35 @@
-import { useEffect, useState } from "react";
+import { useContext, useRef } from "react";
 import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
-import { getToken } from "../utils/getToken";
+import { AuthContext } from "../store/AuthContext";
 
 function Login() {
-  const [loggedUser, setLoggedUser] = useState({});
-  console.log("🚀 ~ Login ~ loggedUser:", loggedUser);
+  const { login } = useContext(AuthContext);
 
-  const handleInputChange = (e) => {
-    setLoggedUser({ ...loggedUser, [e.target.name]: e.target.value });
-  };
-
-  const handleLogin = async (e) => {
-    e.preventDefault();
-    try {
-      const myHeaders = new Headers();
-      myHeaders.append("Content-Type", "application/x-www-form-urlencoded");
-
-      const urlencoded = new URLSearchParams();
-      urlencoded.append("email", loggedUser.email);
-      urlencoded.append("password", loggedUser.password);
-
-      const requestOptions = {
-        method: "POST",
-        headers: myHeaders,
-        body: urlencoded,
-        redirect: "follow",
-      };
-
-      const response = await fetch(
-        "http://localhost:5000/api/users/login",
-        requestOptions
-      );
-      const result = await response.json();
-      if (result.userToken) {
-        localStorage.setItem("token", result.userToken);
-        localStorage.setItem("id", result.user.id);
-        setLoggedUser(result.user);
-      }
-    } catch (error) {
-      console.log("error", error);
-    }
-  };
-
-  useEffect(() => {
-    const token = getToken();
-    if (token) {
-      console.log("You're LOGGED IN !");
-    } else {
-      console.log("You're NOT logged in !");
-    }
-  }, [loggedUser]);
+  const emailRef = useRef();
+  const passwordRef = useRef();
 
   return (
     <div>
       <main className="main">
         <div className="container">
           <h1 className="text-center mb-5">User Login</h1>
-          <Form onSubmit={handleLogin}>
+          {/* <Form onSubmit={(e) => login(e, email, password)}> */}
+          <Form
+            onSubmit={(e) =>
+              login(e, emailRef.current.value, passwordRef.current.value)
+            }
+          >
             <Form.Group controlId="formBasicEmail">
               <Form.Label>Email address</Form.Label>
               <Form.Control
                 type="email"
                 name="email"
+                // value={email}
+                ref={emailRef}
                 placeholder="Enter email"
-                onChange={handleInputChange}
+                // onChange={handleInputChange}
+                // onChange={(e) => setEmail(e.target.value)}
                 required
               />
             </Form.Group>
@@ -74,8 +39,8 @@ function Login() {
               <Form.Control
                 type="password"
                 name="password"
+                ref={passwordRef}
                 placeholder="Password"
-                onChange={handleInputChange}
                 required
               />
             </Form.Group>

@@ -1,8 +1,9 @@
-import { useEffect, useRef, useState } from "react";
+import { useContext, useEffect, useRef, useState } from "react";
 import { Button, Card } from "react-bootstrap";
 import Nav from "react-bootstrap/Nav";
 import Form from "react-bootstrap/Form";
 import Cards from "../components/Cards";
+import { AuthContext } from "../store/AuthContext.js";
 
 function About() {
   const [collectionType, setCollectionType] = useState("topics");
@@ -10,7 +11,8 @@ function About() {
   const [filteredData, setFilteredData] = useState([]);
   const [inputValue, setInputValue] = useState("");
   const inputRef = useRef(null);
-
+  const { loggedUser } = useContext(AuthContext);
+  console.log("loggedUser", loggedUser);
   const fetchData = async () => {
     const requestOptions = {
       method: "GET",
@@ -65,6 +67,7 @@ function About() {
 
   return (
     <div>
+      <h2>user: {loggedUser?.userName}</h2>
       {collectionType === "topics" && (
         <>
           <Card
@@ -133,7 +136,12 @@ function About() {
               {/* //! =========CARDS===================== */}
               {filteredData.length > 0 ? (
                 filteredData.map((item, i) => (
-                  <Cards key={i} post={item} comments={item.comments} />
+                  <Cards
+                    key={i}
+                    post={item}
+                    comments={item.comments}
+                    author={item.author}
+                  />
                 ))
               ) : (
                 <h5 className="text-center mb-5 pt-4">
@@ -212,7 +220,12 @@ function About() {
               </Form>
               {filteredData.length > 0 ? (
                 filteredData.map((item, i) => (
-                  <Cards key={i} post={item} comments={item.comments} />
+                  <Cards
+                    key={i}
+                    post={item}
+                    comments={item.comments}
+                    author={item.author}
+                  />
                 ))
               ) : (
                 <h5 className="text-center mb-5 pt-4">
@@ -292,7 +305,12 @@ function About() {
               {/* //! ===================================================== */}
               {filteredData.length > 0 ? (
                 filteredData.map((item, i) => (
-                  <Cards key={i} post={item} comments={item.comments} />
+                  <Cards
+                    key={i}
+                    post={item}
+                    comments={item.comments}
+                    author={item.author}
+                  />
                 ))
               ) : (
                 <h5 className="text-center mb-5 pt-4">

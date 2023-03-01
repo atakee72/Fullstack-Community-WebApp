@@ -5,7 +5,7 @@ import Card from "react-bootstrap/Card";
 import Nav from "react-bootstrap/Nav";
 import transformDate from "../utils/transformDate";
 
-function Cards({ post, comments }) {
+function Cards({ post, comments, author }) {
   const [activeTab, setActiveTab] = useState("Posts");
   return (
     <Card
@@ -80,8 +80,63 @@ function Cards({ post, comments }) {
       {/* >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>TOPICS TAB */}
       {activeTab === "Posts" && post && (
         <Card.Body>
-          <Card.Title>{post.title}</Card.Title>
-          <Card.Text>{post.body}</Card.Text>
+          <div
+            style={{
+              margin: "10px",
+
+              borderRadius: "5px",
+            }}
+          >
+            <i>
+              <h6
+                style={{
+                  padding: "2%",
+                  borderRadius: "5px",
+                  margin: "0 0 5% 0",
+                  backgroundColor: "skyBlue",
+                  color: "white",
+                  textDecoration: "underline",
+                  color: "gray",
+                  fontSize: "0.8em",
+                }}
+              >
+                <span
+                  style={{
+                    color: "white",
+                  }}
+                >
+                  Date: {transformDate(post.date)} - Views: {post.views} -
+                  Author: {author?.userName}
+                </span>
+              </h6>
+            </i>
+            <Card.Title>{post.title}</Card.Title>
+            <Card.Text>{post.body}</Card.Text>
+            <i>
+              <span
+                style={{
+                  padding: "1%",
+                  borderRadius: "5px",
+                  margin: "3% 0 1% 0",
+                  backgroundColor: "skyBlue",
+                  color: "white",
+                  textDecoration: "underline",
+                  color: "gray",
+                  fontSize: "0.8em",
+                }}
+              >
+                <mark
+                  style={{
+                    backgroundColor: "skyBlue",
+                    color: "white",
+                  }}
+                >
+                  {/* //todo TODO: this is a quick fix, needs modifying if more than two tags are given: */}
+                  Tags: {post.tags.at(0)}, {post.tags.at(1)}
+                </mark>
+              </span>
+            </i>
+          </div>
         </Card.Body>
       )}
       {/* >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>COMMENTS TAB */}
@@ -101,23 +156,31 @@ function Cards({ post, comments }) {
               <div
                 style={{
                   margin: "10px",
-
-                  borderRadius: "5px",
+                  padding: "2% 0 5% 0",
+                  borderBottom: "1px solid lightGray",
                 }}
               >
                 <i>
                   <h6
                     style={{
-                      padding: "0",
-                      margin: "0",
-                      backgroundColor: "rgba(0, 0, 0, 0.1)",
+                      padding: "2%",
+                      borderRadius: "5px",
+                      margin: "0 0 5% 0",
+                      backgroundColor: "skyBlue",
+                      color: "white",
                       textDecoration: "underline",
                       color: "gray",
                       fontSize: "0.8em",
                     }}
                   >
-                    Date: {transformDate(comment?.date)} - Upvotes:{" "}
-                    {comment?.upvotes} - Author: {comment?.userName}
+                    <span
+                      style={{
+                        color: "white",
+                      }}
+                    >
+                      Date: {transformDate(comment.date)} - Author:{" "}
+                      {comment?.userName}
+                    </span>
                   </h6>
                 </i>
                 <Card.Text>{comment?.body}</Card.Text>

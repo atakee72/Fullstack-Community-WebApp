@@ -9,6 +9,7 @@ import NoMatch from "./pages/NoMatch";
 import { Routes, Route } from "react-router-dom";
 import Navbar from "./components/Navbar";
 import Button from "react-bootstrap/Button";
+import { AuthContextProvider } from "./store/AuthContext";
 
 function App() {
   const [users, setUsers] = useState([]);
@@ -42,8 +43,9 @@ function App() {
 
   return (
     <div className="App">
-      <header>
-        {/* <Button
+      <AuthContextProvider>
+        <header>
+          {/* <Button
           type="submit"
           value="Submit"
           constiant="primary"
@@ -52,22 +54,23 @@ function App() {
         >
           Logout!
         </Button>{" "} */}
-        <Navbar />
-        {/* <p>
+          <Navbar />
+          {/* <p>
           <code>{JSON.stringify(users, null, " \n \t")}</code>
         </p> */}
-      </header>
+        </header>
 
-      <main>
-        <Routes>
-          <Route path="/" element={<Home />} />
-          <Route path="login" element={<Login />} />
-          <Route path="register" element={<Register />} />
-          <Route path="userProfile" element={<UserProfile />} />
-          <Route path="landingPage" element={<LandingPage />} />
-          <Route path="*" element={<NoMatch />} />
-        </Routes>
-      </main>
+        <main>
+          <Routes>
+            <Route path="/" element={<Home />} />
+            <Route path="login" element={<Login />} />
+            <Route path="register" element={<Register />} />
+            <Route path="userProfile" element={<UserProfile />} />
+            <Route path="landingPage" element={<LandingPage />} />
+            <Route path="*" element={<NoMatch />} />
+          </Routes>
+        </main>
+      </AuthContextProvider>
     </div>
   );
 }
