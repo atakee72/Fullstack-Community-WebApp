@@ -132,6 +132,31 @@ function About(selectedTags) {
     }
   };
 
+  const deleteForumPost = async (e, post) => {
+    e.preventDefault();
+    const requestOptions = {
+      method: "DELETE",
+      redirect: "follow",
+    };
+
+    try {
+      const response = await fetch(
+        `http://localhost:5000/api/topics/${post._id}`,
+        requestOptions
+      );
+      const deletedPost = await response.json();
+      console.log(deletedPost);
+
+      if (deletedPost) {
+        fetchData();
+      }
+      // alert("🚀 ~ Deleted that post!", deletedPost);
+    } catch (error) {
+      console.log("🚀 ~ deleteForumPost ~ error:", error);
+      alert("🚀 ~ Post could not be deleted:", error.msg);
+    }
+  };
+
   const postAComment = async (e, commentText, post) => {
     e.preventDefault();
     console.log("commentText", commentText);
@@ -296,6 +321,7 @@ function About(selectedTags) {
                           <Form.Label>Title of Your Text</Form.Label>
                           <Form.Control
                             type="text"
+                            value={postTitle}
                             ref={postTitleRef}
                             onChange={(event) =>
                               setPostTitle(event.target.value)
@@ -311,6 +337,7 @@ function About(selectedTags) {
                             as="textarea"
                             rows={5}
                             columns={12}
+                            value={postBody}
                             ref={postBodyRef}
                             onChange={(event) =>
                               setPostBody(event.target.value)
@@ -356,6 +383,7 @@ function About(selectedTags) {
                       comments={item.comments}
                       author={item.author}
                       postAComment={postAComment}
+                      deleteForumPost={deleteForumPost}
                     />
                   </div>
                 ))

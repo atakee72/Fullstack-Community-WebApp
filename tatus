@@ -1,0 +1,66 @@
+[33mcommit 2b294b7075de965db663698353fc88fe9d321824[m[33m ([m[1;36mHEAD -> [m[1;32mmaster[m[33m, [m[1;31morigin/master[m[33m)[m
+Author: Ercan A <atakee@gmail.com>
+Date:   Sun Mar 5 13:55:00 2023 +0100
+
+    Adding forum posts works! :) But there are a lot more to do! Go to work! :))
+
+[33mcommit b3c172a6fd6992d72b8a449c24e3074f814449e1[m
+Author: Ercan A <atakee@gmail.com>
+Date:   Wed Mar 1 01:17:13 2023 +0100
+
+    We now have an AuthContext. Register, login and logout functions are moved to that context.
+
+[33mcommit 06b65201dba671d949cda75fad1b9abe797d3feb[m
+Author: Ercan A <atakee@gmail.com>
+Date:   Tue Feb 28 02:12:44 2023 +0100
+
+    Author of comments are now shown with userName
+
+[33mcommit 475fceabd6aff7187a11f9d40a9b9c576422c69e[m
+Author: Ercan A <atakee@gmail.com>
+Date:   Mon Feb 27 23:27:00 2023 +0100
+
+    All the collections and their connections can be viewed in the frontend and search function is working flawlessly. Great state to save the work! :)
+
+[33mcommit b0fa7b4336779c2c02d3e2e11275e9effaeb5c93[m
+Author: Ercan A <atakee@gmail.com>
+Date:   Mon Feb 27 17:31:19 2023 +0100
+
+    different collections of data are being delivered now through a single card prototype!
+
+[33mcommit db9454866db9bd919527244cd90eb7504ee5814e[m
+Author: Ercan A <atakee@gmail.com>
+Date:   Mon Feb 27 15:58:36 2023 +0100
+
+    cards are working well, time to show other collections in the frontend
+
+[33mcommit 92582791da42ec46faedb3155f88e9c1e67a4537[m
+Author: Ercan Atak <atakee@gmail.com>
+Date:   Tue Feb 14 14:51:19 2023 +0100
+
+    to control
+
+[33mcommit ed5b183ce6b86a6cc6fdc08dafef43f3c7855887[m
+Author: Ercan Atak <atakee@gmail.com>
+Date:   Sun Feb 12 23:02:40 2023 +0100
+
+    excess file wiped out
+
+[33mcommit 5acbd869baf65edba4419cf766064b4d9fb71aca[m
+Author: Ercan Atak <atakee@gmail.com>
+Date:   Sun Feb 12 22:47:09 2023 +0100
+
+    after nesting collections within each other using ObjectIds - everything works! :)
+
+[33mcommit 5a77f447fe76fe92add5db1e58172ef668399948[m
+Author: Ercan Atak <atakee@gmail.com>
+Date:   Tue Feb 7 11:44:17 2023 +0100
+
+    Update code with bug fixes and improvements
+
+[33mcommit 3b7e8704e0fbdb8a60043333c54b515589a3358c[m
+Author: Ercan Atak <atakee@gmail.com>
+Date:   Mon Feb 6 09:55:50 2023 +0100
+
+    first commit after install
+    ation of the frontend

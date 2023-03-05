@@ -43,7 +43,8 @@ const getTopicById = async (req, res) => {
   }
 };
 
-const postTopic = async (req, res) => {
+//! OTHER COLLECTIONS USE THE FOLLOWING FUNCTION, TOO:
+const postTopic = async (req, res) => {     
   const newTopic = new topicModel({
     _id: new mongoose.Types.ObjectId(),
     title: req.body.title,

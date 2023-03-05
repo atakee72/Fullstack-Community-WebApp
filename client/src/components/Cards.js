@@ -1,49 +1,20 @@
-import { useRef, useState } from "react";
+import { useContext, useRef, useState } from "react";
 import Button from "react-bootstrap/Button";
 import CloseButton from "react-bootstrap/CloseButton";
 import Card from "react-bootstrap/Card";
 import Nav from "react-bootstrap/Nav";
 import Form from "react-bootstrap/Form";
 import transformDate from "../utils/transformDate";
+import { AuthContext } from "../store/AuthContext.js";
+import Alert from "react-bootstrap/Alert";
 
-function Cards({ post, comments, author, postAComment }) {
+function Cards({ post, comments, author, postAComment, deleteForumPost }) {
   const [activeTab, setActiveTab] = useState("Posts");
   const commentTextRef = useRef();
+  const { userId } = useContext(AuthContext);
+  const [show, setShow] = useState(false);
+
   // console.log("🚀 ~ Cards ~ commentTextRef:", commentTextRef.current.value);
-
-  // const postInForum = async () => {
-  //   const myHeaders = new Headers();
-  //   myHeaders.append("Content-Type", "application/x-www-form-urlencoded");
-
-  //   const urlencoded = new URLSearchParams();
-  //   urlencoded.append("title", title);
-  //   urlencoded.append("body", body);
-  //   urlencoded.append("author", loggedUser.userName);
-  //   urlencoded.append("date", new Date().getTime());
-  //   urlencoded.append("tags", selectedTags);
-
-  //   const requestOptions = {
-  //     method: "POST",
-  //     headers: myHeaders,
-  //     body: urlencoded,
-  //     redirect: "follow",
-  //   };
-
-  //   try {
-  //     const response = await fetch(
-  //       "http://localhost:5000/api/topics/post",
-  //       requestOptions
-  //     );
-  //     const newPost = await response.json();
-  //     console.log("🚀 ~ postInForum ~ newPost:", newPost);
-  //   } catch (error) {
-  //     console.log("Error sending the new post", error);
-  //   }
-  // };
-
-  const deleteForumPost = () => {
-    alert("Deleted that post!");
-  };
 
   return (
     <Card
@@ -58,7 +29,59 @@ function Cards({ post, comments, author, postAComment }) {
       }}
       className="m-4 ms-5 me-5 p-4"
     >
-      <CloseButton onClick={deleteForumPost}></CloseButton>
+      {userId === author?._id ? (
+        <>
+          <CloseButton
+            id="isAuthor"
+            onClick={() => setShow(true)}
+          ></CloseButton>
+
+          {show && (
+            <Alert
+              id="isAuthor"
+              variant="danger"
+              onClose={() => setShow(false)}
+              dismissible
+            >
+              <h6>
+                Do you really want to delete your post? This action is not
+                reversible.
+              </h6>
+              <Button
+                variant={"danger"}
+                onClick={(e) => {
+                  deleteForumPost(e, post);
+                  setShow(false);
+                }}
+              >
+                Yes
+              </Button>
+              <Button variant={"success"} onClick={() => setShow(false)}>
+                No
+              </Button>
+            </Alert>
+          )}
+        </>
+      ) : (
+        <>
+          <CloseButton
+            id="isNotAuthor"
+            onClick={() => setShow(true)}
+          ></CloseButton>
+
+          {show && (
+            <Alert
+              id="isNotAuthor"
+              variant="danger"
+              onClose={() => setShow(false)}
+              dismissible
+            >
+              <h6>You are not allowed for this action.</h6>
+            </Alert>
+          )}
+        </>
+      )}
+
       <Card.Header>
         <Nav variant="tabs" defaultActiveKey="Posts">
           <Nav.Item>
