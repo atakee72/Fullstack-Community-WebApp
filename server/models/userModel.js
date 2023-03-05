@@ -43,6 +43,12 @@ const userSchema = new mongoose.Schema({
   comments: [{ type: mongoose.Schema.Types.ObjectId, ref: "comment" }],
 
   topics: [{ type: mongoose.Schema.Types.ObjectId, ref: "topic" }],
+  announcements: [
+    { type: mongoose.Schema.Types.ObjectId, ref: "announcement" },
+  ],
+  recommendations: [
+    { type: mongoose.Schema.Types.ObjectId, ref: "recommendation" },
+  ],
 
   likes: [{ type: String }],
 });

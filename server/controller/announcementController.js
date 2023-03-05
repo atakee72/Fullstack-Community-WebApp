@@ -5,7 +5,9 @@ const getAllAnnouncements = async (req, res) => {
     const requestedAnnouncements = await announcementModel
       .find({})
       .populate("comments")
-      .populate("author");
+      // .populate("author");
+      .populate({ path: "author", select: "userName" })
+      .sort({ date: -1 });
     // .exec();
     res.status(200).json({
       number: requestedAnnouncements.length,

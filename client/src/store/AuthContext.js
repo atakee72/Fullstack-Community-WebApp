@@ -1,6 +1,7 @@
 import { createContext, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { getToken } from "../utils/getToken";
+import { getUserId } from "../utils/getUserId";
 
 export const AuthContext = createContext();
 
@@ -9,6 +10,7 @@ export const AuthContextProvider = (props) => {
   const [loggedUser, setLoggedUser] = useState({});
   const [loader, setLoader] = useState(true);
   const redirectTo = useNavigate();
+  const userId = getUserId();
 
   const register = async (e, username, email, password) => {
     // Check email format, password length - avoid making useless requests
@@ -40,6 +42,8 @@ export const AuthContextProvider = (props) => {
       const newUserData = await response.json();
       console.log("🚀 ~ ~ newUserData", newUserData);
       console.log("🚀 ~ ~ response", response);
+      alert("🚀 Registered successfully! Please login to continue! 🚀");
+      redirectTo("/Login");
     } catch (error) {
       console.log("garip bir şeyler oldu burda!", error);
     }
@@ -67,11 +71,13 @@ export const AuthContextProvider = (props) => {
         requestOptions
       );
       const result = await response.json();
-      console.log("result, login::", result);
+      console.log("result, login:", result);
       if (result.userToken) {
         localStorage.setItem("token", result.userToken);
-        localStorage.setItem("id", result.user.id);
+        localStorage.setItem("id", result.user.id); //! Gerekiyor mu?
         setLoggedUser(result.user);
+        alert("🚀 You are logged in! 🚀");
+        redirectTo("/");
       }
     } catch (error) {
       console.log("error", error);
@@ -83,6 +89,7 @@ export const AuthContextProvider = (props) => {
     localStorage.removeItem("id");
     setLoggedUser(false);
     console.log("You're logged out!");
+    alert("🚀 You're logged out! 🚀");
     redirectTo("/");
   };
 
@@ -105,6 +112,7 @@ export const AuthContextProvider = (props) => {
         register,
         loader,
         setLoader,
+        userId,
       }}
     >
       {props.children}

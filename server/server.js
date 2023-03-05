@@ -61,6 +61,21 @@ const addMiddlewares = () => {
 
   app.use(passport.initialize());
   passport.use(jwtStrategy);
+
+  // app.use((req, res) => {
+  //   const error = new Error("Not found");
+  //   error.status = 404;
+  //   next(error);
+  // });
+
+  // app.use((error, req, res) => {
+  //   res.status(error.status || 500);
+  //   res.json({
+  //     error: {
+  //       message: error.message,
+  //     },
+  //   });
+  // });
 };
 
 // *** One can call all in an "envelope" function called "controller". Then one only needs to call the controller.

@@ -21,18 +21,5 @@ router.post("/imageUpload", multerUpload.single("image"), imageUpload);
 router.post("/signup", signup);
 router.post("/login", login);
 
-// router.post("/:id", updateUser); //todo  TODO:  this has to be checked!
-
-router.get("/:userId", async (req, res) => {
-  try {
-    const commentingUser = await userModel.findById({ _id: req.params.userId });
-    res.status(200).json({
-      msg: "Here is your author of that comment",
-      commentingUser,
-    });
-  } catch (err) {
-    res.status(500).json({ message: err.message });
-  }
-});
 
 export default router;

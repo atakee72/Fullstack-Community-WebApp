@@ -7,7 +7,6 @@ const imageUpload = async (req, res) => {
   console.log("🚀 ~ ~ req.file", req.file);
 
   try {
-    console.log("something");
     const pictureUpload = await cloudinary.uploader.upload(req.file.path, {
       folder: "communityWebApp",
     });
@@ -29,6 +28,8 @@ const getAllUsers = async (req, res) => {
     const allUsers = await userModel
       .find({})
       .populate("topics")
+      .populate("announcements")
+      .populate("recommendations")
       .populate("comments")
       .exec();
     console.log("allusers >>>", allUsers);

@@ -5,15 +5,20 @@ const commentsSchema = new mongoose.Schema({
     type: String,
   },
 
-  // author: { type: mongoose.Schema.Types.ObjectId, ref: "user" },
+  author: { type: mongoose.Schema.Types.ObjectId, ref: "user" },
 
-  userName: { type: mongoose.Schema.Types.String, ref: "user" },
+  // userName: { type: mongoose.Schema.Types.String, ref: "user" },
 
   date: {
     type: Number,
   },
 
   upvotes: { type: Number },
+
+  collectionItem: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "collectionItem",
+  },
 });
 
 const commentModel = mongoose.model("comment", commentsSchema);

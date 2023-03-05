@@ -5,7 +5,9 @@ const getAllRecommendations = async (req, res) => {
     const requestedRecommendations = await recommendationModel
       .find({})
       .populate("comments")
-      .populate("author");
+      // .populate("author");
+      .populate({ path: "author", select: "userName" })
+      .sort({ date: -1 });
     // .exec();
     res.status(200).json({
       number: requestedRecommendations.length,

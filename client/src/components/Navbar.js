@@ -1,11 +1,14 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useContext } from "react";
 import { NavLink } from "react-router-dom";
 import Logout from "./Logout";
-// import "../../public/assets/logo.png";
+import { AuthContext } from "../store/AuthContext";
+import { getToken } from "../utils/getToken";
 
 function Navbar() {
   const [windowWidth, setWindowWidth] = useState(window.innerWidth);
   const [windowHeight, setWindowHeight] = useState(window.innerHeight);
+  const { loggedUser } = useContext(AuthContext);
+  const token = getToken();
 
   const handleResize = () => {
     setWindowWidth(window.innerWidth);
@@ -23,6 +26,8 @@ function Navbar() {
   return (
     <nav>
       <div style={{ position: "absolute", right: "10px" }}>
+        {token && <h2> User: {loggedUser.userName}</h2>}
+        {/* //! muss ich vielleicht den Loader benutzen? */}
         W: {windowWidth} & H: {windowHeight}
       </div>
       <div
@@ -69,9 +74,11 @@ function Navbar() {
               <span>(Landing Page)</span>
             </NavLink>{" "}
           </li> */}
-          <li>
-            <Logout />
-          </li>
+          {loggedUser && (
+            <li>
+              <Logout />
+            </li>
+          )}
         </ul>
       </div>
     </nav>
