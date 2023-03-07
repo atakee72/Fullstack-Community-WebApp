@@ -6,10 +6,14 @@ const getAllTopics = async (req, res) => {
   try {
     const requestedTopics = await topicModel
       .find({})
-      .populate("comments")
+      .sort({ date: -1 }) //* Sort the topics by date in descending order
+      .populate({
+        path: "comments",
+        options: { sort: { date: -1 } }, //* Sort the comments by date in descending order
+      })
       // .populate("author");
-      .populate({ path: "author", select: "userName" })
-      .sort({ date: -1 });
+      .populate({ path: "author", select: "userName" });
+      
 
     // .exec();
     res.status(200).json({

@@ -15,9 +15,10 @@ const commentsSchema = new mongoose.Schema({
 
   upvotes: { type: Number },
 
-  collectionItem: {
+  // collectionItem: {
+  relevantPostId: {
     type: mongoose.Schema.Types.ObjectId,
-    ref: "collectionItem",
+    ref: "relevantPostId",
   },
 });
 

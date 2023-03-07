@@ -1,5 +1,6 @@
 import commentModel from "../models/commentModel.js";
 import topicModel from "../models/topicModel.js";
+import mongoose from "mongoose";
 import generateToken from "../utils/jwt.js";
 
 const getAllComments = async (req, res) => {
@@ -23,51 +24,45 @@ const getAllComments = async (req, res) => {
 };
 
 const postComment = async (req, res) => {
-  console.log("🚀 ~ postComment ~ req.body:", req.body);
-  const { collectionItem } = req.body;
   const newComment = new commentModel({
+    _id: new mongoose.Types.ObjectId(),
     body: req.body.body,
-    userName: req.body.username,
+    author: req.body.author,
     date: req.body.date,
     upvotes: req.body.upvotes,
-    collectionItem: req.body.collectionItem,
+    relevantPostId: req.body.relevantPostId,
   });
-  console.log("🚀 ~ postComment ~ newComment:", newComment);
 
   try {
     const savedComment = await newComment.save();
-    console.log("🚀 ~ postComment ~ savedComment:", savedComment);
-
-    // Update the forum post with the comment ID
     if (savedComment) {
       try {
         const updatedTopic = await topicModel.findByIdAndUpdate(
-          { _id: "63e54bb0fab9b3673bf1941e" },
+          { _id: req.body.relevantPostId },
           { $push: { comments: savedComment._id } },
           { new: true }
         );
-        console.log("updatedTopic", updatedTopic);
         res.status(201).json({
-          msg: "Comment saved and added to the relevant post!",
-          "New comment": {
-            body: savedComment.body,
-            userName: savedComment.loggedUser,
-            date: savedComment.date,
-            upvotes: savedComment.upvotes,
-            collectionItem: savedComment.collectionItem,
-          },
-          updatedPost: updatedTopic,
+          msg: "Added a new comment to the post!",
+          updatedTopic: updatedTopic,
         });
       } catch (error) {
-        console.log("error updating topic", error);
+        res.status(500).json({
+          msg: "Error updating topic",
+        });
       }
+    } else {
+      res.status(500).json({
+        msg: "Ah, something went wrong while saving the new comment!",
+      });
     }
   } catch (error) {
     res.status(500).json({
-      msg: "Ah, an error occured during saving the comment!",
+      msg: "Ah, something went wrong while saving the new comment!",
       error: error,
     });
   }
 };
+
 
 export { getAllComments, postComment };

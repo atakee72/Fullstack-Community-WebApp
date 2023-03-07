@@ -4,6 +4,7 @@ import CloseButton from "react-bootstrap/CloseButton";
 import Card from "react-bootstrap/Card";
 import Nav from "react-bootstrap/Nav";
 import Form from "react-bootstrap/Form";
+import Modal from "react-bootstrap/Modal";
 import transformDate from "../utils/transformDate";
 import { AuthContext } from "../store/AuthContext.js";
 import Alert from "react-bootstrap/Alert";
@@ -11,10 +12,17 @@ import Alert from "react-bootstrap/Alert";
 function Cards({ post, comments, author, postAComment, deleteForumPost }) {
   const [activeTab, setActiveTab] = useState("Posts");
   const commentTextRef = useRef();
+  const [commentText, setCommentText] = useState("");
   const { userId } = useContext(AuthContext);
   const [show, setShow] = useState(false);
 
-  // console.log("🚀 ~ Cards ~ commentTextRef:", commentTextRef.current.value);
+  // const [show, setShow] = useState(false);
+
+  const handleClose = () => setShow(false);
+  const handleShow = () => {
+    setShow(true);
+    // resetPostForm();
+  };
 
   return (
     <Card
@@ -29,59 +37,71 @@ function Cards({ post, comments, author, postAComment, deleteForumPost }) {
       }}
       className="m-4 ms-5 me-5 p-4"
     >
-      {userId === author?._id ? (
-        <>
-          <CloseButton
-            id="isAuthor"
-            onClick={() => setShow(true)}
-          ></CloseButton>
-
-          {show && (
-            <Alert
-              id="isAuthor"
-              variant="danger"
-              onClose={() => setShow(false)}
-              dismissible
-            >
-              <h6>
-                Do you really want to delete your post? This action is not
-                reversible.
-              </h6>
-              <Button
-                variant={"danger"}
-                onClick={(e) => {
-                  deleteForumPost(e, post);
-                  setShow(false);
-                }}
-              >
-                Yes
-              </Button>
-              <Button variant={"success"} onClick={() => setShow(false)}>
-                No
-              </Button>
-            </Alert>
-          )}
-        </>
+      {activeTab !== "Posts" ? (
+        <br />
       ) : (
-        <>
-          <CloseButton
-            id="isNotAuthor"
-            onClick={() => setShow(true)}
-          ></CloseButton>
+        <div>
+          {userId === author?._id ? (
+            <>
+              <CloseButton
+                id="isAuthor"
+                onClick={() => setShow(true)}
+              ></CloseButton>
 
-          {show && (
-            <Alert
-              id="isNotAuthor"
-              variant="danger"
-              onClose={() => setShow(false)}
-              dismissible
-            >
-              <h6>You are not allowed for this action.</h6>
-            </Alert>
+              {show && (
+                <Alert
+                  id="isAuthor"
+                  variant="danger"
+                  onClose={() => setShow(false)}
+                  dismissible
+                >
+                  <h6>
+                    Do you really want to delete your post? This action is not
+                    reversible.
+                  </h6>
+                  <div className="d-flex gap-3">
+                    <Button
+                      className="ps-4 pe-4 m-2"
+                      variant={"danger"}
+                      onClick={(e) => {
+                        deleteForumPost(e, post);
+                        setShow(false);
+                      }}
+                    >
+                      Yes
+                    </Button>
+                    <Button
+                      className="ps-4 pe-4 m-2"
+                      variant={"success"}
+                      onClick={() => setShow(false)}
+                    >
+                      No
+                    </Button>
+                  </div>
+                </Alert>
+              )}
+            </>
+          ) : (
+            <>
+              <CloseButton
+                id="isNotAuthor"
+                onClick={() => setShow(true)}
+              ></CloseButton>
+
+              {show && (
+                <Alert
+                  id="isNotAuthor"
+                  variant="danger"
+                  onClose={() => setShow(false)}
+                  dismissible
+                >
+                  <h6>You are not allowed for this action.</h6>
+                </Alert>
+              )}
+            </>
           )}
-        </>
+        </div>
       )}
-
       <Card.Header>
         <Nav variant="tabs" defaultActiveKey="Posts">
           <Nav.Item>
@@ -131,7 +151,10 @@ function Cards({ post, comments, author, postAComment, deleteForumPost }) {
               <Button
                 variant="light"
                 color="blue"
-                onClick={() => setActiveTab("newComment")}
+                onClick={() => {
+                  handleShow();
+                  setActiveTab("newComment");
+                }}
                 active
               >
                 Write a comment
@@ -140,7 +163,10 @@ function Cards({ post, comments, author, postAComment, deleteForumPost }) {
               <Button
                 variant="light"
                 color="blue"
-                onClick={() => setActiveTab("newComment")}
+                onClick={() => {
+                  handleShow();
+                  setActiveTab("newComment");
+                }}
               >
                 Write a comment
               </Button>
@@ -256,36 +282,50 @@ function Cards({ post, comments, author, postAComment, deleteForumPost }) {
           ))}
         </Card.Body>
       )}
-      {/* >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>NEW COMMENT TAB */}
+      {/* {//! >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>NEW COMMENT TAB */}
       {activeTab === "newComment" && (
         <Card.Body style={{ display: "inline-flex", gap: "10vw" }}>
-          <div style={{ display: "inline-flex", gap: "10vw" }}>
-            <Form
-              onSubmit={(e) =>
-                postAComment(e, commentTextRef.current.value, post)
-              }
-              style={{
-                minWidth: "40vw",
-                minHeight: "40vh",
-                overflow: "auto",
-                resize: "both",
-              }}
-            >
-              <input
-                style={{
-                  minWidth: "20vw",
-                  minHeight: "20vh",
+          <Modal show={show} onHide={handleClose}>
+            <Modal.Header className="m-1 p-1" closeButton>
+              <Modal.Title>Add a comment</Modal.Title>
+            </Modal.Header>
+            <Modal.Body className="m-1 p-1">
+              <Form
+                className="m-1 p-3"
+                onSubmit={(e) => {
+                  handleClose();
+                  if (commentText) {
+                    postAComment(e, commentText, post);
+                  }
+
+                  setActiveTab("Comments");
                 }}
-                type="text"
-                ref={commentTextRef}
-              />
-              <Button variant="primary" type="submit">
-                Submit
-              </Button>
-            </Form>
-          </div>
+              >
+                <Form.Group controlId="exampleForm.ControlTextarea1">
+                  <Form.Label>
+                    Please write your topic here then click submit
+                  </Form.Label>
+                  <Form.Control
+                    as="textarea"
+                    type="text"
+                    rows={5}
+                    columns={12}
+                    ref={commentTextRef}
+                    onChange={(e) => setCommentText(e.target.value)}
+                    className="m-0 p-0"
+                  />
+                </Form.Group>
+
+                <Button type="submit" variant="primary">
+                  Submit
+                </Button>
+              </Form>
+            </Modal.Body>
+          </Modal>
         </Card.Body>
       )}
+
+      {/* ===================================================================================== */}
     </Card>
   );
 }

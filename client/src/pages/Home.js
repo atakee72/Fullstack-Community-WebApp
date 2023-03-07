@@ -14,7 +14,9 @@ function About(selectedTags) {
   const [searchInputValue, setSearchInputValue] = useState("");
   const searchInputRef = useRef(null);
   const { loggedUser, userId } = useContext(AuthContext);
-  console.log("loggedUser", loggedUser);
+  console.log("🚀 ~ About ~ userId:", userId);
+  console.log("loggedUser", loggedUser?.userName);
+
   const postTitleRef = useRef();
   const postBodyRef = useRef();
   const [postTitle, setPostTitle] = useState("");
@@ -23,7 +25,10 @@ function About(selectedTags) {
   const [show, setShow] = useState(false);
 
   const handleClose = () => setShow(false);
-  const handleShow = () => setShow(true);
+  const handleShow = () => {
+    setShow(true);
+    resetPostForm();
+  };
 
   const availableTags = [
     "sports",
@@ -36,6 +41,11 @@ function About(selectedTags) {
 
   const handleTagsSelected = (selectedTags) => {
     console.log("Selected tags:", selectedTags);
+  };
+
+  const resetPostForm = () => {
+    setPostTitle(null);
+    setPostBody(null);
   };
 
   const fetchData = async () => {
@@ -88,20 +98,12 @@ function About(selectedTags) {
     const myHeaders = new Headers();
     myHeaders.append("Content-Type", "application/x-www-form-urlencoded");
 
-    // const raw = JSON.stringify({
-    //   title: postTitle,
-    //   body: postBody,
-    //   author: userId,
-    //   date: Date.now(),
-    //   tags: selectedTags,
-    // });
-
     const urlencoded = new URLSearchParams();
     urlencoded.append("title", postTitle);
     urlencoded.append("body", postBody);
     urlencoded.append("author", userId);
     urlencoded.append("date", Date.now());
-    urlencoded.append("tags", selectedTags.toString());
+    urlencoded.append("tags", selectedTags);
 
     const requestOptions = {
       method: "POST",
@@ -166,10 +168,11 @@ function About(selectedTags) {
 
       const urlencoded = new URLSearchParams();
       urlencoded.append("body", commentText);
-      urlencoded.append("userName", loggedUser.userName);
-      urlencoded.append("date", new Date().getTime());
+      urlencoded.append("author", userId);
+      urlencoded.append("date", Date.now());
       urlencoded.append("upvotes", "5");
-      urlencoded.append("collectionItem", post._id);
+      urlencoded.append("relevantPostId", post._id);
+      console.log("🚀 ~ postAComment ~ post:", post);
 
       const requestOptions = {
         method: "POST",
@@ -184,29 +187,11 @@ function About(selectedTags) {
       );
       const newComment = await response.json();
       console.log("🚀 ~ postAComment ~ newComment:", newComment);
+      console.log("🚀 ~ postAComment ~ checkCommends:", post.comments.at(0));
 
-      // Update the forum post with the comment ID
-
-      // const commentId = newComment._id;
-      // myHeaders.append("Content-Type", "application/x-www-form-urlencoded");
-
-      // urlencoded.append("id", commentId);
-
-      // await fetch(`http://localhost:5000/api/topics/${post._id}`, {
-      //   method: "PATCH",
-      //   headers: myHeaders,
-      //   body: urlencoded,
-      // })
-      //   .then((response) => response.text())
-      //   .then((result) => console.log(result))
-      //   .catch((error) => console.log("error", error));
-
-      //       // Refresh the page to show the updated comment list
-      //       // window.location.reload();
-      // OR
-      //       setTimeout(() => {
-      //         fetchData();
-      //       }, 3000);
+      if (newComment) {
+        fetchData();
+      }
     } catch (error) {
       console.log("🚀 ~ postAComment ~ error:", error);
     }

@@ -74,9 +74,9 @@ export const AuthContextProvider = (props) => {
       console.log("result, login:", result);
       if (result.userToken) {
         localStorage.setItem("token", result.userToken);
-        localStorage.setItem("id", result.user.id); //! Gerekiyor mu?
+        localStorage.setItem("id", result.user.id);
         setLoggedUser(result.user);
-        alert("🚀 You are logged in! 🚀");
+        alert("🚀 You are logged in! 🚀", loggedUser);
         redirectTo("/");
       }
     } catch (error) {
