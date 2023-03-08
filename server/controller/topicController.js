@@ -72,56 +72,6 @@ const postTopic = async (req, res) => {
   }
 };
 
-// const updateTopic = async (req, res) => {
-//   const postId = req.params.topicId;
-//   const newCommentId = req.body.newCommentId;
-//   const options = { new: true };
-//   try {
-//     const updatedTopic = await topicModel.updateOne(
-//       { _id: postId },
-//       { $push: { comments: newCommentId } },
-//       options
-//     );
-//     res.status(200).json({ msg: "Added a new comment!", updatedTopic });
-//   } catch (error) {
-//     console.error(error);
-//     res.status(500).json({
-//       message: "Something went wrong adding new comment!",
-//       error: error,
-//     });
-//   }
-// };
-
-const updateTopic = async (req, res) => {
-  if (error) {
-    throw error;
-  }
-
-  const postId = req.params.topicId;
-  const newCommentId = req.body.newCommentId; //! WARNING =======Burada yazmak zorunda miyim?
-
-  const options = { new: true }; //! ==========================================?
-
-  try {
-    // db.collection("topics").updateOne(
-    //   { _id: postId },
-    //   { $set: { comments: newCommentId } }
-    // );
-
-    const updatedTopic = await topicModel.findByIdAndUpdate(
-      { _id: postId },
-      { $push: { comments: newCommentId } },
-      options
-    );
-    res.status(200).json({ msg: "Added a new comment!", updatedTopic });
-  } catch (error) {
-    console.error(error);
-    res.status(500).json({
-      message: "Something went wrong adding new comment!",
-      error: error,
-    });
-  }
-};
 
 const deleteTopic = async (req, res) => {
   const postId = req.params.topicId;
@@ -139,4 +89,4 @@ const deleteTopic = async (req, res) => {
   }
 };
 
-export { getAllTopics, getTopicById, updateTopic, postTopic, deleteTopic };
+export { getAllTopics, getTopicById, postTopic, deleteTopic };

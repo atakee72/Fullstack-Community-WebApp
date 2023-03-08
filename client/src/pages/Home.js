@@ -16,6 +16,7 @@ function About(selectedTags) {
   const { loggedUser, userId } = useContext(AuthContext);
   console.log("🚀 ~ About ~ userId:", userId);
   console.log("loggedUser", loggedUser?.userName);
+  const [myTags, setMyTags] = useState(selectedTags);
 
   const postTitleRef = useRef();
   const postBodyRef = useRef();
@@ -41,6 +42,7 @@ function About(selectedTags) {
 
   const handleTagsSelected = (selectedTags) => {
     console.log("Selected tags:", selectedTags);
+    setMyTags(selectedTags);
   };
 
   const resetPostForm = () => {
@@ -103,7 +105,7 @@ function About(selectedTags) {
     urlencoded.append("body", postBody);
     urlencoded.append("author", userId);
     urlencoded.append("date", Date.now());
-    urlencoded.append("tags", selectedTags);
+    urlencoded.append("tags", myTags);
 
     const requestOptions = {
       method: "POST",
@@ -194,6 +196,32 @@ function About(selectedTags) {
       }
     } catch (error) {
       console.log("🚀 ~ postAComment ~ error:", error);
+    }
+  };
+
+  const deleteAComment = async (e, comment) => {
+    e.preventDefault();
+
+    const requestOptions = {
+      method: "DELETE",
+      redirect: "follow",
+    };
+
+    try {
+      const response = await fetch(
+        `http://localhost:5000/api/comments/${comment?._id}`,
+        requestOptions
+      );
+      console.log("🚀 ~ comment?._Id:", comment?._id);
+
+      const deletedComment = await response.json();
+      console.log("🚀 ~ deleteAComment ~ deletedComment:", deletedComment);
+
+      if (deletedComment) {
+        fetchData();
+      }
+    } catch (error) {
+      console.log("error", error);
     }
   };
 
@@ -369,6 +397,7 @@ function About(selectedTags) {
                       author={item.author}
                       postAComment={postAComment}
                       deleteForumPost={deleteForumPost}
+                      deleteAComment={deleteAComment}
                     />
                   </div>
                 ))

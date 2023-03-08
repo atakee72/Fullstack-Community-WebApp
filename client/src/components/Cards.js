@@ -8,8 +8,16 @@ import Modal from "react-bootstrap/Modal";
 import transformDate from "../utils/transformDate";
 import { AuthContext } from "../store/AuthContext.js";
 import Alert from "react-bootstrap/Alert";
+import { Badge } from "react-bootstrap";
 
-function Cards({ post, comments, author, postAComment, deleteForumPost }) {
+function Cards({
+  post,
+  comments,
+  author,
+  postAComment,
+  deleteForumPost,
+  deleteAComment,
+}) {
   const [activeTab, setActiveTab] = useState("Posts");
   const commentTextRef = useRef();
   const [commentText, setCommentText] = useState("");
@@ -133,7 +141,7 @@ function Cards({ post, comments, author, postAComment, deleteForumPost }) {
                 onClick={() => setActiveTab("Comments")}
                 active
               >
-                Comments
+                Comments <Badge bg="secondary">{comments?.length}</Badge>
               </Button>
             ) : (
               <Button
@@ -141,7 +149,7 @@ function Cards({ post, comments, author, postAComment, deleteForumPost }) {
                 color="blue"
                 onClick={() => setActiveTab("Comments")}
               >
-                Comments
+                Comments <Badge bg="secondary">{comments?.length}</Badge>
               </Button>
             )}
           </Nav.Item>
@@ -236,22 +244,91 @@ function Cards({ post, comments, author, postAComment, deleteForumPost }) {
       {/* >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>COMMENTS TAB */}
       {activeTab === "Comments" && comments && (
         <Card.Body>
+          {" "}
           {comments.map((comment, i) => (
             <div
               style={{
                 display: "flex",
                 flexWrap: "wrap",
-                gap: "5vw",
+                flexDirection: "column",
+                justifyContent: "flex-start",
+
                 // backgroundColor: "rgba(0, 0, 0, 0.1)",
                 borderRadius: "5px",
               }}
               key={i}
             >
+              <div>
+                {userId === comment?.author ? (
+                  <>
+                    <CloseButton
+                      id="isCommentAuthor"
+                      onClick={() => setShow(true)}
+                    ></CloseButton>
+
+                    {show && (
+                      <Alert
+                        id="isCommentAuthor"
+                        variant="danger"
+                        onClose={() => setShow(false)}
+                        dismissible
+                      >
+                        <h6>
+                          Do you really want to delete your comment? This action
+                          is not reversible.
+                        </h6>
+                        <div className="d-flex gap-3">
+                          <Button
+                            className="ps-4 pe-4 m-2"
+                            variant={"danger"}
+                            onClick={(e) => {
+                              deleteAComment(e, comment);
+                              // setShow(false);
+                            }}
+                          >
+                            Yes
+                          </Button>
+                          <Button
+                            className="ps-4 pe-4 m-2"
+                            variant={"success"}
+                            onClick={() => setShow(false)}
+                          >
+                            No
+                          </Button>
+                        </div>
+                      </Alert>
+                    )}
+                  </>
+                ) : (
+                  <>
+                    <CloseButton
+                      id="isNotCommentAuthor"
+                      onClick={() => setShow(true)}
+                    ></CloseButton>
+
+                    {show && (
+                      <Alert
+                        id="isNotCommentAuthor"
+                        variant="danger"
+                        onClose={() => setShow(false)}
+                        dismissible
+                      >
+                        <h6>You are not allowed for this action.</h6>
+                      </Alert>
+                    )}
+                  </>
+                )}
+              </div>
+
               <div
                 style={{
                   margin: "10px",
                   padding: "2% 0 5% 0",
                   borderBottom: "1px solid lightGray",
+                  display: "flex",
+                  flexDirection: "column",
+                  // backgroundColor: "gray",
+                  gap: "5px",
                 }}
               >
                 <i>
@@ -271,12 +348,12 @@ function Cards({ post, comments, author, postAComment, deleteForumPost }) {
                         color: "white",
                       }}
                     >
-                      Date: {transformDate(comment.date)} - Author:{" "}
-                      {comment.userName}
+                      Date: {transformDate(comment?.date)} - Author:{" "}
+                      {comment?.userName} {comment?.author}
                     </span>
                   </h6>
                 </i>
-                <Card.Text>{comment.body}</Card.Text>
+                <Card.Text>{comment?.body}</Card.Text>
               </div>
             </div>
           ))}

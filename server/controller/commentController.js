@@ -23,6 +23,7 @@ const getAllComments = async (req, res) => {
   }
 };
 
+
 const postComment = async (req, res) => {
   const newComment = new commentModel({
     _id: new mongoose.Types.ObjectId(),
@@ -65,4 +66,20 @@ const postComment = async (req, res) => {
 };
 
 
-export { getAllComments, postComment };
+const deleteComment = async (req, res) => {
+  const commentId = req.params.commentId;
+  try {
+    const commentToDelete = await commentModel.findByIdAndDelete(commentId);
+    res.status(200).json({
+      msg: "Deleted the comment!",
+      "Comment id": commentId,
+      commentToDelete,
+    });
+  } catch (error) {
+    res.status(500).json({
+      msg: "Something went wrong with deletion!",
+    });
+  }
+};
+
+export { getAllComments, postComment, deleteComment };
