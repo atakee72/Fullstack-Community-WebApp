@@ -8,7 +8,7 @@ const getAllComments = async (req, res) => {
     const requestedComments = await commentModel
       .find({})
       // .populate("author");
-      .populate({ path: "author", select: "userName" })
+      .populate({ path: "author", select: "userName userPicture" })
       .sort({ date: -1 });
     // .populate("collectionItem");
 

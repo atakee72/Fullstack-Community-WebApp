@@ -1,0 +1,57 @@
+
+.tag-selector {
+    display: flex;
+    flex-direction: row;
+  }
+  
+  .available-tags {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: flex-start;
+    margin-right: 16px;
+    padding: 1%;
+    min-width: 150px;
+  }
+  
+  .tag {
+    margin-right: 1%;
+    margin-bottom: 1%;
+    padding: 1%;
+    background-color: #e8e0e0;
+    border-radius: 4px;
+    cursor: pointer;
+  }
+  
+  .selected-tags {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: flex-start;
+    align-items: flex-start;
+    border: 1px solid #ccc;
+    padding: 1%;
+    min-width: 150px;
+  }
+  
+  .selected {
+    background-color: skyblue;
+    color: white;
+  }
+  
+  /* Additional styles for the TagSelector component */
+  .tag-selector .available-tags .tag:hover {
+    background-color: #e0e0e0;
+  }
+  
+  .tag-selector .selected-tags .tag:hover {
+    background-color: steelblue;
+  }
+  
+  .tag-selector .selected-tags .tag {
+    margin-right: 1%;
+    margin-bottom: 1%;
+    padding: 1%;
+    background-color: skyblue;
+    border-radius: 4px;
+    color: white;
+    cursor: pointer;
+  }

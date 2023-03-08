@@ -1,11 +1,12 @@
-import Container from "react-bootstrap/Container";
-import Row from "react-bootstrap/Row";
-import Col from "react-bootstrap/Col";
+// import Container from "react-bootstrap/Container";
+// import Row from "react-bootstrap/Row";
+// import Col from "react-bootstrap/Col";
 import React, { useEffect, useState } from "react";
 import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
 import { getToken } from "../utils/getToken";
 import { getUserId } from "../utils/getUserId";
+import HobbySelector from "../components/HobbySelector";
 
 function UserProfile() {
   const [selectedfile, setSelectedFile] = useState(null);
@@ -16,6 +17,27 @@ function UserProfile() {
   const [userHobbies, setUserHobbies] = useState([]);
   const [hobbyInput, setHobbyInput] = useState("");
   const token = getToken();
+
+  const [userId, setUserId] = useState(null);
+  // const [myHobbies, setMyHobbies] = useState(selectedHobbies);
+
+  const availableHobbies = [
+    "sports",
+    "chess",
+    "soccer",
+    "basketball",
+    "books",
+    "politics",
+  ];
+
+  const handleHobbiesSelected = (selectedHobbies) => {
+    console.log("Selected hobbies:", selectedHobbies);
+    // setMyHobbies(selectedHobbies);
+  };
+
+  const userIdIs = () => {
+    setUserId(getUserId());
+  };
 
   const getProfile = () => {
     if (token) {
@@ -54,6 +76,7 @@ function UserProfile() {
       setUser(null);
     }
   };
+
   const handlePictureAttachment = (e) => {
     setSelectedFile(e.target.files[0]);
   };
@@ -63,12 +86,14 @@ function UserProfile() {
 
     const formdata = new FormData();
     formdata.append("image", selectedfile);
+    formdata.append("userId", userId);
 
     console.log("formData :>> ", formdata);
 
     const requestOptions = {
       method: "POST",
       body: formdata,
+      redirect: "follow",
     };
 
     try {
@@ -80,6 +105,10 @@ function UserProfile() {
       const result = await response.json();
       console.log("🚀 ~ ~ result", result);
       setUser({ ...user, userPicture: result.userPicture });
+
+      if (result) {
+        getProfile();
+      }
     } catch (error) {
       console.log("error", error);
     }
@@ -111,7 +140,7 @@ function UserProfile() {
     urlencoded.append("surName", profileUpdates.surName);
     urlencoded.append("birthDay", profileUpdates.birthDay);
     urlencoded.append("roleBadge", profileUpdates.roleBadge);
-    urlencoded.append("hobbies", userHobbies);
+    // urlencoded.append("hobbies", myHobbies);
     console.log(urlencoded.get("hobbies"));
     const requestOptions = {
       method: "POST",
@@ -131,6 +160,7 @@ function UserProfile() {
 
   useEffect(() => {
     getProfile();
+    userIdIs();
   }, [token]);
 
   return (
@@ -349,38 +379,19 @@ function UserProfile() {
 
                 <div className="form-group">
                   <label htmlFor="hobbies">Hobbies</label>
-                  <div className="input-group">
-                    <div>
-                      <input
-                        type="text"
-                        id="hobbies"
-                        name="hobbies"
-                        placeholder="Enter your hobbies"
-                        onChange={handleHobbyInput}
-                        value={hobbyInput}
-                      />
-                      <Button
-                        type="button"
-                        className="m-3 d-block"
-                        onClick={addHobby}
-                      >
-                        Add to List
-                      </Button>
-                    </div>
-                    {console.log("🚀 ~ addHobby ~ userHobbies:", userHobbies)}
-                    <Container>
-                      <Row sm={true} md={true} lg={true}>
-                        {userProfile.hobbies &&
-                          userProfile.hobbies.map((hobby, i) => (
-                            <Col key={i}>{hobby}</Col>
-                          ))}
-                        {/* </Row>
-                      <Row sm={true} md={true} lg={true}> */}
-                        {userHobbies.map((newHobby, index) => (
-                          <Col key={index}>{newHobby}</Col>
-                        ))}
-                      </Row>
-                    </Container>
+                  <div
+                    className="input-group"
+                    style={{
+                      display: "flex",
+                      flexDirection: "row",
+                      justifyContent: "center",
+                      padding: "0",
+                    }}
+                  >
+                    <HobbySelector
+                      handleHobbiesSelected={handleHobbiesSelected}
+                      availableHobbies={availableHobbies}
+                    />
                   </div>
                 </div>
 

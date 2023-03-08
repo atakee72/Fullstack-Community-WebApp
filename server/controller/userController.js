@@ -12,13 +12,35 @@ const imageUpload = async (req, res) => {
     });
     console.log("🚀 ~  ~ pictureUpload>>>>>>>>>", pictureUpload);
 
-    res.status(200).json({
-      msg: "Hurray, the image has been successfully uploaded!",
-      userPicture: pictureUpload.url,
-    });
+    if (pictureUpload) {
+
+      const newPicture = pictureUpload.secure_url
+
+      try {
+        const updatedUser = await userModel.findByIdAndUpdate(
+          { _id: req.body.userId },
+          { $set: { userPicture: newPicture } },
+          { new: true }
+        );
+        res.status(201).json({
+          msg: "Hurray, replaced the profile picture with a new one!",
+          newPicture: newPicture,
+          updatedUser: updatedUser
+        });
+      } catch (error) {
+        res.status(500).json({
+          msg: "Error replacing the profile picture",
+        });
+      }
+    } else {
+      res.status(500).json({
+        msg: "Ah, something went wrong while uploading and/or replacing the profile picture!",
+      });
+    }
+    
   } catch (error) {
     res.status(500).json({
-      errorMsg: "Sorry, something went wrong with the upload!",
+      errorMsg: "So sorry, something went wrong with the updating/replacing the user picture!",
     });
   }
 };

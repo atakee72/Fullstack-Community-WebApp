@@ -26,7 +26,22 @@ function Navbar() {
   return (
     <nav>
       <div style={{ position: "absolute", right: "10px" }}>
-        {token && <h2> User: {loggedUser.userName}</h2>}
+        {token && (
+          <h2>
+            {" "}
+            User: {loggedUser.userName}{" "}
+            <img
+              style={{
+                width: "45px",
+                height: "45px",
+                borderRadius: "30px",
+                objectFit: "cover",
+                zIndex: "1",
+              }}
+              src={loggedUser.userPicture}
+            ></img>
+          </h2>
+        )}
         {/* //! muss ich vielleicht den Loader benutzen? */}
         W: {windowWidth} & H: {windowHeight}
       </div>

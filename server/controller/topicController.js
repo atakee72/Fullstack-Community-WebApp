@@ -12,7 +12,7 @@ const getAllTopics = async (req, res) => {
         options: { sort: { date: -1 } }, //* Sort the comments by date in descending order
       })
       // .populate("author");
-      .populate({ path: "author", select: "userName" });
+      .populate({ path: "author", select: "userName userPicture" });
       
 
     // .exec();

@@ -8,7 +8,7 @@ import Modal from "react-bootstrap/Modal";
 import transformDate from "../utils/transformDate";
 import { AuthContext } from "../store/AuthContext.js";
 import Alert from "react-bootstrap/Alert";
-import { Badge } from "react-bootstrap";
+import { Accordion, Badge } from "react-bootstrap";
 
 function Cards({
   post,
@@ -210,7 +210,19 @@ function Cards({
                   }}
                 >
                   Date: {transformDate(post.date)} - Views: {post.views} -
-                  Author: {author?.userName}
+                  Author: {author?.userName} Picture:{" "}
+                  {
+                    <img
+                      style={{
+                        width: "30px",
+                        height: "30px",
+                        borderRadius: "30px",
+                        objectFit: "cover",
+                        zIndex: "1",
+                      }}
+                      src={post.userPicture}
+                    />
+                  }
                 </span>
               </h6>
             </i>
@@ -244,125 +256,51 @@ function Cards({
       {/* >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>COMMENTS TAB */}
       {activeTab === "Comments" && comments && (
         <Card.Body>
-          {" "}
           {comments.map((comment, i) => (
-            <div
-              style={{
-                display: "flex",
-                flexWrap: "wrap",
-                flexDirection: "column",
-                justifyContent: "flex-start",
-
-                // backgroundColor: "rgba(0, 0, 0, 0.1)",
-                borderRadius: "5px",
-              }}
-              key={i}
-            >
-              <div>
-                {userId === comment?.author ? (
-                  <>
-                    <CloseButton
-                      id="isCommentAuthor"
-                      onClick={() => setShow(true)}
-                    ></CloseButton>
-
-                    {show && (
-                      <Alert
-                        id="isCommentAuthor"
-                        variant="danger"
-                        onClose={() => setShow(false)}
-                        dismissible
-                      >
-                        <h6>
-                          Do you really want to delete your comment? This action
-                          is not reversible.
-                        </h6>
-                        <div className="d-flex gap-3">
-                          <Button
-                            className="ps-4 pe-4 m-2"
-                            variant={"danger"}
-                            onClick={(e) => {
-                              deleteAComment(e, comment);
-                              // setShow(false);
-                            }}
-                          >
-                            Yes
-                          </Button>
-                          <Button
-                            className="ps-4 pe-4 m-2"
-                            variant={"success"}
-                            onClick={() => setShow(false)}
-                          >
-                            No
-                          </Button>
-                        </div>
-                      </Alert>
-                    )}
-                  </>
-                ) : (
-                  <>
-                    <CloseButton
-                      id="isNotCommentAuthor"
-                      onClick={() => setShow(true)}
-                    ></CloseButton>
-
-                    {show && (
-                      <Alert
-                        id="isNotCommentAuthor"
-                        variant="danger"
-                        onClose={() => setShow(false)}
-                        dismissible
-                      >
-                        <h6>You are not allowed for this action.</h6>
-                      </Alert>
-                    )}
-                  </>
-                )}
-              </div>
-
-              <div
+            <Accordion defaultActiveKey={i} flush>
+              <Accordion.Item
+                eventKey={i + 1}
                 style={{
-                  margin: "10px",
-                  padding: "2% 0 5% 0",
-                  borderBottom: "1px solid lightGray",
-                  display: "flex",
-                  flexDirection: "column",
-                  // backgroundColor: "gray",
-                  gap: "5px",
+                  borderBottom: "1px solid skyBlue",
+                  backgroundColor: "#e8f4f8",
                 }}
               >
-                <i>
-                  <h6
-                    style={{
-                      padding: "2%",
-                      borderRadius: "5px",
-                      margin: "0 0 5% 0",
-                      backgroundColor: "skyBlue",
-                      textDecoration: "underline",
-                      color: "gray",
-                      fontSize: "0.8em",
-                    }}
-                  >
-                    <span
+                <Accordion.Header>
+                  Date: {transformDate(comment?.date)} - Author:{" "}
+                  {comment?.userName}{" "}
+                  {
+                    <img
                       style={{
-                        color: "white",
+                        width: "30px",
+                        height: "30px",
+                        borderRadius: "30px",
+                        objectFit: "cover",
+                        zIndex: "1",
                       }}
-                    >
-                      Date: {transformDate(comment?.date)} - Author:{" "}
-                      {comment?.userName} {comment?.author}
-                    </span>
-                  </h6>
-                </i>
-                <Card.Text>{comment?.body}</Card.Text>
-              </div>
-            </div>
+                      src={comment?.userPicture}
+                    />
+                  }
+                </Accordion.Header>
+                <Accordion.Body>
+                  <Card.Text>{comment?.body}</Card.Text>
+                </Accordion.Body>
+              </Accordion.Item>
+            </Accordion>
           ))}
         </Card.Body>
       )}
+
       {/* {//! >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>NEW COMMENT TAB */}
+
       {activeTab === "newComment" && (
         <Card.Body style={{ display: "inline-flex", gap: "10vw" }}>
-          <Modal show={show} onHide={handleClose}>
+          <Modal
+            show={show}
+            onHide={() => {
+              handleClose();
+              setActiveTab("Comments");
+            }}
+          >
             <Modal.Header className="m-1 p-1" closeButton>
               <Modal.Title>Add a comment</Modal.Title>
             </Modal.Header>
