@@ -1,10 +1,11 @@
-import { useContext, useRef } from "react";
+import { useContext, useRef, useState } from "react";
 import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
 import { AuthContext } from "../store/AuthContext";
+import Alert from "react-bootstrap/Alert";
 
 function Login() {
-  const { login } = useContext(AuthContext);
+  const { login, serverMsg } = useContext(AuthContext);
 
   const emailRef = useRef();
   const passwordRef = useRef();
@@ -33,7 +34,6 @@ function Login() {
                 required
               />
             </Form.Group>
-
             <Form.Group controlId="formBasicPassword">
               <Form.Label>Password</Form.Label>
               <Form.Control
@@ -44,12 +44,15 @@ function Login() {
                 required
               />
             </Form.Group>
-
             <div className="text-center">
+              {" "}
+              <br />
               <Button variant="primary" type="submit">
                 Log in
               </Button>
-            </div>
+            </div>{" "}
+            <br />
+            {serverMsg && <Alert variant="danger">{serverMsg}</Alert>}
           </Form>
         </div>
       </main>

@@ -3,7 +3,7 @@ import {
   getAllTopics,
   getTopicById,
   postTopic,
-  // updateTopic,
+  updateTopic,
   deleteTopic,
 } from "../controller/topicController.js";
 
@@ -14,5 +14,7 @@ router.get("/:topicId", getTopicById);
 router.post("/post", postTopic);
 // router.patch("/:topicId", updateTopic); //! PUT mu kullansak acaba?
 router.delete("/:topicId", deleteTopic);
+router.post("/:topicId", updateTopic);
+
 
 export default router;

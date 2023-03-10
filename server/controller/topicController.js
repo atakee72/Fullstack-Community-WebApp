@@ -89,4 +89,35 @@ const deleteTopic = async (req, res) => {
   }
 };
 
-export { getAllTopics, getTopicById, postTopic, deleteTopic };
+
+const updateTopic = async (req, res) => {
+  const { topicId } = req.params;
+  const { theLastLike } = req.body;
+
+  try {
+    const updatedLikeCounter = await topicModel.findOneAndUpdate(
+      { _id: topicId },
+      {
+        $set: {
+          likes: theLastLike,
+        },
+      },
+      { new: true }
+    );
+    const response = {
+      msg: "Like counter updated successfully",
+      noOfLikesNow: updatedLikeCounter,
+    };
+
+    res.status(200).json(response);
+  } catch (error) {
+    const response = {
+      msg: "An error occurred while updating the like counter",
+      error: error,
+    };
+
+    res.status(500).json(response);
+  }
+};
+
+export { getAllTopics, getTopicById, postTopic, deleteTopic, updateTopic };

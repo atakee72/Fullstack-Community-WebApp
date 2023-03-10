@@ -7,6 +7,9 @@ export const AuthContext = createContext();
 
 export const AuthContextProvider = (props) => {
   // const [newUser, setNewUser] = useState({});
+
+  const [serverMsg, setServerMsg] = useState("");
+
   const [loggedUser, setLoggedUser] = useState({});
   const [loader, setLoader] = useState(true);
   const redirectTo = useNavigate();
@@ -39,13 +42,20 @@ export const AuthContextProvider = (props) => {
         "http://localhost:5000/api/users/signup",
         requestOptions
       );
+
       const newUserData = await response.json();
+      setServerMsg(newUserData.msg);
       console.log("🚀 ~ ~ newUserData", newUserData);
       console.log("🚀 ~ ~ response", response);
-      alert("🚀 Registered successfully! Please login to continue! 🚀");
-      redirectTo("/Login");
+
+      if (newUserData) {
+        setTimeout(() => {
+          redirectTo("/Login");
+        }, 3000);
+      }
     } catch (error) {
       console.log("garip bir şeyler oldu burda!", error);
+      setServerMsg(error);
     }
   };
 
@@ -72,15 +82,20 @@ export const AuthContextProvider = (props) => {
       );
       const result = await response.json();
       console.log("result, login:", result);
+      setServerMsg(result.msg);
       if (result.userToken) {
         localStorage.setItem("token", result.userToken);
         localStorage.setItem("id", result.user.id);
         setLoggedUser(result.user);
-        alert("🚀 You are logged in! 🚀", loggedUser);
-        redirectTo("/");
+        setServerMsg(result.msg);
+
+        setTimeout(() => {
+          redirectTo("/");
+        }, 3000);
       }
     } catch (error) {
       console.log("error", error);
+      setServerMsg(error);
     }
   };
 
@@ -113,6 +128,7 @@ export const AuthContextProvider = (props) => {
         loader,
         setLoader,
         userId,
+        serverMsg,
       }}
     >
       {props.children}

@@ -2,6 +2,7 @@ import userModel from "../models/userModel.js";
 import { v2 as cloudinary } from "cloudinary";
 import { encryptPassword, verifyPassword } from "../utils/passEncryp.js";
 import generateToken from "../utils/jwt.js";
+import { body, validationResult } from "express-validator";
 
 const imageUpload = async (req, res) => {
   console.log("🚀 ~ ~ req.file", req.file);
@@ -13,8 +14,7 @@ const imageUpload = async (req, res) => {
     console.log("🚀 ~  ~ pictureUpload>>>>>>>>>", pictureUpload);
 
     if (pictureUpload) {
-
-      const newPicture = pictureUpload.secure_url
+      const newPicture = pictureUpload.secure_url;
 
       try {
         const updatedUser = await userModel.findByIdAndUpdate(
@@ -25,7 +25,7 @@ const imageUpload = async (req, res) => {
         res.status(201).json({
           msg: "Hurray, replaced the profile picture with a new one!",
           newPicture: newPicture,
-          updatedUser: updatedUser
+          updatedUser: updatedUser,
         });
       } catch (error) {
         res.status(500).json({
@@ -37,10 +37,10 @@ const imageUpload = async (req, res) => {
         msg: "Ah, something went wrong while uploading and/or replacing the profile picture!",
       });
     }
-    
   } catch (error) {
     res.status(500).json({
-      errorMsg: "So sorry, something went wrong with the updating/replacing the user picture!",
+      errorMsg:
+        "So sorry, something went wrong with the updating/replacing the user picture!",
     });
   }
 };
@@ -119,12 +119,25 @@ const getUsersByRoleBadge = async (req, res) => {
   }
 };
 
+// const { validationResult } = require("express-validator");
+
+const validateEmailAndPassword = [
+  body("username").isLength({ min: 5 }),
+  body("email").isEmail(),
+  body("password").isLength({ min: 6 }),
+];
+
 const signup = async (req, res) => {
   console.log("req.body", req.body);
   // to use the destructured variables:
   // const { userName, eMail, passWord, userPicture } = req.body;
 
   try {
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+      return res.status(400).json({ errors: errors.array() });
+    }
+
     const existingUser = await userModel.findOne({ eMail: req.body.email });
     console.log("🚀 existingUser", existingUser);
 
@@ -136,22 +149,18 @@ const signup = async (req, res) => {
       const hashedPassword = await encryptPassword(req.body.password);
       console.log("🚀 hashedPassword", hashedPassword);
 
-      // VALIDATE EMAIL AND PASSW. BEFORE SAVING USER express validator --
-
       const newUser = new userModel({
-        //destructured variables above can be then used here
         userName: req.body.username,
         eMail: req.body.email,
         passWord: hashedPassword,
         userPicture: req.body.userPicture,
-        // user roles can be here introduced.. e.g. isAdmin: true/false or admin: yes/no
       });
 
       try {
         const savedUser = await newUser.save();
         console.log("🚀 savedUser", savedUser);
         res.status(201).json({
-          msg: "Signup successful!",
+          msg: "Signup successful! You can now login.",
           user: {
             userName: savedUser.userName,
             eMail: savedUser.eMail,
@@ -252,38 +261,34 @@ const getProfile = async (req, res) => {
 };
 
 const updateUser = async (req, res) => {
-  const { id } = req.params;
-  console.log("🚀 ~ updateUser ~ req.params:", req.params);
-
-  const { firstName, surName, birthDay, roleBadge, hobbies } = req.body;
-  console.log("🚀 ~ updateUser ~ req.body:", req.body);
-  const birthDayInMillis = new Date(birthDay).getMilliseconds();
-  console.log("🚀 ~ updateUser ~ birthDayInMillis:", birthDayInMillis);
+  const { userId } = req.params;
+  const { firstname, surname, birthday, rolebadge, hobbies } = req.body;
+  // const birthDayInMillis = new Date(birthday).getMilliseconds();
 
   try {
     const updatedUser = await userModel.findOneAndUpdate(
-      { _id: id },
+      { _id: userId },
       {
         $set: {
-          firstName,
-          surName,
-          birthDay: birthDayInMillis,
-          roleBadge,
-          hobbies,
+          firstName: firstname,
+          surName: surname,
+          birthDay: birthday,
+          roleBadge: rolebadge,
+          hobbies: hobbies,
         },
       },
       { new: true }
     );
     const response = {
-      message: "User updated successfully",
+      msg: "User updated successfully",
       data: updatedUser,
     };
 
     res.status(200).json(response);
   } catch (error) {
     const response = {
-      message: "An error occurred while updating the user",
-      error: error.message,
+      msg: "An error occurred while updating the user",
+      error: error,
     };
 
     res.status(500).json(response);

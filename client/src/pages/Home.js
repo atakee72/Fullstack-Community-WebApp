@@ -225,6 +225,29 @@ function About(selectedTags) {
     }
   };
 
+  const updateLikesCounter = async (e, post) => {
+    const myHeaders = new Headers();
+    myHeaders.append("Content-Type", "application/x-www-form-urlencoded");
+
+    const urlencoded = new URLSearchParams();
+    urlencoded.append("theLastLike", post.likes);
+
+    const requestOptions = {
+      method: "POST",
+      headers: myHeaders,
+      body: urlencoded,
+      redirect: "follow",
+    };
+
+    try {
+      fetch(`http://localhost:5000/api/topics/${post._id}`, requestOptions)
+        .then((response) => response.text())
+        .then((result) => console.log(result));
+    } catch (error) {
+      console.log("error", error);
+    }
+  };
+
   useEffect(() => {
     fetchData();
     return () => {
@@ -305,21 +328,23 @@ function About(selectedTags) {
                 {/* //! MODAL =============================================================================================  */}
 
                 <div>
-                  <Button
-                    style={{
-                      fontSize: "0.8em",
-                      backgroundColor: "deepskyblue",
-                      border: "none",
-                      right: "10%",
-                      bottom: "10%",
-                      alignSelf: "center",
-                    }}
-                    className="p-2"
-                    variant="secondary"
-                    onClick={handleShow}
-                  >
-                    Start a debate
-                  </Button>
+                  {loggedUser && (
+                    <Button
+                      style={{
+                        fontSize: "0.8em",
+                        backgroundColor: "deepskyblue",
+                        border: "none",
+                        right: "10%",
+                        bottom: "10%",
+                        alignSelf: "center",
+                      }}
+                      className="p-2"
+                      variant="secondary"
+                      onClick={handleShow}
+                    >
+                      Start a debate
+                    </Button>
+                  )}
 
                   <Modal show={show} onHide={handleClose}>
                     <Modal.Header className="m-1 p-1" closeButton>
@@ -398,6 +423,7 @@ function About(selectedTags) {
                       postAComment={postAComment}
                       deleteForumPost={deleteForumPost}
                       deleteAComment={deleteAComment}
+                      updateLikesCounter={updateLikesCounter}
                     />
                   </div>
                 ))

@@ -17,11 +17,13 @@ function Cards({
   postAComment,
   deleteForumPost,
   deleteAComment,
+  updateLikesCounter,
 }) {
   const [activeTab, setActiveTab] = useState("Posts");
   const commentTextRef = useRef();
+  const likeRef = useRef();
   const [commentText, setCommentText] = useState("");
-  const { userId } = useContext(AuthContext);
+  const { userId, loggedUser } = useContext(AuthContext);
   const [show, setShow] = useState(false);
 
   // const [show, setShow] = useState(false);
@@ -134,6 +136,7 @@ function Cards({
           </Nav.Item>
 
           <Nav.Item>
+            {" "}
             {activeTab === "Comments" ? (
               <Button
                 variant="light"
@@ -164,6 +167,7 @@ function Cards({
                   setActiveTab("newComment");
                 }}
                 active
+                disabled={!loggedUser}
               >
                 Write a comment
               </Button>
@@ -175,6 +179,7 @@ function Cards({
                   handleShow();
                   setActiveTab("newComment");
                 }}
+                disabled={!loggedUser}
               >
                 Write a comment
               </Button>
@@ -209,8 +214,14 @@ function Cards({
                     color: "white",
                   }}
                 >
-                  Date: {transformDate(post.date)} - Views: {post.views} -
-                  Author: {author?.userName} Picture:{" "}
+                  Date: {transformDate(post.date)} - Views: {post.views} - Likes
+                  <button
+                    ref={commentTextRef}
+                    onClick={() => updateLikesCounter()}
+                  >
+                    💗
+                  </button>
+                  : {post.likes} Author: {author?.userName} Picture:{" "}
                   {
                     <img
                       style={{
@@ -257,35 +268,49 @@ function Cards({
       {activeTab === "Comments" && comments && (
         <Card.Body>
           {comments.map((comment, i) => (
-            <Accordion defaultActiveKey={i} flush>
-              <Accordion.Item
-                eventKey={i + 1}
-                style={{
-                  borderBottom: "1px solid skyBlue",
-                  backgroundColor: "#e8f4f8",
-                }}
-              >
-                <Accordion.Header>
-                  Date: {transformDate(comment?.date)} - Author:{" "}
-                  {comment?.userName}{" "}
-                  {
-                    <img
-                      style={{
-                        width: "30px",
-                        height: "30px",
-                        borderRadius: "30px",
-                        objectFit: "cover",
-                        zIndex: "1",
-                      }}
-                      src={comment?.userPicture}
-                    />
-                  }
-                </Accordion.Header>
-                <Accordion.Body>
-                  <Card.Text>{comment?.body}</Card.Text>
-                </Accordion.Body>
-              </Accordion.Item>
-            </Accordion>
+            <div>
+              <Accordion defaultActiveKey={i} flush>
+                <Accordion.Item
+                  eventKey={i + 1}
+                  style={{
+                    borderBottom: "1px solid skyBlue",
+                    backgroundColor: "#e8f4f8",
+                  }}
+                >
+                  <Accordion.Header
+                    style={{
+                      display: "flex",
+                      flexDirection: "row-reverse",
+                      alignContent: "center",
+                    }}
+                  >
+                    {userId === comment?.author && (
+                      <CloseButton
+                        style={{ backgroundColor: "tomato" }}
+                        onClick={(e) => deleteAComment(e, comment)}
+                      ></CloseButton>
+                    )}
+                    Date: {transformDate(comment?.date)} - Author:{" "}
+                    {comment?.userName}{" "}
+                    {
+                      <img
+                        style={{
+                          width: "30px",
+                          height: "30px",
+                          borderRadius: "30px",
+                          objectFit: "cover",
+                          // zIndex: "5",
+                        }}
+                        src={comment?.author?.userPicture}
+                      />
+                    }
+                  </Accordion.Header>
+                  <Accordion.Body>
+                    <Card.Text>{comment?.body}</Card.Text>
+                  </Accordion.Body>
+                </Accordion.Item>
+              </Accordion>{" "}
+            </div>
           ))}
         </Card.Body>
       )}
@@ -318,7 +343,7 @@ function Cards({
               >
                 <Form.Group controlId="exampleForm.ControlTextarea1">
                   <Form.Label>
-                    Please write your topic here then click submit
+                    Please write your comment below then click submit
                   </Form.Label>
                   <Form.Control
                     as="textarea"

@@ -11,6 +11,7 @@ import announcementRoutes from "./routes/announcementRoutes.js";
 import recommendationRoutes from "./routes/recommendationRoutes.js";
 import cloudinaryConfig from "./config/cloudinaryConfig.js";
 import { jwtStrategy } from "./config/passport.js";
+import userModel from "./models/userModel.js";
 
 const app = express(); //initialising our app
 
@@ -58,6 +59,16 @@ const addMiddlewares = () => {
 
   app.use(cors(corsOptions)); //middleware: cors
   cloudinaryConfig();
+
+  app.post("/user", (req, res) => {
+    userModel
+      .create({
+        userName: req.body.username,
+        eMail: req.body.email,
+        passWord: req.body.password,
+      })
+      .then((user) => res.json(user));
+  });
 
   app.use(passport.initialize());
   passport.use(jwtStrategy);

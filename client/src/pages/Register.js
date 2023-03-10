@@ -1,9 +1,10 @@
 import { useRef, useContext } from "react";
 import Button from "react-bootstrap/Button";
 import { AuthContext } from "../store/AuthContext";
+import Alert from "react-bootstrap/Alert";
 
 function Register() {
-  const { register } = useContext(AuthContext);
+  const { register, serverMsg } = useContext(AuthContext);
 
   const usernameRef = useRef();
   const emailRef = useRef();
@@ -62,6 +63,8 @@ function Register() {
                 Sign Up!
               </Button>{" "}
             </div>
+            <br />
+            {serverMsg && <Alert variant="danger">{serverMsg}</Alert>}
           </form>
         </div>
       </main>

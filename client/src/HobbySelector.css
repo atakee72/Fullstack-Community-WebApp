@@ -1,10 +1,10 @@
 
-.tag-selector {
+.hobby-selector {
     display: flex;
     flex-direction: row;
   }
   
-  .available-tags {
+  .available-hobbies {
     display: flex;
     flex-wrap: wrap;
     justify-content: flex-start;
@@ -13,7 +13,7 @@
     min-width: 150px;
   }
   
-  .tag {
+  .hobby {
     margin-right: 1%;
     margin-bottom: 1%;
     padding: 1%;
@@ -22,7 +22,7 @@
     cursor: pointer;
   }
   
-  .selected-tags {
+  .selected-hobbies {
     display: flex;
     flex-wrap: wrap;
     justify-content: flex-start;
@@ -38,15 +38,15 @@
   }
   
   /* Additional styles for the TagSelector component */
-  .tag-selector .available-tags .tag:hover {
+  .hobby-selector .available-hobbies .hobby:hover {
     background-color: #e0e0e0;
   }
   
-  .tag-selector .selected-tags .tag:hover {
+  .hobby-selector .selected-hobbies .hobby:hover {
     background-color: steelblue;
   }
   
-  .tag-selector .selected-tags .tag {
+  .hobby-selector .selected-hobbies .hobby {
     margin-right: 1%;
     margin-bottom: 1%;
     padding: 1%;

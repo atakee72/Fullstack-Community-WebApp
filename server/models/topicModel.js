@@ -21,6 +21,8 @@ const topicsSchema = new mongoose.Schema({
 
   views: { type: Number },
 
+  likes: { type: Number },
+
   tags: [{ type: String }],
 });
 

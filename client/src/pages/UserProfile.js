@@ -1,6 +1,3 @@
-// import Container from "react-bootstrap/Container";
-// import Row from "react-bootstrap/Row";
-// import Col from "react-bootstrap/Col";
 import React, { useEffect, useState } from "react";
 import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
@@ -8,14 +5,12 @@ import { getToken } from "../utils/getToken";
 import { getUserId } from "../utils/getUserId";
 import HobbySelector from "../components/HobbySelector";
 
-function UserProfile() {
+function UserProfile(selectedHobbies) {
   const [selectedfile, setSelectedFile] = useState(null);
   const [user, setUser] = useState({});
   const [error, setError] = useState(null);
   const [userProfile, setUserProfile] = useState(null);
   const [profileUpdates, setProfileUpdates] = useState({});
-  const [userHobbies, setUserHobbies] = useState([]);
-  const [hobbyInput, setHobbyInput] = useState("");
   const token = getToken();
 
   const [userId, setUserId] = useState(null);
@@ -114,19 +109,9 @@ function UserProfile() {
     }
   };
 
+  //! BUNLARI SİLECEGİZ BELLİ Kİ ============================================================?????????????????
   const handleUpdateInput = (e) => {
     setProfileUpdates({ ...profileUpdates, [e.target.name]: [e.target.value] });
-  };
-
-  const handleHobbyInput = (event) => {
-    setHobbyInput(event.target.value);
-    // console.log("🚀 ~ handleHobbyInput ~ setHobbyInput:", hobbyInput);
-  };
-  const addHobby = (e) => {
-    e.preventDefault();
-    if (hobbyInput.length > 0) {
-      setUserHobbies([...userHobbies, hobbyInput]);
-    }
   };
 
   const handleProfileUpdate = async (e) => {
@@ -136,12 +121,12 @@ function UserProfile() {
     myHeaders.append("Content-Type", "application/x-www-form-urlencoded");
 
     const urlencoded = new URLSearchParams();
-    urlencoded.append("firstName", profileUpdates.firstName);
-    urlencoded.append("surName", profileUpdates.surName);
-    urlencoded.append("birthDay", profileUpdates.birthDay);
-    urlencoded.append("roleBadge", profileUpdates.roleBadge);
-    // urlencoded.append("hobbies", myHobbies);
-    console.log(urlencoded.get("hobbies"));
+    urlencoded.append("firstname", profileUpdates.firstname);
+    urlencoded.append("surname", profileUpdates.surname);
+    urlencoded.append("birthday", profileUpdates.birthday);
+    urlencoded.append("rolebadge", profileUpdates.rolebadge);
+    urlencoded.append("hobbies", selectedHobbies);
+
     const requestOptions = {
       method: "POST",
       headers: myHeaders,
@@ -149,13 +134,19 @@ function UserProfile() {
       redirect: "follow",
     };
 
-    const userId = getUserId();
-    console.log("🚀 ~ handleProfileUpdate ~ userId:", userId);
+    // const userId = getUserId();
+    // console.log("🚀 ~ handleProfileUpdate ~ userId:", userId);
 
-    fetch(`http://localhost:5000/api/users/${userId}`, requestOptions)
-      .then((response) => response.json())
-      .then((result) => console.log(result))
-      .catch((error) => console.log("error", error));
+    try {
+      const response = await fetch(
+        `http://localhost:5000/api/users/${userId}`,
+        requestOptions
+      );
+      const updatedUserInfo = await response.json();
+      console.log(updatedUserInfo);
+    } catch (error) {
+      console.log("error", error);
+    }
   };
 
   useEffect(() => {
@@ -233,7 +224,13 @@ function UserProfile() {
                     defaultValue={userProfile.userName}
                     readOnly
                   />
-                  <span style={{ marginTop: "0px", paddingTop: "0px" }}>
+                  <span
+                    style={{
+                      marginTop: "0px",
+                      paddingTop: "0px",
+                      fontSize: "0.8rem",
+                    }}
+                  >
                     <i>*This field is not editable</i>
                   </span>
                 </div>
@@ -278,15 +275,25 @@ function UserProfile() {
                   )}
                 </div>
                 <div className="form-group">
-                  <label htmlFor="email">Email</label>
+                  <label htmlFor="email">Email*</label>
                   <input
                     style={{ marginBottom: "0px" }}
                     type="email"
                     id="email"
                     name="email"
                     defaultValue={userProfile.eMail}
-                    onChange={handleUpdateInput}
+                    // onChange={handleUpdateInput}
+                    readOnly
                   />
+                  <span
+                    style={{
+                      marginTop: "0px",
+                      paddingTop: "0px",
+                      fontSize: "0.8rem",
+                    }}
+                  >
+                    <i>*This field is not editable</i>
+                  </span>
                 </div>
 
                 <div className="form-group">
@@ -385,7 +392,10 @@ function UserProfile() {
                       display: "flex",
                       flexDirection: "row",
                       justifyContent: "center",
-                      padding: "0",
+                      padding: "5%",
+                      margin: "5%",
+                      border: "1px dashed gray",
+                      minWidth: "400px",
                     }}
                   >
                     <HobbySelector

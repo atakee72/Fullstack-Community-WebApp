@@ -7,7 +7,7 @@ import { getToken } from "../utils/getToken";
 function Navbar() {
   const [windowWidth, setWindowWidth] = useState(window.innerWidth);
   const [windowHeight, setWindowHeight] = useState(window.innerHeight);
-  const { loggedUser } = useContext(AuthContext);
+  const { userId, loggedUser } = useContext(AuthContext);
   const token = getToken();
 
   const handleResize = () => {
@@ -79,17 +79,19 @@ function Navbar() {
               <span>Register</span>
             </NavLink>{" "}
           </li>
-          <li>
-            <NavLink to="userProfile">
-              <span>User Profile</span>
-            </NavLink>{" "}
-          </li>
+          {loggedUser && (
+            <li>
+              <NavLink to="userProfile">
+                <span>User Profile</span>
+              </NavLink>{" "}
+            </li>
+          )}
           {/* <li>
             <NavLink to="landingPage">
               <span>(Landing Page)</span>
             </NavLink>{" "}
           </li> */}
-          {loggedUser && (
+          {userId && (
             <li>
               <Logout />
             </li>

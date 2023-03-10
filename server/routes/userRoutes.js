@@ -20,6 +20,7 @@ router.get("/:roleBadge", getUsersByRoleBadge);
 router.post("/imageUpload", multerUpload.single("image"), imageUpload);
 router.post("/signup", signup);
 router.post("/login", login);
+router.post("/:userId", updateUser);
 
 
 export default router;
