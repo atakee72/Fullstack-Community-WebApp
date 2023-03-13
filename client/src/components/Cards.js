@@ -25,14 +25,20 @@ function Cards({
   const [commentText, setCommentText] = useState("");
   const { userId, loggedUser } = useContext(AuthContext);
   const [show, setShow] = useState(false);
+  const [isClicked, setIsClicked] = useState(false);
 
-  // const [show, setShow] = useState(false);
+  const [commentShow, setCommentShow] = useState(false);
 
   const handleClose = () => setShow(false);
   const handleShow = () => {
     setShow(true);
     // resetPostForm();
   };
+
+  // const handleCommentClose = () => setCommentShow(false);
+  // const handleCommentShow = () => {
+  //   setCommentShow(true);
+  // };
 
   return (
     <Card
@@ -274,43 +280,117 @@ function Cards({
       {activeTab === "Comments" && comments && (
         <Card.Body>
           {comments.map((comment, i) => (
-            <div>
-              <Accordion defaultActiveKey={i} flush>
-                <Accordion.Item
-                  eventKey={i + 1}
-                  style={{
-                    borderBottom: "1px solid skyBlue",
-                    backgroundColor: "#e8f4f8",
-                  }}
-                >
-                  <Accordion.Header>
-                    {userId === comment?.author && (
-                      <CloseButton
-                        style={{ backgroundColor: "tomato" }}
-                        onClick={(e) => deleteAComment(e, comment)}
-                      ></CloseButton>
-                    )}
-                    {transformDate(comment?.date)} &emsp;{" "}
-                    {comment.author?.userName} &emsp;
-                    {
-                      <img
-                        style={{
-                          width: "30px",
-                          height: "30px",
-                          borderRadius: "30px",
-                          objectFit: "cover",
-                          // zIndex: "5",
-                        }}
-                        src={comment.author?.userPicture}
-                      />
-                    }
-                  </Accordion.Header>
-                  <Accordion.Body>
-                    <Card.Text>{comment?.body}</Card.Text>
-                  </Accordion.Body>
-                </Accordion.Item>
-              </Accordion>{" "}
-            </div>
+            <Accordion defaultActiveKey={i} key={i} flush>
+              <Accordion.Item
+                eventKey={i + 1}
+                style={{
+                  borderBottom: "1px solid skyBlue",
+                  backgroundColor: "#e8f4f8",
+                }}
+              >
+                <Accordion.Header>
+                  {" "}
+                  {isClicked ? (
+                    ""
+                  ) : (
+                    <CloseButton
+                      style={{ backgroundColor: "lightGray" }}
+                      // id="isCommentAuthor"
+                      onClick={() => {
+                        setIsClicked(true);
+                        setCommentShow(true);
+                      }}
+                    ></CloseButton>
+                  )}
+                  {userId === comment?.author._id ? (
+                    <>
+                      {commentShow && (
+                        <Alert
+                          id="isCommentAuthor"
+                          variant="danger"
+                          onClose={() => {
+                            setIsClicked(false);
+                            setCommentShow(false);
+                          }}
+                          dismissible
+                          style={{ display: "absolute", zIndex: "1" }}
+                        >
+                          <span>Delete your post irreversibly?</span>
+                          <div className="d-flex gap-3">
+                            &emsp; &emsp;{" "}
+                            <span
+                              // className="ps-4 pe-4 m-2"
+                              // variant={"danger"}
+                              onClick={(e) => {
+                                deleteAComment(e, comment);
+                                setIsClicked(false);
+                                setCommentShow(false);
+                              }}
+                            >
+                              <u>
+                                <b>Yes</b>
+                              </u>
+                            </span>{" "}
+                            &emsp; &emsp;
+                            <span
+                              // className="ps-4 pe-4 m-2"
+                              // variant={"success"}
+                              onClick={() => {
+                                setIsClicked(false);
+                                setCommentShow(false);
+                              }}
+                            >
+                              <u>
+                                <b>No</b>
+                              </u>
+                            </span>
+                          </div>
+                        </Alert>
+                      )}
+                    </>
+                  ) : (
+                    <>
+                      {/* <CloseButton
+                          id="isNotCommentAuthor"
+                          onClick={() => setCommentShow(true)}
+                        ></CloseButton> */}
+                      &emsp;{" "}
+                      {commentShow && (
+                        <Alert
+                          id="isNotCommentAuthor"
+                          variant="danger"
+                          onClose={() => {
+                            setIsClicked(false);
+                            setCommentShow(false);
+                          }}
+                          dismissible
+                        >
+                          <span>You are not allowed for this action.</span>
+                        </Alert>
+                      )}
+                    </>
+                  )}{" "}
+                  &emsp;
+                  {transformDate(comment?.date)} &emsp;{" "}
+                  {comment.author?.userName} &emsp;
+                  {
+                    <img
+                      style={{
+                        width: "30px",
+                        height: "30px",
+                        borderRadius: "30px",
+                        objectFit: "cover",
+                        // zIndex: "5",
+                      }}
+                      src={comment.author?.userPicture}
+                    />
+                  }
+                </Accordion.Header>
+                <Accordion.Body>
+                  <Card.Text>{comment?.body}</Card.Text>
+                </Accordion.Body>
+              </Accordion.Item>
+            </Accordion>
           ))}
         </Card.Body>
       )}
