@@ -295,7 +295,7 @@ function Cards({
                   ) : (
                     <CloseButton
                       style={{ backgroundColor: "lightGray" }}
-                      // id="isCommentAuthor"
+                      id="isCommentAuthor"
                       onClick={() => {
                         setIsClicked(true);
                         setCommentShow(true);
