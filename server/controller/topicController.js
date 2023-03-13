@@ -93,21 +93,36 @@ const deleteTopic = async (req, res) => {
 
 const updateLikes = async (req, res) => {
   const { topicId } = req.params;
-  // const { likes } = req.body;
+  const { userId } = req.body;
 
   try {
+    const topic = await topicModel.findById(topicId);
+
+    // Check if the current user has already liked the topic
+    if (topic.likedBy.includes(userId)) {
+      const response = {
+        msg: "The user has already liked this topic",
+        totalLikesNow: topic.likes,
+      };
+      return res.status(400).json(response);
+    }
+
     const updatedLikeCounter = await topicModel.findOneAndUpdate(
       { _id: topicId },
       {
         $inc: {
           likes: 1,
         },
+        $push: {
+          likedBy: userId,
+        },
       },
       { new: true }
     );
+
     const response = {
       msg: "Like counter updated successfully",
-      noOfLikesNow: updatedLikeCounter,
+      totalLikesNow: updatedLikeCounter,
     };
 
     res.status(200).json(response);

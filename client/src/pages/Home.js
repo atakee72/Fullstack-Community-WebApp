@@ -228,15 +228,17 @@ function About(selectedTags) {
   };
 
   const updateLikesCounter = async (e, post) => {
-    // const myHeaders = new Headers();
-    // myHeaders.append("Content-Type", "application/x-www-form-urlencoded");
+    e.preventDefault();
+
+    const myHeaders = new Headers();
+    myHeaders.append("Content-Type", "application/x-www-form-urlencoded");
 
     const urlencoded = new URLSearchParams();
-    // urlencoded.append("theLastLike", post.likes);
+    urlencoded.append("userId", userId);
 
     const requestOptions = {
       method: "POST",
-      // headers: myHeaders,
+      headers: myHeaders,
       body: urlencoded,
       redirect: "follow",
     };
