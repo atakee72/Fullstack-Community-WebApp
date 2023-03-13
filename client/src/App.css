@@ -77,7 +77,6 @@ body {
 .container {
 	max-width: 600px;
 	margin: 0 auto;
-  background-color: #c9c4b9;
 }
 
 /* h1 {
@@ -204,9 +203,7 @@ label {
   margin-bottom: 10px;
 }
 
-.card {
-  background-color: #c9c4b9;
-}
+
 
 /* .list-item:last-child {
   margin-bottom: 0;

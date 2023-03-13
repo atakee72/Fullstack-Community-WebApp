@@ -23,6 +23,8 @@ const topicsSchema = new mongoose.Schema({
 
   likes: { type: Number },
 
+  likedBy: [{ type: mongoose.Schema.Types.ObjectId, ref: "user" }],
+
   tags: [{ type: String }],
 });
 
