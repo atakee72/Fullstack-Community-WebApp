@@ -106,6 +106,8 @@ function About(selectedTags) {
     urlencoded.append("author", userId);
     urlencoded.append("date", Date.now());
     urlencoded.append("tags", myTags);
+    urlencoded.append("likes", 0);
+    urlencoded.append("views", 0);
 
     const requestOptions = {
       method: "POST",
@@ -226,23 +228,30 @@ function About(selectedTags) {
   };
 
   const updateLikesCounter = async (e, post) => {
-    const myHeaders = new Headers();
-    myHeaders.append("Content-Type", "application/x-www-form-urlencoded");
+    // const myHeaders = new Headers();
+    // myHeaders.append("Content-Type", "application/x-www-form-urlencoded");
 
     const urlencoded = new URLSearchParams();
-    urlencoded.append("theLastLike", post.likes);
+    // urlencoded.append("theLastLike", post.likes);
 
     const requestOptions = {
       method: "POST",
-      headers: myHeaders,
+      // headers: myHeaders,
       body: urlencoded,
       redirect: "follow",
     };
 
     try {
-      fetch(`http://localhost:5000/api/topics/${post._id}`, requestOptions)
-        .then((response) => response.text())
-        .then((result) => console.log(result));
+      const response = await fetch(
+        `http://localhost:5000/api/topics/${post._id}`,
+        requestOptions
+      );
+      const result = await response.json();
+      console.log(result);
+
+      if (result) {
+        fetchData();
+      }
     } catch (error) {
       console.log("error", error);
     }

@@ -47,11 +47,11 @@ function Cards({
         boxShadow: "0px 0px 10px 0px rgba(0, 0, 0, 0.2)",
         gap: "20px",
         width: "100%",
-        backgroundColor: "#f4f4f4",
+        backgroundColor: "#c9c4b9",
         overflow: "auto",
         resize: "vertical",
       }}
-      className="m-4 ms-5 me-5 p-4"
+      className="m-4 ms-5 me-5 p-4 card"
     >
       {activeTab !== "Posts" ? (
         <br />
@@ -227,8 +227,8 @@ function Cards({
                   Date: {transformDate(post.date)} - Views: {post.views}
                   <button
                     style={{ border: "none", background: "none" }}
-                    ref={commentTextRef}
-                    onClick={() => updateLikesCounter()}
+                    ref={likeRef}
+                    onClick={(e) => updateLikesCounter(e, post)}
                   >
                     💗{post.likes}
                   </button>

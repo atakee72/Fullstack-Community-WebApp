@@ -49,7 +49,7 @@ const getTopicById = async (req, res) => {
 };
 
 //! OTHER COLLECTIONS USE THE FOLLOWING FUNCTION, TOO:
-const postTopic = async (req, res) => {     
+const postTopic = async (req, res) => {
   const newTopic = new topicModel({
     _id: new mongoose.Types.ObjectId(),
     title: req.body.title,
@@ -57,6 +57,8 @@ const postTopic = async (req, res) => {
     author: req.body.author,
     date: req.body.date,
     tags: req.body.tags,
+    likes: req.body.likes,
+    views: req.body.views,
   });
 
   try {
@@ -72,7 +74,6 @@ const postTopic = async (req, res) => {
     });
   }
 };
-
 
 const deleteTopic = async (req, res) => {
   const postId = req.params.topicId;
@@ -90,17 +91,16 @@ const deleteTopic = async (req, res) => {
   }
 };
 
-
-const updateTopic = async (req, res) => {
+const updateLikes = async (req, res) => {
   const { topicId } = req.params;
-  const { theLastLike } = req.body;
+  // const { likes } = req.body;
 
   try {
     const updatedLikeCounter = await topicModel.findOneAndUpdate(
       { _id: topicId },
       {
-        $set: {
-          likes: theLastLike,
+        $inc: {
+          likes: 1,
         },
       },
       { new: true }
@@ -121,4 +121,4 @@ const updateTopic = async (req, res) => {
   }
 };
 
-export { getAllTopics, getTopicById, postTopic, deleteTopic, updateTopic };
+export { getAllTopics, getTopicById, postTopic, deleteTopic, updateLikes };
