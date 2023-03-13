@@ -1,2 +1,2 @@
-# Fullstack-Community-WebApp
-A Fullstack Social Web App for Local Communities
+# Fullstack-(MERN)-Community-WebApp
+A Fullstack (MERN) Social Web App for Local Communities
