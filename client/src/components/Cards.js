@@ -212,16 +212,21 @@ function Cards({
                 <span
                   style={{
                     color: "white",
+                    display: "flex",
+                    alignItems: "center",
+                    justifyContent: "flex-start",
+                    gap: "1%",
                   }}
                 >
-                  Date: {transformDate(post.date)} - Views: {post.views} - Likes
+                  Date: {transformDate(post.date)} - Views: {post.views}
                   <button
+                    style={{ border: "none", background: "none" }}
                     ref={commentTextRef}
                     onClick={() => updateLikesCounter()}
                   >
-                    💗
+                    💗{post.likes}
                   </button>
-                  : {post.likes} Author: {author?.userName} Picture:{" "}
+                  {author?.userName}{" "}
                   {
                     <img
                       style={{
@@ -230,8 +235,9 @@ function Cards({
                         borderRadius: "30px",
                         objectFit: "cover",
                         zIndex: "1",
+                        background: "none",
                       }}
-                      src={post.userPicture}
+                      src={post.author?.userPicture}
                     />
                   }
                 </span>
@@ -277,21 +283,15 @@ function Cards({
                     backgroundColor: "#e8f4f8",
                   }}
                 >
-                  <Accordion.Header
-                    style={{
-                      display: "flex",
-                      flexDirection: "row-reverse",
-                      alignContent: "center",
-                    }}
-                  >
+                  <Accordion.Header>
                     {userId === comment?.author && (
                       <CloseButton
                         style={{ backgroundColor: "tomato" }}
                         onClick={(e) => deleteAComment(e, comment)}
                       ></CloseButton>
                     )}
-                    Date: {transformDate(comment?.date)} - Author:{" "}
-                    {comment?.userName}{" "}
+                    {transformDate(comment?.date)} &emsp;{" "}
+                    {comment.author?.userName} &emsp;
                     {
                       <img
                         style={{
@@ -301,7 +301,7 @@ function Cards({
                           objectFit: "cover",
                           // zIndex: "5",
                         }}
-                        src={comment?.author?.userPicture}
+                        src={comment.author?.userPicture}
                       />
                     }
                   </Accordion.Header>

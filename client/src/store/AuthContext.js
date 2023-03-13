@@ -10,7 +10,11 @@ export const AuthContextProvider = (props) => {
 
   const [serverMsg, setServerMsg] = useState("");
 
-  const [loggedUser, setLoggedUser] = useState({});
+  // const [loggedUser, setLoggedUser] = useState({});
+  const [loggedUser, setLoggedUser] = useState(() => {
+    const user = JSON.parse(localStorage.getItem("user"));
+    return user ? user : {};
+  });
   const [loader, setLoader] = useState(true);
   const redirectTo = useNavigate();
   const userId = getUserId();
@@ -28,7 +32,7 @@ export const AuthContextProvider = (props) => {
       urlencoded.append("password", password);
       urlencoded.append(
         "userPicture",
-        "https://rugby.vlaanderen/wp-content/uploads/2018/03/Anonymous-Profile-pic.jpg"
+        "https://www.focusedu.org/wp-content/uploads/2018/12/circled-user-male-skin-type-1-2.png"
       );
 
       const requestOptions = {
@@ -86,6 +90,7 @@ export const AuthContextProvider = (props) => {
       if (result.userToken) {
         localStorage.setItem("token", result.userToken);
         localStorage.setItem("id", result.user.id);
+        localStorage.setItem("user", JSON.stringify(result.user));
         setLoggedUser(result.user);
         setServerMsg(result.msg);
 

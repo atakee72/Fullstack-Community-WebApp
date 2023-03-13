@@ -264,6 +264,7 @@ const updateUser = async (req, res) => {
   const { userId } = req.params;
   const { firstname, surname, birthday, rolebadge, hobbies } = req.body;
   // const birthDayInMillis = new Date(birthday).getMilliseconds();
+  //   const birthDayInMillis = new Date(birthday).getTime();
 
   try {
     const updatedUser = await userModel.findOneAndUpdate(

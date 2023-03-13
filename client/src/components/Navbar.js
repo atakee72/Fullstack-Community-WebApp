@@ -8,6 +8,8 @@ function Navbar() {
   const [windowWidth, setWindowWidth] = useState(window.innerWidth);
   const [windowHeight, setWindowHeight] = useState(window.innerHeight);
   const { userId, loggedUser } = useContext(AuthContext);
+  // console.log("🚀 ~ Navbar ~ loggedUser:", loggedUser);
+
   const token = getToken();
 
   const handleResize = () => {
@@ -29,21 +31,21 @@ function Navbar() {
         {token && (
           <h2>
             {" "}
-            User: {loggedUser.userName}{" "}
+            {loggedUser.userName} &emsp;
             <img
               style={{
-                width: "45px",
-                height: "45px",
+                width: "60px",
+                height: "60px",
                 borderRadius: "30px",
                 objectFit: "cover",
-                zIndex: "1",
+                background: "none",
               }}
-              src={loggedUser.userPicture}
-            ></img>
+              src={loggedUser?.picture}
+            ></img>{" "}
           </h2>
         )}
         {/* //! muss ich vielleicht den Loader benutzen? */}
-        W: {windowWidth} & H: {windowHeight}
+        &emsp; W: {windowWidth} & H: {windowHeight}
       </div>
       <div
         style={{

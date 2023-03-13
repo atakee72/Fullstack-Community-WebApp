@@ -1,9 +1,10 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useRef, useState } from "react";
 import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
 import { getToken } from "../utils/getToken";
 import { getUserId } from "../utils/getUserId";
 import HobbySelector from "../components/HobbySelector";
+import { AuthContext } from "../store/AuthContext";
 
 function UserProfile(selectedHobbies) {
   const [selectedfile, setSelectedFile] = useState(null);
@@ -13,7 +14,8 @@ function UserProfile(selectedHobbies) {
   const [profileUpdates, setProfileUpdates] = useState({});
   const token = getToken();
 
-  const [userId, setUserId] = useState(null);
+  const userId = useContext(AuthContext);
+
   // const [myHobbies, setMyHobbies] = useState(selectedHobbies);
 
   const availableHobbies = [
@@ -25,13 +27,20 @@ function UserProfile(selectedHobbies) {
     "politics",
   ];
 
+  const fNameRef = useRef();
+  const sNameRef = useRef();
+  const bDayRef = useRef();
+  const rBadgeRef = useRef();
+  // const hobbiesRef = useRef();
+  const [fName, setFName] = useState("");
+  const [sName, setSName] = useState("");
+  const [bDay, setBDay] = useState();
+  const [rBadge, setRBadge] = useState("");
+  const [hobbies, setHobbies] = useState([""]);
+
   const handleHobbiesSelected = (selectedHobbies) => {
     console.log("Selected hobbies:", selectedHobbies);
     // setMyHobbies(selectedHobbies);
-  };
-
-  const userIdIs = () => {
-    setUserId(getUserId());
   };
 
   const getProfile = () => {
@@ -110,9 +119,14 @@ function UserProfile(selectedHobbies) {
   };
 
   //! BUNLARI SİLECEGİZ BELLİ Kİ ============================================================?????????????????
-  const handleUpdateInput = (e) => {
-    setProfileUpdates({ ...profileUpdates, [e.target.name]: [e.target.value] });
-  };
+
+  // const handleUpdateInput = (e) => {
+  //   setProfileUpdates({ ...profileUpdates, [e.target.name]: [e.target.value] });
+  //   console.log(
+  //     "🚀 ~ handleUpdateInput ~ setProfileUpdates:",
+  //     setProfileUpdates
+  //   );
+  // };
 
   const handleProfileUpdate = async (e) => {
     e.preventDefault();
@@ -151,7 +165,6 @@ function UserProfile(selectedHobbies) {
 
   useEffect(() => {
     getProfile();
-    userIdIs();
   }, [token]);
 
   return (
@@ -241,15 +254,19 @@ function UserProfile(selectedHobbies) {
                       type="text"
                       id="firstName"
                       name="firstName"
+                      value={fName}
                       defaultValue={userProfile.firstName}
-                      onChange={handleUpdateInput}
+                      ref={fNameRef}
+                      onChange={(event) => setFName(event.target.value)}
                     />
                   ) : (
                     <input
                       type="text"
                       id="firstName"
                       name="firstName"
-                      onChange={handleUpdateInput}
+                      value={fName}
+                      ref={fNameRef}
+                      onChange={(event) => setFName(event.target.value)}
                       required
                     />
                   )}
@@ -262,14 +279,16 @@ function UserProfile(selectedHobbies) {
                       id="surName"
                       name="surName"
                       defaultValue={userProfile.surName}
-                      onChange={handleUpdateInput}
+                      // onChange={handleUpdateInput}
+                      ref={sNameRef}
                     />
                   ) : (
                     <input
                       type="text"
                       id="surname"
                       name="surname"
-                      onChange={handleUpdateInput}
+                      // onChange={handleUpdateInput}
+                      ref={sNameRef}
                       required
                     />
                   )}
@@ -305,14 +324,16 @@ function UserProfile(selectedHobbies) {
                       id="birthDay"
                       name="birthDay"
                       defaultValue={userProfile.birthDay}
-                      onChange={handleUpdateInput}
+                      // onChange={handleUpdateInput}
+                      ref={bDayRef}
                     />
                   ) : (
                     <input
                       type="date"
                       id="birthDay"
                       name="birthDay"
-                      onChange={handleUpdateInput}
+                      // onChange={handleUpdateInput}
+                      ref={bDayRef}
                     />
                   )}
                 </div>
@@ -324,7 +345,8 @@ function UserProfile(selectedHobbies) {
                     <select
                       id="roleBadge"
                       name="roleBadge"
-                      onChange={handleUpdateInput}
+                      // onChange={handleUpdateInput}
+                      ref={rBadgeRef}
                     >
                       <option value="Choose a badge..." disabled>
                         Choose a badge...
@@ -369,7 +391,8 @@ function UserProfile(selectedHobbies) {
                     <select
                       id="roleBadge"
                       name="roleBadge"
-                      onChange={handleUpdateInput}
+                      // onChange={handleUpdateInput}
+                      ref={rBadgeRef}
                       required
                     >
                       <option value="Choose a badge..." disabled>
@@ -396,11 +419,13 @@ function UserProfile(selectedHobbies) {
                       margin: "5%",
                       border: "1px dashed gray",
                       minWidth: "400px",
+                      backgroundColor: "black",
                     }}
                   >
                     <HobbySelector
                       handleHobbiesSelected={handleHobbiesSelected}
                       availableHobbies={availableHobbies}
+                      // ref={hobbiesRef}
                     />
                   </div>
                 </div>

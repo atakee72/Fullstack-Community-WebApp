@@ -10,6 +10,7 @@ const getAllTopics = async (req, res) => {
       .populate({
         path: "comments",
         options: { sort: { date: -1 } }, //* Sort the comments by date in descending order
+        populate: { path: "author", select: "userName userPicture" },
       })
       // .populate("author");
       .populate({ path: "author", select: "userName userPicture" });

@@ -266,7 +266,7 @@ function About(selectedTags) {
               padding: "50px",
               margin: "20px 100px 20px 100px",
               gap: "20px",
-              backgroundColor: "#f4f4f4",
+              backgroundColor: "#4b9aaa",
               maxWidth: "90vw",
               minWidth: "50vw",
               minHeight: "40vh",
@@ -332,13 +332,15 @@ function About(selectedTags) {
                     <Button
                       style={{
                         fontSize: "0.8em",
-                        backgroundColor: "deepskyblue",
+                        backgroundColor: "#eccc6e",
                         border: "none",
                         right: "10%",
                         bottom: "10%",
                         alignSelf: "center",
+                        color: "#814256",
+                        fontWeight: "bold",
                       }}
-                      className="p-2"
+                      className="p-3"
                       variant="secondary"
                       onClick={handleShow}
                     >
@@ -346,7 +348,11 @@ function About(selectedTags) {
                     </Button>
                   )}
 
-                  <Modal show={show} onHide={handleClose}>
+                  <Modal
+                    show={show}
+                    onHide={handleClose}
+                    style={{ backgroundColor: "#814256" }}
+                  >
                     <Modal.Header className="m-1 p-1" closeButton>
                       <Modal.Title>Start a discussion</Modal.Title>
                     </Modal.Header>
@@ -446,7 +452,7 @@ function About(selectedTags) {
               padding: "50px",
               margin: "20px 100px 20px 100px",
               gap: "20px",
-              backgroundColor: "#f4f4f4",
+
               maxWidth: "90vw",
               minWidth: "50vw",
               minHeight: "40vh",
@@ -499,6 +505,7 @@ function About(selectedTags) {
                     placeholder="Search in announcements"
                     onChange={handle_InSearch_Filter}
                     ref={searchInputRef}
+                    width="100%"
                   />
                 </Form.Group>
               </Form>
