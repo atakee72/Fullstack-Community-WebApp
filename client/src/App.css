@@ -65,8 +65,6 @@ nav a {
 
 
 
-/* //! ====  */
-
 
 
 .card { 
@@ -75,7 +73,6 @@ nav a {
   gap: 20px;
   width: 100%;
   min-height: 50%;
-  background-color: #c9c4b9;
   overflow: auto;
   resize: vertical;
 }
@@ -88,6 +85,8 @@ body {
 	font-family: 'Segoe UI', sans-serif;
 	margin: 0;
   text-shadow: -2px -2px -2px #f9f9f9;
+  background-color: #eccc6e;
+
 }
 
 /* .header {
@@ -181,9 +180,9 @@ form {
   justify-content: space-between;
   align-items: center;
   padding: 20px;
-  background-color: #EA99A2;
+  background-color: #4b9aaa;
   border-radius: 5px;
-  box-shadow: 0px 0px 10px 0px #4b9aaa;
+  box-shadow: 0px 0px 2px 0px lightgray;
   margin-bottom: 20px;
 }
 

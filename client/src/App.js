@@ -44,7 +44,7 @@ function App() {
   // }, []);
 
   return (
-    <div className="App">
+    <div className="App" style={{ backgroundColor: "#eccc6e" }}>
       <AuthContextProvider>
         <header>
           {/* <Button

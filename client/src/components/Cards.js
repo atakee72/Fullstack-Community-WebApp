@@ -40,7 +40,10 @@ function Cards({
   // };
 
   return (
-    <Card className="m-4 ms-5 me-5 p-4 card">
+    <Card
+      className="m-4 ms-5 me-5 p-4 card"
+      style={{ backgroundColor: "#c9c4b9" }}
+    >
       {activeTab !== "Posts" ? (
         <br />
       ) : (

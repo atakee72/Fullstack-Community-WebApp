@@ -267,7 +267,11 @@ function About(selectedTags) {
   }, [collectionType]);
 
   return (
-    <div>
+    <div
+      style={{
+        backgroundColor: "#eccc6e",
+      }}
+    >
       {collectionType === "topics" && (
         <>
           <Card
@@ -340,23 +344,27 @@ function About(selectedTags) {
 
                 <div>
                   {loggedUser && (
-                    <Button
+                    <div
                       style={{
-                        fontSize: "0.8em",
-                        backgroundColor: "#eccc6e",
-                        border: "none",
-                        right: "10%",
-                        bottom: "10%",
-                        alignSelf: "center",
-                        color: "#814256",
-                        fontWeight: "bold",
+                        position: "sticky",
+                        top: "0",
                       }}
-                      className="p-3"
-                      variant="secondary"
-                      onClick={handleShow}
                     >
-                      Start a debate
-                    </Button>
+                      <Button
+                        style={{
+                          fontSize: "em",
+                          backgroundColor: "#eccc6e",
+                          border: "none",
+                          color: "#814256",
+                          width: "100%",
+                        }}
+                        className="p-3 topicBtn"
+                        variant="secondary"
+                        onClick={handleShow}
+                      >
+                        Start a debate
+                      </Button>
+                    </div>
                   )}
 
                   <Modal
@@ -463,7 +471,7 @@ function About(selectedTags) {
               padding: "50px",
               margin: "20px 100px 20px 100px",
               gap: "20px",
-
+              backgroundColor: "#4b9aaa",
               maxWidth: "90vw",
               minWidth: "50vw",
               minHeight: "40vh",
@@ -548,7 +556,7 @@ function About(selectedTags) {
               padding: "50px",
               margin: "20px 100px 20px 100px",
               gap: "20px",
-              backgroundColor: "#f4f4f4",
+              backgroundColor: "#4b9aaa",
               maxWidth: "90vw",
               minWidth: "50vw",
               minHeight: "40vh",
