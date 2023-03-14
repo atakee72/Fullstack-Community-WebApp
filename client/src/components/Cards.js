@@ -26,7 +26,6 @@ function Cards({
   const { userId, loggedUser } = useContext(AuthContext);
   const [show, setShow] = useState(false);
   const [isClicked, setIsClicked] = useState(false);
-
   const [commentShow, setCommentShow] = useState(false);
 
   const handleClose = () => setShow(false);
@@ -42,16 +41,8 @@ function Cards({
 
   return (
     <Card
-      style={{
-        borderRadius: "5px",
-        boxShadow: "0px 0px 10px 0px rgba(0, 0, 0, 0.2)",
-        gap: "20px",
-        width: "100%",
-        backgroundColor: "#c9c4b9",
-        overflow: "auto",
-        resize: "vertical",
-      }}
       className="m-4 ms-5 me-5 p-4 card"
+      style={{ backgroundColor: "#c9c4b9" }}
     >
       {activeTab !== "Posts" ? (
         <br />
@@ -295,7 +286,7 @@ function Cards({
                   ) : (
                     <CloseButton
                       style={{ backgroundColor: "lightGray" }}
-                      id="isCommentAuthor"
+                      // id="isCommentAuthor"
                       onClick={() => {
                         setIsClicked(true);
                         setCommentShow(true);
@@ -351,9 +342,9 @@ function Cards({
                   ) : (
                     <>
                       {/* <CloseButton
-                          id="isNotCommentAuthor"
-                          onClick={() => setCommentShow(true)}
-                        ></CloseButton> */}
+                        id="isNotCommentAuthor"
+                        onClick={() => setCommentShow(true)}
+                      ></CloseButton> */}
                       &emsp;{" "}
                       {commentShow && (
                         <Alert
@@ -380,7 +371,6 @@ function Cards({
                         height: "30px",
                         borderRadius: "30px",
                         objectFit: "cover",
-                        // zIndex: "5",
                       }}
                       src={comment.author?.userPicture}
                     />
@@ -398,7 +388,9 @@ function Cards({
       {/* {//! >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>NEW COMMENT TAB */}
 
       {activeTab === "newComment" && (
-        <Card.Body style={{ display: "inline-flex", gap: "10vw" }}>
+        <Card.Body
+          style={{ display: "inline-flex", gap: "10vw", height: "100%" }}
+        >
           <Modal
             show={show}
             onHide={() => {

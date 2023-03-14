@@ -33,6 +33,7 @@ function Navbar() {
             {" "}
             {loggedUser.userName} &emsp;
             <img
+              className="loggedUserPic"
               style={{
                 width: "60px",
                 height: "60px",
@@ -45,7 +46,7 @@ function Navbar() {
           </h2>
         )}
         {/* //! muss ich vielleicht den Loader benutzen? */}
-        &emsp; W: {windowWidth} & H: {windowHeight}
+        &emsp;&emsp;&emsp;&emsp; {windowWidth} x {windowHeight}
       </div>
       <div
         style={{

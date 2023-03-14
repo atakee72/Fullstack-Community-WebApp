@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import { Button } from "react-bootstrap";
 
 function LandingPage() {
   const [windowWidth, setWindowWidth] = useState(window.innerWidth);
@@ -24,6 +25,19 @@ function LandingPage() {
         className="hero"
         style={{ display: "flex", alignItems: "center" }}
       >
+        <Button className="p-3 w-25 actionBtn">
+          <a
+            style={{
+              color: "white",
+              fontSize: "1.5em",
+              textDecoration: "none",
+              fontWeight: "bold",
+            }}
+            href="./register"
+          >
+            Sign Up
+          </a>
+        </Button>
         <h1 style={{ writingMode: "vertical-lr" }} className="text-center mb-4">
           Connect with <br /> Your Community
         </h1>
@@ -69,8 +83,15 @@ function LandingPage() {
       <section className="call-to-action">
         <h2>Join Our Community</h2>
         <p>
-          <a href="./register">Sign Up</a> today to start connecting with your
-          local community.
+          <Button>
+            <a
+              style={{ color: "white", textDecoration: "none" }}
+              href="./register"
+            >
+              Sign Up
+            </a>
+          </Button>{" "}
+          today to start connecting with your local community.
         </p>
       </section>
 
