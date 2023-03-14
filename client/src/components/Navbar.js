@@ -33,6 +33,7 @@ function Navbar() {
             {" "}
             {loggedUser.userName} &emsp;
             <img
+              className="loggedUserPic"
               style={{
                 width: "60px",
                 height: "60px",

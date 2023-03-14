@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+// import { useEffect, useState } from "react";
 import "./App.css";
 import "./HobbySelector.css";
 import LandingPage from "./pages/LandingPage";
@@ -9,24 +9,24 @@ import UserProfile from "./pages/UserProfile";
 import NoMatch from "./pages/NoMatch";
 import { Routes, Route } from "react-router-dom";
 import Navbar from "./components/Navbar";
-import Button from "react-bootstrap/Button";
+// import Button from "react-bootstrap/Button";
 import { AuthContextProvider } from "./store/AuthContext";
 import ProtectedRoute from "./routes/ProtectedRoute";
 
 function App() {
-  const [users, setUsers] = useState([]);
+  // const [users, setUsers] = useState([]);
 
-  const fetchData = async () => {
-    try {
-      const response = await fetch("http://localhost:5000/api/users/all");
-      const data = await response.json();
-      console.log("response >>>", response);
-      console.log("data :>>>", data);
-      setUsers(data.allUsers); //hook veya util yaparsan, bunu kaldir!
-    } catch (error) {
-      console.log("error", error);
-    }
-  };
+  // const fetchData = async () => {
+  //   try {
+  //     const response = await fetch("http://localhost:5000/api/users/all");
+  //     const data = await response.json();
+  //     console.log("response >>>", response);
+  //     console.log("data :>>>", data);
+  //     setUsers(data.allUsers); //hook veya util yaparsan, bunu kaldir!
+  //   } catch (error) {
+  //     console.log("error", error);
+  //   }
+  // };
 
   // const logout = () => {
   //   localStorage.removeItem("token");
