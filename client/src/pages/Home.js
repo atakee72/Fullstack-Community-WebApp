@@ -287,6 +287,7 @@ function About(selectedTags) {
               minHeight: "40vh",
               overflow: "auto",
               resize: "vertical",
+              height: "fit-content",
             }}
           >
             <Card.Header>
@@ -344,27 +345,24 @@ function About(selectedTags) {
 
                 <div>
                   {loggedUser && (
-                    <div
+                    <Button
                       style={{
+                        fontSize: "1.1em",
+                        backgroundColor: "#eccc6e",
+                        border: "none",
+                        color: "#814256",
+                        width: "100%",
+                        boxShadow: "0px 0px 10px 0px rgba(0, 0, 0, 0.2",
                         position: "sticky",
                         top: "0",
+                        zIndex: "1",
                       }}
+                      className="p-3 topicBtn"
+                      variant="secondary"
+                      onClick={handleShow}
                     >
-                      <Button
-                        style={{
-                          fontSize: "em",
-                          backgroundColor: "#eccc6e",
-                          border: "none",
-                          color: "#814256",
-                          width: "100%",
-                        }}
-                        className="p-3 topicBtn"
-                        variant="secondary"
-                        onClick={handleShow}
-                      >
-                        Start a debate
-                      </Button>
-                    </div>
+                      Start a debate
+                    </Button>
                   )}
 
                   <Modal
