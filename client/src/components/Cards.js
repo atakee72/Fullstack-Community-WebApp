@@ -18,6 +18,7 @@ function Cards({
   deleteForumPost,
   deleteAComment,
   updateLikesCounter,
+  serverMsg,
 }) {
   const [activeTab, setActiveTab] = useState("Posts");
   const commentTextRef = useRef();
@@ -27,6 +28,7 @@ function Cards({
   const [show, setShow] = useState(false);
   const [isClicked, setIsClicked] = useState(false);
   const [commentShow, setCommentShow] = useState(false);
+  const [isHeartClicked, setIsHeartClicked] = useState(false);
 
   const handleClose = () => setShow(false);
   const handleShow = () => {
@@ -62,10 +64,10 @@ function Cards({
                   onClose={() => setShow(false)}
                   dismissible
                 >
-                  <h6>
+                  <span>
                     Do you really want to delete your post? This action is not
                     reversible.
-                  </h6>
+                  </span>
                   <div className="d-flex gap-3">
                     <Button
                       className="ps-4 pe-4 m-2"
@@ -200,7 +202,7 @@ function Cards({
                   padding: "2%",
                   borderRadius: "5px",
                   margin: "0 0 5% 0",
-                  backgroundColor: "skyBlue",
+                  backgroundColor: "#4b9aaa",
                   textDecoration: "underline",
                   color: "gray",
                   fontSize: "0.8em",
@@ -219,9 +221,14 @@ function Cards({
                   <button
                     style={{ border: "none", background: "none" }}
                     ref={likeRef}
-                    onClick={(e) => updateLikesCounter(e, post)}
+                    onClick={(e) => {
+                      updateLikesCounter(e, post);
+                      setIsHeartClicked(true);
+                    }}
                   >
-                    💗{post.likes}
+                    {/* {isHeartClicked && !serverMsg ? "💗" : "🤍"} */}
+                    {post.likedBy.includes(userId) ? "💗" : "🤍"}
+                    {post.likes}
                   </button>
                   {author?.userName}{" "}
                   {
@@ -250,7 +257,7 @@ function Cards({
                   style={{
                     display: "inline-block",
                     listStyle: "none",
-                    backgroundColor: "skyBlue",
+                    backgroundColor: "#4b9aaa",
                     color: "white",
                     borderRadius: "5px",
                     textDecoration: "underline",
@@ -275,28 +282,29 @@ function Cards({
               <Accordion.Item
                 eventKey={i + 1}
                 style={{
-                  borderBottom: "1px solid skyBlue",
+                  borderBottom: "1px solid #eccc6e",
                   backgroundColor: "#e8f4f8",
                 }}
               >
                 <Accordion.Header>
                   {" "}
-                  {isClicked ? (
-                    ""
-                  ) : (
+                  {!isClicked ? (
                     <CloseButton
                       style={{ backgroundColor: "lightGray" }}
-                      // id="isCommentAuthor"
+                      id="isCommentAuthor"
                       onClick={() => {
                         setIsClicked(true);
                         setCommentShow(true);
                       }}
                     ></CloseButton>
+                  ) : (
+                    <></>
                   )}
                   {userId === comment?.author._id ? (
                     <>
                       {commentShow && (
                         <Alert
+                          key={i}
                           id="isCommentAuthor"
                           variant="danger"
                           onClose={() => {
@@ -348,6 +356,7 @@ function Cards({
                       &emsp;{" "}
                       {commentShow && (
                         <Alert
+                          key={i}
                           id="isNotCommentAuthor"
                           variant="danger"
                           onClose={() => {

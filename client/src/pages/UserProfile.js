@@ -31,12 +31,12 @@ function UserProfile(selectedHobbies) {
   const sNameRef = useRef();
   const bDayRef = useRef();
   const rBadgeRef = useRef();
-  // const hobbiesRef = useRef();
-  const [fName, setFName] = useState("");
-  const [sName, setSName] = useState("");
-  const [bDay, setBDay] = useState();
-  const [rBadge, setRBadge] = useState("");
-  const [hobbies, setHobbies] = useState([""]);
+  const hobbiesRef = useRef();
+  // const [fName, setFName] = useState("");
+  // const [sName, setSName] = useState("");
+  // const [bDay, setBDay] = useState();
+  // const [rBadge, setRBadge] = useState("");
+  // const [hobbies, setHobbies] = useState([""]);
 
   const handleHobbiesSelected = (selectedHobbies) => {
     console.log("Selected hobbies:", selectedHobbies);
@@ -90,7 +90,8 @@ function UserProfile(selectedHobbies) {
 
     const formdata = new FormData();
     formdata.append("image", selectedfile);
-    formdata.append("userId", userId);
+    formdata.append("userId", userId.userId);
+    console.log("🚀 ~ handlePictureUpload ~ userId:", userId);
 
     console.log("formData :>> ", formdata);
 
@@ -135,11 +136,11 @@ function UserProfile(selectedHobbies) {
     myHeaders.append("Content-Type", "application/x-www-form-urlencoded");
 
     const urlencoded = new URLSearchParams();
-    urlencoded.append("firstname", profileUpdates.firstname);
-    urlencoded.append("surname", profileUpdates.surname);
-    urlencoded.append("birthday", profileUpdates.birthday);
-    urlencoded.append("rolebadge", profileUpdates.rolebadge);
-    urlencoded.append("hobbies", selectedHobbies);
+    urlencoded.append("firstname", fNameRef.current.value);
+    urlencoded.append("surname", sNameRef.current.value);
+    // urlencoded.append("birthday", bDayRef.current.value);
+    // urlencoded.append("rolebadge", rBadgeRef.current.value);
+    // urlencoded.append("hobbies", selectedHobbies);
 
     const requestOptions = {
       method: "POST",
@@ -149,15 +150,15 @@ function UserProfile(selectedHobbies) {
     };
 
     // const userId = getUserId();
-    // console.log("🚀 ~ handleProfileUpdate ~ userId:", userId);
+    console.log("🚀 ~ handleProfileUpdate ~ userId:", userId);
 
     try {
       const response = await fetch(
-        `http://localhost:5000/api/users/${userId}`,
+        `http://localhost:5000/api/users/${userId.userId}`,
         requestOptions
       );
       const updatedUserInfo = await response.json();
-      console.log(updatedUserInfo);
+      // console.log(updatedUserInfo);
     } catch (error) {
       console.log("error", error);
     }
@@ -173,9 +174,9 @@ function UserProfile(selectedHobbies) {
 
       {userProfile && (
         <main>
-          <div className=" main text-center mb-5">
+          <div>
             <div className="container">
-              <h1>User Profile</h1>
+              <h1 className=" main text-center mb-4 pb-1">User Profile</h1>
               <div
                 className="form-group"
                 style={{
@@ -210,7 +211,7 @@ function UserProfile(selectedHobbies) {
                         height: "200px",
                         objectFit: "cover",
                       }}
-                      src={userProfile.userPicture}
+                      src={userProfile?.userPicture}
                     ></img>
                   ) : (
                     <img
@@ -254,19 +255,17 @@ function UserProfile(selectedHobbies) {
                       type="text"
                       id="firstName"
                       name="firstName"
-                      value={fName}
                       defaultValue={userProfile.firstName}
-                      ref={fNameRef}
-                      onChange={(event) => setFName(event.target.value)}
+                      // ref={fNameRef}
+                      // onChange={(event) => setFName(event.target.value)}
                     />
                   ) : (
                     <input
                       type="text"
                       id="firstName"
                       name="firstName"
-                      value={fName}
                       ref={fNameRef}
-                      onChange={(event) => setFName(event.target.value)}
+                      // onChange={(event) => setFName(event.target.value)}
                       required
                     />
                   )}
@@ -280,7 +279,7 @@ function UserProfile(selectedHobbies) {
                       name="surName"
                       defaultValue={userProfile.surName}
                       // onChange={handleUpdateInput}
-                      ref={sNameRef}
+                      // ref={sNameRef}
                     />
                   ) : (
                     <input
@@ -325,7 +324,7 @@ function UserProfile(selectedHobbies) {
                       name="birthDay"
                       defaultValue={userProfile.birthDay}
                       // onChange={handleUpdateInput}
-                      ref={bDayRef}
+                      // ref={bDayRef}
                     />
                   ) : (
                     <input
@@ -346,7 +345,7 @@ function UserProfile(selectedHobbies) {
                       id="roleBadge"
                       name="roleBadge"
                       // onChange={handleUpdateInput}
-                      ref={rBadgeRef}
+                      // ref={rBadgeRef}
                     >
                       <option value="Choose a badge..." disabled>
                         Choose a badge...
@@ -425,7 +424,7 @@ function UserProfile(selectedHobbies) {
                     <HobbySelector
                       handleHobbiesSelected={handleHobbiesSelected}
                       availableHobbies={availableHobbies}
-                      // ref={hobbiesRef}
+                      ref={hobbiesRef}
                     />
                   </div>
                 </div>

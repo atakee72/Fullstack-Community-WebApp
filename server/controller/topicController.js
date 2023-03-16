@@ -99,25 +99,36 @@ const updateLikes = async (req, res) => {
     const topic = await topicModel.findById(topicId);
 
     // Check if the current user has already liked the topic
-    if (topic.likedBy.includes(userId)) {
-      const response = {
-        msg: "The user has already liked this topic",
-        totalLikesNow: topic.likes,
-      };
-      return res.status(400).json(response);
-    }
+    // if (topic.likedBy.includes(userId)) {
+    //   const response = {
+    //     msg: "The user has already liked this topic",
+    //     totalLikesNow: topic.likes,
+    //   };
+    //   return res.status(400).json(response);
+    // }
+
+    const operation = topic.likedBy.includes(userId)
+      ? {
+          $inc: {
+            likes: -1,
+          },
+          $pull: {
+            likedBy: userId,
+          },
+        }
+      : {
+          $inc: {
+            likes: 1,
+          },
+          $push: {
+            likedBy: userId,
+          },
+        };
+    console.log("🚀 ~ updateLikes ~ t:", operation);
 
     const updatedLikeCounter = await topicModel.findOneAndUpdate(
       { _id: topicId },
-      {
-        $inc: {
-          likes: 1,
-        },
-        $push: {
-          likedBy: userId,
-        },
-      },
-      { new: true }
+      operation
     );
 
     const response = {
@@ -127,6 +138,8 @@ const updateLikes = async (req, res) => {
 
     res.status(200).json(response);
   } catch (error) {
+    console.log("🚀 ~ updateLikes ~ error:", error);
+
     const response = {
       msg: "An error occurred while updating the like counter",
       error: error,

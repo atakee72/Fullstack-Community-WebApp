@@ -26,8 +26,8 @@ function Navbar() {
   }, []);
 
   return (
-    <nav>
-      <div style={{ position: "absolute", right: "10px" }}>
+    <nav style={{ padding: "2%" }}>
+      <div style={{ position: "absolute", right: "1%" }}>
         {token && (
           <h2>
             {" "}
@@ -40,6 +40,7 @@ function Navbar() {
                 borderRadius: "30px",
                 objectFit: "cover",
                 background: "none",
+                boxShadow: "0px 0px 10px 0px rgba(0, 0, 0, 0.2)",
               }}
               src={loggedUser?.picture}
             ></img>{" "}
@@ -61,6 +62,7 @@ function Navbar() {
               maxWidth: "15vw",
               minWidth: "150px",
               borderRadius: "50px",
+              boxShadow: "0px 0px 10px 0px rgba(0, 0, 0, 0.2)",
             }}
             src="https://res.cloudinary.com/djgxiadrc/image/upload/v1677334203/communityWebApp/Beige_und_Grau_Minimalistisch_Zitat_Instagram-Beitrag_Kopyas%C4%B1_6_g2r1na.png"
             alt="logo"

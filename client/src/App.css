@@ -3,7 +3,7 @@
 header {
   background-color: #814256;
   color: #eccc6e;
-  padding: 1%;
+  /* padding: 2%; */
 }
 
 /* header h1 {
@@ -21,9 +21,9 @@ header {
 
 .hero {
   background-color: #eccc6e;
-  padding: 1%;
-  text-align: center;
-  color: #814256
+  padding: 2%;
+  text-align: left;
+  color: #814256;
 }
 .about {
   padding: 1%;
@@ -32,12 +32,12 @@ header {
 }
 .features {
   padding: 4%;
-  background-color: #c9c4b9;
+  background-color: #aca89f;
   color: #eccc6e;
 }
 .call-to-action {
   background-color: #814256;
-  color: #fff;
+  color: #eccc6e;
   padding: 20px;
   text-align: center;
 }
@@ -63,11 +63,7 @@ nav a {
   margin-right: 20px;
 }
 
-
-
-
-
-.card { 
+.card {
   border-radius: 5px;
   box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.2);
   gap: 20px;
@@ -78,15 +74,14 @@ nav a {
 }
 
 * {
-	box-sizing: border-box;
+  box-sizing: border-box;
 }
 
 body {
-	font-family: 'Segoe UI', sans-serif;
-	margin: 0;
+  font-family: "Segoe UI", sans-serif;
+  margin: 0;
   text-shadow: -2px -2px -2px #f9f9f9;
   background-color: #eccc6e;
-
 }
 
 /* .header {
@@ -96,16 +91,15 @@ body {
 } */
 
 .main {
-	padding: 50px 20px;
-	background-color: #eccc6e;
+  padding: 1% 1%;
+  background-color: #eccc6e;
   box-shadow: 0px 0px 10px 0px #eccc6e;
-  color: #814256
-
+  color: #814256;
 }
 
 .container {
-	max-width: 600px;
-	margin: 0 auto;
+  max-width: 600px;
+  margin: 0 auto;
 }
 
 /* h1 {
@@ -114,63 +108,63 @@ body {
 } */
 
 .form-group {
-	margin-bottom: 30px;
+  margin-bottom: 30px;
 }
 
 label {
-	display: inline-block;
-	margin-bottom: 10px;
-	font-weight: 600;
-	color: #eccc6e;
+  display: inline-block;
+  margin-bottom: 10px;
+  font-weight: 600;
+  color: #eccc6e;
 }
 
 input {
-	display: block;
-	width: 100%;
-	padding: 10px;
-	border-radius: 5px;
-	border: 1px solid #eccc6e;
-	font-size: 1rem;
+  display: block;
+  width: 100%;
+  padding: 10px;
+  border-radius: 5px;
+  border: 1px solid #eccc6e;
+  font-size: 1rem;
 }
 
 input[type="submit"] {
-	background-color: #eccc6e;
-	color: #eccc6e;
-	font-size: 1.2rem;
-	padding: 10px 0;
-	border: none;
-	border-radius: 5px;
-	cursor: pointer;
+  background-color: #eccc6e;
+  color: #eccc6e;
+  font-size: 1.2rem;
+  padding: 10px 0;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
 }
 
 input[type="submit"]:hover {
-	background-color: #5a6268;
+  background-color: #5a6268;
 }
 
 .footer {
-	background-color: #814256;
-	color: #eccc6e;
-	padding: 20px;
+  background-color: #814256;
+  color: #eccc6e;
+  padding: 20px;
 }
 
 .footer p {
-	margin: 0;
-	font-size: 1rem;
+  margin: 0;
+  font-size: 1rem;
 }
 
 @media (min-width: 768px) {
-	.main {
-		padding: 80px;
-	}
-	
-	/* h1 {
+  .main {
+    padding: 80px;
+  }
+
+  /* h1 {
 		font-size: 2.5rem;
 		margin-bottom: 40px;
 	} */
-	
-	.container {
-		max-width: 800px;
-	}
+
+  .container {
+    max-width: 800px;
+  }
 }
 
 /* User profile form page styles */
@@ -231,8 +225,6 @@ label {
   box-shadow: 0px 0px 5px 0px rgba(0, 0, 0, 0.1);
   margin-bottom: 10px;
 }
-
-
 
 /* .list-item:last-child {
   margin-bottom: 0;
@@ -297,7 +289,6 @@ label {
   border-radius: 5px;
 } */
 
-
 /* __________=============   */
 
 .tag-selector {
@@ -334,8 +325,8 @@ label {
 }
 
 .selected {
-  background-color: skyblue;
-  color: white;
+  background-color: #4b9aaa;
+  color: #eccc6e;
 }
 
 /* Additional styles for the TagSelector component */
@@ -351,8 +342,8 @@ label {
   margin-right: 1%;
   margin-bottom: 1%;
   padding: 1%;
-  background-color: skyblue;
+  background-color: #4b9aaa;
   border-radius: 4px;
-  color: white;
+  color: #eccc6e;
   cursor: pointer;
 }
