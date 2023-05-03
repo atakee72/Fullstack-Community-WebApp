@@ -15,7 +15,7 @@ function About(selectedTags) {
   const searchInputRef = useRef(null);
   const { loggedUser, userId } = useContext(AuthContext);
   console.log("🚀 ~ About ~ userId:", userId);
-  console.log("loggedUser", loggedUser?.userName);
+  console.log("loggedUser", loggedUser?.userName, loggedUser.picture);
   const [myTags, setMyTags] = useState(selectedTags);
   const [serverMsg, setServerMsg] = useState("");
 

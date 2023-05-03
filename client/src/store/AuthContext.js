@@ -107,6 +107,7 @@ export const AuthContextProvider = (props) => {
   const logout = () => {
     localStorage.removeItem("token");
     localStorage.removeItem("id");
+    localStorage.removeItem("user");
     setLoggedUser(false);
     console.log("You're logged out!");
     alert("🚀 You're logged out! 🚀");

@@ -227,8 +227,8 @@ function Cards({
                     }}
                   >
                     {/* {isHeartClicked && !serverMsg ? "💗" : "🤍"} */}
-                    {post.likedBy.includes(userId) ? "💗" : "🤍"}
-                    {post.likes}
+                    {post?.likedBy?.includes(userId) ? "💗" : "🤍"}
+                    {post?.likes}
                   </button>
                   {author?.userName}{" "}
                   {

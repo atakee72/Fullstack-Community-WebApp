@@ -132,7 +132,7 @@ function UserProfile(selectedHobbies) {
   const handleProfileUpdate = async (e) => {
     e.preventDefault();
 
-    var myHeaders = new Headers();
+    const myHeaders = new Headers();
     myHeaders.append("Content-Type", "application/x-www-form-urlencoded");
 
     const urlencoded = new URLSearchParams();
