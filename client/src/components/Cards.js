@@ -263,10 +263,11 @@ function Cards({
                     textDecoration: "underline",
                     fontSize: "0.8em",
                   }}
+                  key={i}
                   className="m-1 p-1"
                 >
                   <i>
-                    <li key={i}>{tag} </li>
+                    <li>{tag} </li>
                   </i>
                 </ul>
               ))}
@@ -294,15 +295,15 @@ function Cards({
                       id="isCommentAuthor"
                       onClick={() => {
                         setIsClicked(true);
-                        setCommentShow(true);
+                        setCommentShow(false);
                       }}
                     ></CloseButton>
                   ) : (
                     <></>
                   )}
-                  {userId === comment?.author._id ? (
+                  {userId === comment?.author?._id ? (
                     <>
-                      {commentShow && (
+                      {isClicked && (
                         <Alert
                           key={i}
                           id="isCommentAuthor"
@@ -314,47 +315,41 @@ function Cards({
                           dismissible
                           style={{ display: "absolute", zIndex: "1" }}
                         >
-                          <span>Delete your post irreversibly?</span>
+                          <span>Delete your comment irreversibly?</span>
                           <div className="d-flex gap-3">
                             &emsp; &emsp;{" "}
-                            <span
-                              // className="ps-4 pe-4 m-2"
-                              // variant={"danger"}
-                              onClick={(e) => {
-                                deleteAComment(e, comment);
-                                setIsClicked(false);
-                                setCommentShow(false);
-                              }}
-                            >
-                              <u>
-                                <b>Yes</b>
-                              </u>
-                            </span>{" "}
+                            <b>
+                              <span
+                                // className="ps-4 pe-4 m-2"
+                                // variant={"danger"}
+                                onClick={(e) => {
+                                  deleteAComment(e, comment);
+                                  setIsClicked(false);
+                                  setCommentShow(false);
+                                }}
+                              >
+                                Yes
+                              </span>
+                            </b>{" "}
                             &emsp; &emsp;
-                            <span
-                              // className="ps-4 pe-4 m-2"
-                              // variant={"success"}
-                              onClick={() => {
-                                setIsClicked(false);
-                                setCommentShow(false);
-                              }}
-                            >
-                              <u>
-                                <b>No</b>
-                              </u>
-                            </span>
+                            <b>
+                              <span
+                                onClick={() => {
+                                  setIsClicked(false);
+                                  setCommentShow(false);
+                                }}
+                              >
+                                No
+                              </span>
+                            </b>
                           </div>
                         </Alert>
                       )}
                     </>
                   ) : (
                     <>
-                      {/* <CloseButton
-                        id="isNotCommentAuthor"
-                        onClick={() => setCommentShow(true)}
-                      ></CloseButton> */}
                       &emsp;{" "}
-                      {commentShow && (
+                      {isClicked && (
                         <Alert
                           key={i}
                           id="isNotCommentAuthor"
@@ -369,7 +364,7 @@ function Cards({
                         </Alert>
                       )}
                     </>
-                  )}{" "}
+                  )}
                   &emsp;
                   {transformDate(comment?.date)} &emsp;{" "}
                   {comment.author?.userName} &emsp;

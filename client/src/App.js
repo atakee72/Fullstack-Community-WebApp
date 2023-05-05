@@ -30,9 +30,9 @@ function App() {
             <Route
               path="userProfile"
               element={
-                // <ProtectedRoute>
-                <UserProfile />
-                // </ProtectedRoute>
+                <ProtectedRoute>
+                  <UserProfile />
+                </ProtectedRoute>
               }
             />
             <Route path="landingPage" element={<LandingPage />} />

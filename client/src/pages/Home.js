@@ -14,7 +14,7 @@ function About(selectedTags) {
   const [searchInputValue, setSearchInputValue] = useState("");
   const searchInputRef = useRef(null);
   const { loggedUser, userId } = useContext(AuthContext);
-  console.log("🚀 ~ About ~ userId:", userId);
+  // console.log("🚀 ~ About ~ userId:", userId);
   console.log("loggedUser", loggedUser?.userName, loggedUser.picture);
   const [myTags, setMyTags] = useState(selectedTags);
   const [serverMsg, setServerMsg] = useState("");
@@ -448,9 +448,10 @@ function About(selectedTags) {
                             justifyContent: "center",
                             width: "100%",
                           }}
+                          key={i}
                         >
                           <Cards
-                            key={i}
+                            item={item}
                             post={item}
                             comments={item.comments}
                             author={item.author}
