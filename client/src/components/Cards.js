@@ -312,7 +312,7 @@ function Cards({
                             setIsClicked(false);
                             setCommentShow(false);
                           }}
-                          dismissible
+                          // dismissible
                           style={{ display: "absolute", zIndex: "1" }}
                         >
                           <span>Delete your comment irreversibly?</span>
@@ -320,8 +320,6 @@ function Cards({
                             &emsp; &emsp;{" "}
                             <b>
                               <span
-                                // className="ps-4 pe-4 m-2"
-                                // variant={"danger"}
                                 onClick={(e) => {
                                   deleteAComment(e, comment);
                                   setIsClicked(false);

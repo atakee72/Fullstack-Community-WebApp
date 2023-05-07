@@ -488,10 +488,11 @@ function About(selectedTags) {
                     minHeight: "40vh",
                     overflow: "auto",
                     resize: "vertical",
+                    height: "fit-content",
                   }}
                 >
                   <Card.Header>
-                    <Nav variant="tabs" defaultActiveKey="topics">
+                    <Nav variant="tabs" defaultActiveKey="Discussions">
                       <Nav.Item>
                         <Button
                           variant="light"
@@ -517,38 +518,145 @@ function About(selectedTags) {
                   </Card.Header>
                   <Card.Body>
                     {/* //! ================================================== */}
-                    <Form
-                      className="align-items-center"
-                      onChange={handle_InSearch_Input}
-                      style={{ display: "flex" }}
-                    >
-                      <Form.Group
-                        className="mb-3 w-100 text-center"
-                        controlId="formBasicEmail"
+
+                    <div className="d-flex  flex-column justify-items-center">
+                      <Form
+                        className="align-items-center"
+                        onChange={handle_InSearch_Input}
+                        style={{ display: "flex" }}
                       >
-                        <Form.Label>
-                          <h1 className="text-center mb-5 pt-4">
-                            Announcements
-                          </h1>
-                        </Form.Label>
-                        <Form.Control
-                          className="w-100 text-center"
-                          type="text"
-                          placeholder="Search in announcements"
-                          onChange={handle_InSearch_Filter}
-                          ref={searchInputRef}
-                          width="100%"
-                        />
-                      </Form.Group>
-                    </Form>
+                        <Form.Group
+                          className="mb-3 w-100 text-center"
+                          controlId="formBasicEmail"
+                        >
+                          <Form.Label>
+                            <h1 className="text-center mb-5 pt-4">
+                              Announcements
+                            </h1>
+                          </Form.Label>
+                          <Form.Control
+                            className="w-100 text-center"
+                            type="text"
+                            placeholder="Search in announcements"
+                            onChange={handle_InSearch_Filter}
+                            ref={searchInputRef}
+                            // width="100%"
+                          />
+                        </Form.Group>
+                      </Form>
+
+                      {/* //! button for a new ANNOUNCEMENT   */}
+                      {loggedUser && (
+                        <Button
+                          style={{
+                            fontSize: "1.1em",
+                            backgroundColor: "#814256",
+                            border: "none",
+                            color: "#eccc6e",
+                            width: "100%",
+                            boxShadow: "0px 0px 10px 0px rgba(0, 0, 0, 0.2",
+                            position: "sticky",
+                            top: "0",
+                            zIndex: "1",
+                          }}
+                          className="p-3 topicBtn"
+                          variant="secondary"
+                          onClick={handleShow}
+                        >
+                          Make an announcement
+                        </Button>
+                      )}
+
+                      {/* //! MODAL === for a new post ==================================  */}
+
+                      <div>
+                        <Modal
+                          show={show}
+                          onHide={handleClose}
+                          style={{ backgroundColor: "#814256" }}
+                        >
+                          <Modal.Header className="m-1 p-1" closeButton>
+                            <Modal.Title>Make an announcement</Modal.Title>
+                          </Modal.Header>
+                          <Modal.Body className="m-1 p-1">
+                            <Form className="m-1 p-3" onSubmit={postInForum}>
+                              <Form.Group
+                                className="mb-3"
+                                controlId="exampleForm.ControlInput1"
+                              >
+                                <Form.Label>Title of Your Text</Form.Label>
+                                <Form.Control
+                                  type="text"
+                                  value={postTitle}
+                                  ref={postTitleRef}
+                                  onChange={(event) =>
+                                    setPostTitle(event.target.value)
+                                  }
+                                  autoFocus
+                                />
+                              </Form.Group>
+                              <Form.Group controlId="exampleForm.ControlTextarea1">
+                                <Form.Label>
+                                  What would you like to announce here?
+                                </Form.Label>
+                                <Form.Control
+                                  as="textarea"
+                                  rows={5}
+                                  columns={12}
+                                  value={postBody}
+                                  ref={postBodyRef}
+                                  onChange={(event) =>
+                                    setPostBody(event.target.value)
+                                  }
+                                  className="m-0 p-0"
+                                />
+                              </Form.Group>
+                              <Button type="submit" variant="primary">
+                                Submit
+                              </Button>
+                            </Form>
+                          </Modal.Body>
+                          <Modal.Footer
+                            style={{
+                              display: "flex",
+                              flexDirection: "row",
+                              justifyContent: "center",
+                              padding: "0",
+                            }}
+                          >
+                            <TagSelector
+                              handleTagsSelected={handleTagsSelected}
+                              availableTags={availableTags}
+                            />
+                          </Modal.Footer>
+                        </Modal>
+                      </div>
+                    </div>
+
+                    {/* //! announcement CARDS  */}
+
                     {filteredData.length > 0 ? (
                       filteredData.map((item, i) => (
-                        <Cards
+                        <div
+                          style={{
+                            display: "flex",
+                            justifyContent: "center",
+                            width: "100%",
+                          }}
                           key={i}
-                          post={item}
-                          comments={item.comments}
-                          author={item.author}
-                        />
+                        >
+                          <Cards
+                            key={i}
+                            post={item}
+                            comments={item.comments}
+                            author={item.author}
+                            postAComment={postAComment}
+                            deleteForumPost={deleteForumPost}
+                            deleteAComment={deleteAComment}
+                            updateLikesCounter={updateLikesCounter}
+                            serverMsg={serverMsg}
+                          />
+                        </div>
                       ))
                     ) : (
                       <h5 className="text-center mb-5 pt-4">
@@ -575,10 +683,11 @@ function About(selectedTags) {
                     minHeight: "40vh",
                     overflow: "auto",
                     resize: "vertical",
+                    height: "fit-content",
                   }}
                 >
                   <Card.Header>
-                    <Nav variant="tabs" defaultActiveKey="topics">
+                    <Nav variant="tabs" defaultActiveKey="Discussions">
                       <Nav.Item>
                         <Button
                           variant="light"
@@ -603,39 +712,142 @@ function About(selectedTags) {
                     </Nav>
                   </Card.Header>
                   <Card.Body>
-                    {/* //! =================================================== */}
-                    <Form
-                      className="align-items-center"
-                      onChange={handle_InSearch_Input}
-                      style={{ display: "flex" }}
-                    >
-                      <Form.Group
-                        className="mb-3 w-100 text-center"
-                        controlId="formBasicEmail"
+                    {/* //! =====================SEARCH FORM============================== */}
+
+                    <div className="d-flex  flex-column justify-items-center">
+                      <Form
+                        className="align-items-center"
+                        onChange={handle_InSearch_Input}
+                        style={{ display: "flex" }}
                       >
-                        <Form.Label>
-                          <h1 className="text-center mb-5 pt-4">
-                            Recommendations
-                          </h1>
-                        </Form.Label>
-                        <Form.Control
-                          className="w-100 text-center"
-                          type="text"
-                          placeholder="Search in recommendations"
-                          onChange={handle_InSearch_Filter}
-                          ref={searchInputRef}
-                        />
-                      </Form.Group>
-                    </Form>
-                    {/* //! ===================================================== */}
+                        <Form.Group
+                          className="mb-3 w-100 text-center"
+                          controlId="formBasicEmail"
+                        >
+                          <Form.Label>
+                            <h1 className="text-center mb-5 pt-4">
+                              Recommendations
+                            </h1>
+                          </Form.Label>
+                          <Form.Control
+                            className="w-100 text-center"
+                            type="text"
+                            placeholder="Search in recommendations"
+                            onChange={handle_InSearch_Filter}
+                            ref={searchInputRef}
+                          />
+                        </Form.Group>
+                      </Form>
+                      {/* //! button for a new post   */}
+                      {loggedUser && (
+                        <Button
+                          style={{
+                            fontSize: "1.1em",
+                            backgroundColor: "#814256",
+                            border: "none",
+                            color: "#eccc6e",
+                            width: "100%",
+                            boxShadow: "0px 0px 10px 0px rgba(0, 0, 0, 0.2",
+                            position: "sticky",
+                            top: "0",
+                            zIndex: "1",
+                          }}
+                          className="p-3 topicBtn"
+                          variant="secondary"
+                          onClick={handleShow}
+                        >
+                          Make a recommendation
+                        </Button>
+                      )}
+
+                      {/* //! MODAL === for a new post ==================================  */}
+
+                      <div>
+                        <Modal
+                          show={show}
+                          onHide={handleClose}
+                          style={{ backgroundColor: "#814256" }}
+                        >
+                          <Modal.Header className="m-1 p-1" closeButton>
+                            <Modal.Title>Make a recommendation</Modal.Title>
+                          </Modal.Header>
+                          <Modal.Body className="m-1 p-1">
+                            <Form className="m-1 p-3" onSubmit={postInForum}>
+                              <Form.Group
+                                className="mb-3"
+                                controlId="exampleForm.ControlInput1"
+                              >
+                                <Form.Label>Title of Your Text</Form.Label>
+                                <Form.Control
+                                  type="text"
+                                  value={postTitle}
+                                  ref={postTitleRef}
+                                  onChange={(event) =>
+                                    setPostTitle(event.target.value)
+                                  }
+                                  autoFocus
+                                />
+                              </Form.Group>
+                              <Form.Group controlId="exampleForm.ControlTextarea1">
+                                <Form.Label>
+                                  What would you like to recommend here?
+                                </Form.Label>
+                                <Form.Control
+                                  as="textarea"
+                                  rows={5}
+                                  columns={12}
+                                  value={postBody}
+                                  ref={postBodyRef}
+                                  onChange={(event) =>
+                                    setPostBody(event.target.value)
+                                  }
+                                  className="m-0 p-0"
+                                />
+                              </Form.Group>
+                              <Button type="submit" variant="primary">
+                                Submit
+                              </Button>
+                            </Form>
+                          </Modal.Body>
+                          <Modal.Footer
+                            style={{
+                              display: "flex",
+                              flexDirection: "row",
+                              justifyContent: "center",
+                              padding: "0",
+                            }}
+                          >
+                            <TagSelector
+                              handleTagsSelected={handleTagsSelected}
+                              availableTags={availableTags}
+                            />
+                          </Modal.Footer>
+                        </Modal>
+                      </div>
+                    </div>
+
+                    {/* //! ================recommendation cards ===================================== */}
                     {filteredData.length > 0 ? (
                       filteredData.map((item, i) => (
-                        <Cards
-                          key={i}
-                          post={item}
-                          comments={item.comments}
-                          author={item.author}
-                        />
+                        <div
+                          style={{
+                            display: "flex",
+                            justifyContent: "center",
+                            width: "100%",
+                          }}
+                        >
+                          <Cards
+                            key={i}
+                            post={item}
+                            comments={item.comments}
+                            author={item.author}
+                            postAComment={postAComment}
+                            deleteForumPost={deleteForumPost}
+                            deleteAComment={deleteAComment}
+                            updateLikesCounter={updateLikesCounter}
+                            serverMsg={serverMsg}
+                          />
+                        </div>
                       ))
                     ) : (
                       <h5 className="text-center mb-5 pt-4">
