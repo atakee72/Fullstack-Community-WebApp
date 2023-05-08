@@ -61,7 +61,7 @@ function PostModal({
         <Modal.Body
           className="m-1 p-1"
           style={{
-            backgroundColor: "#eccc6e",
+            backgroundColor: "#4b9aaa",
             color: "white",
             border: "none",
             width: "100%",
@@ -93,7 +93,16 @@ function PostModal({
                 className="m-0 p-0"
               />
             </Form.Group>
-            <Button type="submit" variant="primary" className="mt-3">
+            <Button
+              type="submit"
+              variant="primary"
+              className="mt-3"
+              style={{
+                border: "none",
+                backgroundColor: "#814256",
+                color: "#eccc6e",
+              }}
+            >
               Submit
             </Button>
           </Form>
