@@ -6,6 +6,7 @@ import Cards from "../components/Cards";
 import { AuthContext } from "../store/AuthContext.js";
 import TagSelector from "../components/TagSelector";
 import Modal from "react-bootstrap/Modal";
+import SearchForm from "../components/SearchForm";
 
 function About(selectedTags) {
   const [collectionType, setCollectionType] = useState("topics");
@@ -328,7 +329,13 @@ function About(selectedTags) {
                     {/* //! ==================SEARCHFORM=================  */}
 
                     <div className="d-flex  flex-column justify-items-center">
-                      <Form
+                      <SearchForm
+                        handle_InSearch_Input={handle_InSearch_Input}
+                        collectionType={collectionType}
+                        handle_InSearch_Filter={handle_InSearch_Filter}
+                        searchInputRef={searchInputRef}
+                      />
+                      {/* <Form
                         className="align-items-center"
                         onChange={handle_InSearch_Input}
                         style={{ display: "flex" }}
@@ -350,7 +357,7 @@ function About(selectedTags) {
                             ref={searchInputRef}
                           />
                         </Form.Group>
-                      </Form>
+                      </Form> */}
                       {/* //! button for a new post   */}
                       {loggedUser && (
                         <Button
@@ -378,7 +385,9 @@ function About(selectedTags) {
                         <Modal
                           show={show}
                           onHide={handleClose}
-                          style={{ backgroundColor: "#814256" }}
+                          style={{
+                            background: "transparent",
+                          }}
                         >
                           <Modal.Header className="m-1 p-1" closeButton>
                             <Modal.Title>Start a discussion</Modal.Title>
