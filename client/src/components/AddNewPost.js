@@ -1,7 +1,7 @@
 import React from "react";
 import { Button } from "react-bootstrap";
 
-function SearchButton({ handleShow, collectionType }) {
+function AddNewPost({ handleShow, collectionType }) {
   const collectionTypes = {
     topics: "Start a debate",
     announcements: "Make an announcement",
@@ -29,4 +29,4 @@ function SearchButton({ handleShow, collectionType }) {
   );
 }
 
-export default SearchButton;
+export default AddNewPost;

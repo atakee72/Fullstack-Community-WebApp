@@ -27,27 +27,50 @@ const TagSelector = ({ availableTags, handleTagsSelected }) => {
     const filteredTags = selectedTags.filter((t) => t !== tag);
     setSelectedTags(filteredTags);
     handleTagsSelected(filteredTags);
+    availableTags.push(tag);
   };
 
   return (
-    <div className="tag-selector">
-      <div className="available-tags">
-        {availableTags.map((tag) => (
-          <div
-            key={tag}
-            draggable
-            onDragStart={(event) => handleTagDragStart(event, tag)}
-            className="tag"
-            onClick={(event) => handleTagClick(event, tag)}
-          >
-            {tag}
-          </div>
-        ))}
+    <div
+      className="tag-selector"
+      style={{
+        display: "flex",
+        justifyContent: "space-between",
+      }}
+    >
+      <div
+        className="available-tags"
+        style={{
+          display: "flex",
+          justifyContent: "flex-start",
+          alignItems: "flex-start",
+        }}
+      >
+        {availableTags
+          .filter((tag) => !selectedTags.includes(tag))
+          .map((tag) => (
+            <div
+              key={tag}
+              draggable
+              onDragStart={(event) => handleTagDragStart(event, tag)}
+              className="tag"
+              onClick={(event) => handleTagClick(event, tag)}
+              style={{
+                backgroundColor: "#eccc6e",
+                color: "#4b9aaa",
+                justifyContent: "flex-start",
+                alignItems: "flex-start",
+              }}
+            >
+              {tag}
+            </div>
+          ))}
       </div>
       <div
         className="selected-tags"
         onDragOver={(event) => event.preventDefault()}
         onDrop={handleTagDrop}
+        style={{ backgroundColor: "#eccc6e", borderRadius: "5px" }}
       >
         {selectedTags.map((tag) => (
           <div

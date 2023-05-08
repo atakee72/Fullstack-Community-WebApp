@@ -291,18 +291,20 @@ label {
 
 /* __________=============   */
 
-.tag-selector {
+/* .tag-selector {
   display: flex;
   flex-direction: row;
-}
+} */
 
 .available-tags {
   display: flex;
   flex-wrap: wrap;
   justify-content: flex-start;
+  align-content: space-between;
   margin-right: 16px;
   padding: 1%;
-  min-width: 150px;
+  max-width: 150px;
+  min-width: 200px;
 }
 
 .tag {
@@ -319,9 +321,13 @@ label {
   flex-wrap: wrap;
   justify-content: flex-start;
   align-items: flex-start;
-  border: 1px solid #ccc;
+  align-content: space-between;
   padding: 1%;
-  min-width: 150px;
+  max-width: 150px;
+  min-width: 200px;
+  min-height: 75px;
+  max-height: 100px;
+
 }
 
 .selected {

@@ -1,13 +1,14 @@
 import { useContext, useEffect, useRef, useState } from "react";
 import { Button, Card } from "react-bootstrap";
 import Nav from "react-bootstrap/Nav";
-import Form from "react-bootstrap/Form";
+// import Form from "react-bootstrap/Form";
 import Cards from "../components/Cards";
 import { AuthContext } from "../store/AuthContext.js";
-import TagSelector from "../components/TagSelector";
-import Modal from "react-bootstrap/Modal";
+// import TagSelector from "../components/TagSelector";
+// import Modal from "react-bootstrap/Modal";
 import SearchForm from "../components/SearchForm";
-import SearchButton from "../components/SearchButton";
+import AddNewPost from "../components/AddNewPost";
+import PostModal from "../components/PostModal";
 
 function About(selectedTags) {
   const [collectionType, setCollectionType] = useState("topics");
@@ -362,7 +363,7 @@ function About(selectedTags) {
                       {/* //! button for a new post   */}
                       {
                         loggedUser && (
-                          <SearchButton
+                          <AddNewPost
                             handleShow={handleShow}
                             collectionType={collectionType}
                           />
@@ -392,7 +393,21 @@ function About(selectedTags) {
                       {/* //! MODAL === for a new post ==================================  */}
 
                       <div>
-                        <Modal
+                        <PostModal
+                          collectionType={collectionType}
+                          show={show}
+                          handleClose={handleClose}
+                          postInForum={postInForum}
+                          postTitle={postTitle}
+                          postTitleRef={postTitleRef}
+                          postBodyRef={postBodyRef}
+                          setPostTitle={setPostTitle}
+                          postBody={postBody}
+                          setPostBody={setPostBody}
+                          handleTagsSelected={handleTagsSelected}
+                          availableTags={availableTags}
+                        />
+                        {/* <Modal
                           show={show}
                           onHide={handleClose}
                           style={{
@@ -454,7 +469,7 @@ function About(selectedTags) {
                               availableTags={availableTags}
                             />
                           </Modal.Footer>
-                        </Modal>
+                        </Modal> */}
                       </div>
                     </div>
 
@@ -539,7 +554,13 @@ function About(selectedTags) {
                     {/* //! ================================================== */}
 
                     <div className="d-flex  flex-column justify-items-center">
-                      <Form
+                      <SearchForm
+                        handle_InSearch_Input={handle_InSearch_Input}
+                        collectionType={collectionType}
+                        handle_InSearch_Filter={handle_InSearch_Filter}
+                        searchInputRef={searchInputRef}
+                      />
+                      {/* <Form
                         className="align-items-center"
                         onChange={handle_InSearch_Input}
                         style={{ display: "flex" }}
@@ -562,34 +583,57 @@ function About(selectedTags) {
                             // width="100%"
                           />
                         </Form.Group>
-                      </Form>
+                      </Form> */}
 
                       {/* //! button for a new ANNOUNCEMENT   */}
-                      {loggedUser && (
-                        <Button
-                          style={{
-                            fontSize: "1.1em",
-                            backgroundColor: "#814256",
-                            border: "none",
-                            color: "#eccc6e",
-                            width: "100%",
-                            boxShadow: "0px 0px 10px 0px rgba(0, 0, 0, 0.2",
-                            position: "sticky",
-                            top: "0",
-                            zIndex: "1",
-                          }}
-                          className="p-3 topicBtn"
-                          variant="secondary"
-                          onClick={handleShow}
-                        >
-                          Make an announcement
-                        </Button>
-                      )}
+                      {
+                        loggedUser && (
+                          <AddNewPost
+                            handleShow={handleShow}
+                            collectionType={collectionType}
+                          />
+                        )
+
+                        //   (
+                        //   <Button
+                        //     style={{
+                        //       fontSize: "1.1em",
+                        //       backgroundColor: "#814256",
+                        //       border: "none",
+                        //       color: "#eccc6e",
+                        //       width: "100%",
+                        //       boxShadow: "0px 0px 10px 0px rgba(0, 0, 0, 0.2",
+                        //       position: "sticky",
+                        //       top: "0",
+                        //       zIndex: "1",
+                        //     }}
+                        //     className="p-3 topicBtn"
+                        //     variant="secondary"
+                        //     onClick={handleShow}
+                        //   >
+                        //     Make an announcement
+                        //   </Button>
+                        // )
+                      }
 
                       {/* //! MODAL === for a new post ==================================  */}
 
                       <div>
-                        <Modal
+                        <PostModal
+                          collectionType={collectionType}
+                          show={show}
+                          handleClose={handleClose}
+                          postInForum={postInForum}
+                          postTitle={postTitle}
+                          postTitleRef={postTitleRef}
+                          postBodyRef={postBodyRef}
+                          setPostTitle={setPostTitle}
+                          postBody={postBody}
+                          setPostBody={setPostBody}
+                          handleTagsSelected={handleTagsSelected}
+                          availableTags={availableTags}
+                        />
+                        {/* <Modal
                           show={show}
                           onHide={handleClose}
                           style={{ backgroundColor: "#814256" }}
@@ -648,7 +692,7 @@ function About(selectedTags) {
                               availableTags={availableTags}
                             />
                           </Modal.Footer>
-                        </Modal>
+                        </Modal> */}
                       </div>
                     </div>
 
@@ -734,7 +778,13 @@ function About(selectedTags) {
                     {/* //! =====================SEARCH FORM============================== */}
 
                     <div className="d-flex  flex-column justify-items-center">
-                      <Form
+                      <SearchForm
+                        handle_InSearch_Input={handle_InSearch_Input}
+                        collectionType={collectionType}
+                        handle_InSearch_Filter={handle_InSearch_Filter}
+                        searchInputRef={searchInputRef}
+                      />
+                      {/* <Form
                         className="align-items-center"
                         onChange={handle_InSearch_Input}
                         style={{ display: "flex" }}
@@ -756,33 +806,51 @@ function About(selectedTags) {
                             ref={searchInputRef}
                           />
                         </Form.Group>
-                      </Form>
+                      </Form> */}
                       {/* //! button for a new post   */}
                       {loggedUser && (
-                        <Button
-                          style={{
-                            fontSize: "1.1em",
-                            backgroundColor: "#814256",
-                            border: "none",
-                            color: "#eccc6e",
-                            width: "100%",
-                            boxShadow: "0px 0px 10px 0px rgba(0, 0, 0, 0.2",
-                            position: "sticky",
-                            top: "0",
-                            zIndex: "1",
-                          }}
-                          className="p-3 topicBtn"
-                          variant="secondary"
-                          onClick={handleShow}
-                        >
-                          Make a recommendation
-                        </Button>
+                        <AddNewPost
+                          handleShow={handleShow}
+                          collectionType={collectionType}
+                        />
+                        // <Button
+                        //   style={{
+                        //     fontSize: "1.1em",
+                        //     backgroundColor: "#814256",
+                        //     border: "none",
+                        //     color: "#eccc6e",
+                        //     width: "100%",
+                        //     boxShadow: "0px 0px 10px 0px rgba(0, 0, 0, 0.2",
+                        //     position: "sticky",
+                        //     top: "0",
+                        //     zIndex: "1",
+                        //   }}
+                        //   className="p-3 topicBtn"
+                        //   variant="secondary"
+                        //   onClick={handleShow}
+                        // >
+                        //   Make a recommendation
+                        // </Button>
                       )}
 
                       {/* //! MODAL === for a new post ==================================  */}
 
                       <div>
-                        <Modal
+                        <PostModal
+                          collectionType={collectionType}
+                          show={show}
+                          handleClose={handleClose}
+                          postInForum={postInForum}
+                          postTitle={postTitle}
+                          postTitleRef={postTitleRef}
+                          postBodyRef={postBodyRef}
+                          setPostTitle={setPostTitle}
+                          postBody={postBody}
+                          setPostBody={setPostBody}
+                          handleTagsSelected={handleTagsSelected}
+                          availableTags={availableTags}
+                        />
+                        {/* <Modal
                           show={show}
                           onHide={handleClose}
                           style={{ backgroundColor: "#814256" }}
@@ -841,7 +909,7 @@ function About(selectedTags) {
                               availableTags={availableTags}
                             />
                           </Modal.Footer>
-                        </Modal>
+                        </Modal> */}
                       </div>
                     </div>
 
