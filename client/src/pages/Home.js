@@ -7,6 +7,7 @@ import { AuthContext } from "../store/AuthContext.js";
 import TagSelector from "../components/TagSelector";
 import Modal from "react-bootstrap/Modal";
 import SearchForm from "../components/SearchForm";
+import SearchButton from "../components/SearchButton";
 
 function About(selectedTags) {
   const [collectionType, setCollectionType] = useState("topics");
@@ -359,26 +360,35 @@ function About(selectedTags) {
                         </Form.Group>
                       </Form> */}
                       {/* //! button for a new post   */}
-                      {loggedUser && (
-                        <Button
-                          style={{
-                            fontSize: "1.1em",
-                            backgroundColor: "#814256",
-                            border: "none",
-                            color: "#eccc6e",
-                            width: "100%",
-                            boxShadow: "0px 0px 10px 0px rgba(0, 0, 0, 0.2",
-                            position: "sticky",
-                            top: "0",
-                            zIndex: "1",
-                          }}
-                          className="p-3 topicBtn"
-                          variant="secondary"
-                          onClick={handleShow}
-                        >
-                          Start a debate
-                        </Button>
-                      )}
+                      {
+                        loggedUser && (
+                          <SearchButton
+                            handleShow={handleShow}
+                            collectionType={collectionType}
+                          />
+                        )
+
+                        //   (
+                        //   <Button
+                        //     style={{
+                        //       fontSize: "1.1em",
+                        //       backgroundColor: "#814256",
+                        //       border: "none",
+                        //       color: "#eccc6e",
+                        //       width: "100%",
+                        //       boxShadow: "0px 0px 10px 0px rgba(0, 0, 0, 0.2",
+                        //       position: "sticky",
+                        //       top: "0",
+                        //       zIndex: "1",
+                        //     }}
+                        //     className="p-3 topicBtn"
+                        //     variant="secondary"
+                        //     onClick={handleShow}
+                        //   >
+                        //     Start a debate
+                        //   </Button>
+                        // )
+                      }
                       {/* //! MODAL === for a new post ==================================  */}
 
                       <div>
