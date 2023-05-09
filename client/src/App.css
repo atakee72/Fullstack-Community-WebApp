@@ -353,3 +353,20 @@ label {
   color: #eccc6e;
   cursor: pointer;
 }
+
+/* main card */
+
+.mainCard {
+  border-radius: 5px;
+  box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.2);
+  padding: 50px;
+  margin: 20px 100px 20px 100px;
+  gap: 20px;
+  background-color: #4b9aaa !important;
+  max-width: 90vw;
+  min-width: 50vw;
+  min-height: 40vh;
+  overflow: auto;
+  resize: vertical;
+  height: fit-content;
+}
