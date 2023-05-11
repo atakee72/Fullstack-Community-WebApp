@@ -1,14 +1,13 @@
 import { useContext, useRef, useState } from "react";
 import Button from "react-bootstrap/Button";
-import CloseButton from "react-bootstrap/CloseButton";
 import Card from "react-bootstrap/Card";
 import Nav from "react-bootstrap/Nav";
-import Form from "react-bootstrap/Form";
-import Modal from "react-bootstrap/Modal";
 import transformDate from "../utils/transformDate";
 import { AuthContext } from "../store/AuthContext.js";
-import Alert from "react-bootstrap/Alert";
-import { Accordion, Badge } from "react-bootstrap";
+import { Badge } from "react-bootstrap";
+import AccordionItem from "./AccordionItem";
+import CommentModal from "./CommentModal";
+import DeletePostButton from "./DeletePostButton";
 
 function Cards({
   post,
@@ -26,6 +25,7 @@ function Cards({
   const [commentText, setCommentText] = useState("");
   const { userId, loggedUser } = useContext(AuthContext);
   const [show, setShow] = useState(false);
+  const [showAlert, setShowAlert] = useState(false);
   const [isClicked, setIsClicked] = useState(false);
   const [commentShow, setCommentShow] = useState(false);
   const [isHeartClicked, setIsHeartClicked] = useState(false);
@@ -33,84 +33,21 @@ function Cards({
   const handleClose = () => setShow(false);
   const handleShow = () => {
     setShow(true);
-    // resetPostForm();
   };
-
-  // const handleCommentClose = () => setCommentShow(false);
-  // const handleCommentShow = () => {
-  //   setCommentShow(true);
-  // };
 
   return (
     <Card
       className="m-4 ms-5 me-5 p-4 card"
       style={{ backgroundColor: "#c9c4b9" }}
     >
-      {activeTab !== "Posts" ? (
-        <br />
-      ) : (
-        <div>
-          {userId === author?._id ? (
-            <>
-              <CloseButton
-                id="isAuthor"
-                onClick={() => setShow(true)}
-              ></CloseButton>
+      <DeletePostButton
+        showAlert={showAlert}
+        setShowAlert={setShowAlert}
+        author={author}
+        deleteForumPost={deleteForumPost}
+        post={post}
+      />
 
-              {show && (
-                <Alert
-                  id="isAuthor"
-                  variant="danger"
-                  onClose={() => setShow(false)}
-                  dismissible
-                >
-                  <span>
-                    Do you really want to delete your post? This action is not
-                    reversible.
-                  </span>
-                  <div className="d-flex gap-3">
-                    <Button
-                      className="ps-4 pe-4 m-2"
-                      variant={"danger"}
-                      onClick={(e) => {
-                        deleteForumPost(e, post);
-                        setShow(false);
-                      }}
-                    >
-                      Yes
-                    </Button>
-                    <Button
-                      className="ps-4 pe-4 m-2"
-                      variant={"success"}
-                      onClick={() => setShow(false)}
-                    >
-                      No
-                    </Button>
-                  </div>
-                </Alert>
-              )}
-            </>
-          ) : (
-            <>
-              <CloseButton
-                id="isNotAuthor"
-                onClick={() => setShow(true)}
-              ></CloseButton>
-
-              {show && (
-                <Alert
-                  id="isNotAuthor"
-                  variant="danger"
-                  onClose={() => setShow(false)}
-                  dismissible
-                >
-                  <h6>You are not allowed for this action.</h6>
-                </Alert>
-              )}
-            </>
-          )}
-        </div>
-      )}
       <Card.Header>
         <Nav variant="tabs" defaultActiveKey="Posts">
           <Nav.Item>
@@ -252,25 +189,47 @@ function Cards({
 
             <>
               {/* Tags: {post.tags.at(0)}, {post.tags.at(1)} */}
-              {post.tags?.map((tag, i) => (
-                <ul
-                  style={{
-                    display: "inline-block",
-                    listStyle: "none",
-                    backgroundColor: "#4b9aaa",
-                    color: "white",
-                    borderRadius: "5px",
-                    textDecoration: "underline",
-                    fontSize: "0.8em",
-                  }}
-                  key={i}
-                  className="m-1 p-1"
-                >
-                  <i>
-                    <li>{tag} </li>
-                  </i>
-                </ul>
-              ))}
+              <ul
+                style={{
+                  display: "inline-block",
+                  margin: "1%",
+                  listStyle: "none",
+                  backgroundColor: "#4b9aaa",
+                  color: "white",
+                  borderRadius: "5px",
+                  textDecoration: "underline",
+                  fontSize: "0.8em",
+                }}
+                className="m-1 p-1"
+              >
+                {post?.tags.map((tag, i) => (
+                  <li key={i}>
+                    <span> Tags: {tag} </span>
+                  </li>
+                ))}
+              </ul>
+            </>
+            <>
+              {/* Tags: {post.tags.at(0)}, {post.tags.at(1)} */}
+              <div>
+                {post?.tags.map((tag, i) => (
+                  <span
+                    key={i}
+                    style={{
+                      display: "inline-block",
+                      backgroundColor: "#4b9aaa",
+                      color: "white",
+                      borderRadius: "5px",
+                      padding: "0.2em 0.5em",
+                      margin: "0.2em",
+                      fontSize: "0.8em",
+                      textDecoration: "underline",
+                    }}
+                  >
+                    {tag}
+                  </span>
+                ))}
+              </div>
             </>
           </div>
         </Card.Body>
@@ -278,168 +237,33 @@ function Cards({
       {/* >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>COMMENTS TAB */}
       {activeTab === "Comments" && comments && (
         <Card.Body>
-          {comments.map((comment, i) => (
-            <Accordion defaultActiveKey={i} key={i} flush>
-              <Accordion.Item
-                eventKey={i + 1}
-                style={{
-                  borderBottom: "1px solid #eccc6e",
-                  backgroundColor: "#e8f4f8",
-                }}
-              >
-                <Accordion.Header>
-                  {" "}
-                  {!isClicked ? (
-                    <CloseButton
-                      style={{ backgroundColor: "lightGray" }}
-                      id="isCommentAuthor"
-                      onClick={() => {
-                        setIsClicked(true);
-                        setCommentShow(false);
-                      }}
-                    ></CloseButton>
-                  ) : (
-                    <></>
-                  )}
-                  {userId === comment?.author?._id ? (
-                    <>
-                      {isClicked && (
-                        <Alert
-                          key={i}
-                          id="isCommentAuthor"
-                          variant="danger"
-                          onClose={() => {
-                            setIsClicked(false);
-                            setCommentShow(false);
-                          }}
-                          // dismissible
-                          style={{ display: "absolute", zIndex: "1" }}
-                        >
-                          <span>Delete your comment irreversibly?</span>
-                          <div className="d-flex gap-3">
-                            &emsp; &emsp;{" "}
-                            <b>
-                              <span
-                                onClick={(e) => {
-                                  deleteAComment(e, comment);
-                                  setIsClicked(false);
-                                  setCommentShow(false);
-                                }}
-                              >
-                                Yes
-                              </span>
-                            </b>{" "}
-                            &emsp; &emsp;
-                            <b>
-                              <span
-                                onClick={() => {
-                                  setIsClicked(false);
-                                  setCommentShow(false);
-                                }}
-                              >
-                                No
-                              </span>
-                            </b>
-                          </div>
-                        </Alert>
-                      )}
-                    </>
-                  ) : (
-                    <>
-                      &emsp;{" "}
-                      {isClicked && (
-                        <Alert
-                          key={i}
-                          id="isNotCommentAuthor"
-                          variant="danger"
-                          onClose={() => {
-                            setIsClicked(false);
-                            setCommentShow(false);
-                          }}
-                          dismissible
-                        >
-                          <span>You are not allowed for this action.</span>
-                        </Alert>
-                      )}
-                    </>
-                  )}
-                  &emsp;
-                  {transformDate(comment?.date)} &emsp;{" "}
-                  {comment.author?.userName} &emsp;
-                  {
-                    <img
-                      style={{
-                        width: "30px",
-                        height: "30px",
-                        borderRadius: "30px",
-                        objectFit: "cover",
-                      }}
-                      src={comment.author?.userPicture}
-                    />
-                  }
-                </Accordion.Header>
-                <Accordion.Body>
-                  <Card.Text>{comment?.body}</Card.Text>
-                </Accordion.Body>
-              </Accordion.Item>
-            </Accordion>
-          ))}
+          <AccordionItem
+            comments={comments}
+            // isClicked={isClicked}
+            // setIsClicked={setIsClicked}
+            setCommentShow={setCommentShow}
+            deleteAComment={deleteAComment}
+          />
         </Card.Body>
       )}
-
       {/* {//! >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>NEW COMMENT TAB */}
-
       {activeTab === "newComment" && (
         <Card.Body
           style={{ display: "inline-flex", gap: "10vw", height: "100%" }}
         >
-          <Modal
+          <CommentModal
             show={show}
-            onHide={() => {
-              handleClose();
-              setActiveTab("Comments");
-            }}
-          >
-            <Modal.Header className="m-1 p-1" closeButton>
-              <Modal.Title>Add a comment</Modal.Title>
-            </Modal.Header>
-            <Modal.Body className="m-1 p-1">
-              <Form
-                className="m-1 p-3"
-                onSubmit={(e) => {
-                  handleClose();
-                  if (commentText) {
-                    postAComment(e, commentText, post);
-                  }
-
-                  setActiveTab("Comments");
-                }}
-              >
-                <Form.Group controlId="exampleForm.ControlTextarea1">
-                  <Form.Label>
-                    Please write your comment below then click submit
-                  </Form.Label>
-                  <Form.Control
-                    as="textarea"
-                    type="text"
-                    rows={5}
-                    columns={12}
-                    ref={commentTextRef}
-                    onChange={(e) => setCommentText(e.target.value)}
-                    className="m-0 p-0"
-                  />
-                </Form.Group>
-
-                <Button type="submit" variant="primary">
-                  Submit
-                </Button>
-              </Form>
-            </Modal.Body>
-          </Modal>
+            handleClose={handleClose}
+            setActiveTab={setActiveTab}
+            commentText={commentText}
+            setCommentText={setCommentText}
+            commentTextRef={commentTextRef}
+            postAComment={postAComment}
+            post={post}
+          />
         </Card.Body>
       )}
-
-      {/* ===================================================================================== */}
+      {/* ============================================================= */}
     </Card>
   );
 }

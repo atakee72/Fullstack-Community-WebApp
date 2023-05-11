@@ -370,3 +370,45 @@ label {
   resize: vertical;
   height: fit-content;
 }
+
+
+/* CommentAccordion  */
+
+#wrap{
+  margin: 10px 0px;
+  width: 100%;
+  line-height:1.6em;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+#accordion{
+  width: 600px;
+  margin: 0px;
+  padding: 0px;
+  list-style: none;
+}
+
+#accordion .ribbon{
+  font-size: 12pt;
+  margin: 0px;
+  padding: 10px;
+  background: #4b9aaa;
+  border-bottom: 1px solid #eccc6e;
+  display: flex;
+  align-items: center;
+  justify-content: space-start;
+  color: #eccc6e
+}
+#accordion li div.content{
+  display: none;
+  padding: 10px;
+  background: #f9f9f9;
+  border: 1px solid #eccc6e;
+}
+
+#accordion li:hover div.content{
+  display: inherit;
+   }
+
