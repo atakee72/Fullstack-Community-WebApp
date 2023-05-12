@@ -267,7 +267,10 @@ function About(selectedTags) {
     <>
       <main className="main">
         <div className="container">
-          <div className="pb-4">
+          <div
+            className="p-4"
+            style={{ backgroundColor: "#4b9aaa", borderRadius: "50%" }}
+          >
             <a className="aNormal" href="/">
               <img
                 style={{

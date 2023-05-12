@@ -56,7 +56,7 @@ nav ul {
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 20px;
+  gap: 1px;
 }
 
 nav ul div {
@@ -64,15 +64,19 @@ nav ul div {
 }
 
 nav a {
-  color: #eccc6e;
+  color: #814256 !important;
   text-decoration: none;
   margin-right: 20px;
+  background-color: #eccc6e;
+  padding: 7px;
+  border-radius: 4px;
 }
 
 nav a:hover {
   background-color: #4b9aaa;
   padding: 7px;
   border-radius: 4px;
+  color: #eccc6e !important;
 }
 
 .card {

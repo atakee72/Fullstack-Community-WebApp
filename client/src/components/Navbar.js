@@ -34,7 +34,7 @@ function Navbar() {
       },
       {
         opacity: 1,
-        duration: 0.5,
+        duration: 0.3,
       }
     );
 
@@ -45,20 +45,20 @@ function Navbar() {
       tween2.restart();
     };
 
-    hamburger.addEventListener("click", handleClick);
-    ornek.addEventListener("click", handleClick);
-    loginLink.addEventListener("click", handleClick);
-    registerLink.addEventListener("click", handleClick);
-    profileLink.addEventListener("click", handleClick);
-    logoutLink.addEventListener("click", handleClick);
+    hamburger?.addEventListener("click", handleClick);
+    ornek?.addEventListener("click", handleClick);
+    loginLink?.addEventListener("click", handleClick);
+    registerLink?.addEventListener("click", handleClick);
+    profileLink?.addEventListener("click", handleClick);
+    logoutLink?.addEventListener("click", handleClick);
 
     return () => {
-      hamburger.removeEventListener("click", handleClick);
-      ornek.addEventListener("click", handleClick);
-      loginLink.addEventListener("click", handleClick);
-      registerLink.addEventListener("click", handleClick);
-      profileLink.addEventListener("click", handleClick);
-      logoutLink.addEventListener("click", handleClick);
+      // hamburger?.removeEventListener("click", handleClick);
+      // ornek?.addEventListener("click", handleClick);
+      // loginLink?.addEventListener("click", handleClick);
+      // registerLink?.addEventListener("click", handleClick);
+      // profileLink?.addEventListener("click", handleClick);
+      // logoutLink?.addEventListener("click", handleClick);
     };
   }, []);
 
@@ -131,12 +131,12 @@ function Navbar() {
                 background: "none",
                 boxShadow: "0px 0px 10px 0px rgba(0, 0, 0, 0.2)",
               }}
-              src={loggedUser.picture}
-              alt={`${loggedUser.userName}'s profile picture`}
+              src={loggedUser?.picture}
+              alt={`${loggedUser?.userName}'s profile picture`}
             />
             <h2 style={{ color: "#4b9aaa", fontSize: "1rem" }}>
               {" "}
-              {loggedUser.userName}{" "}
+              {loggedUser?.userName}{" "}
             </h2>
           </>
         )}
