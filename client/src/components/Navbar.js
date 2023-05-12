@@ -39,8 +39,8 @@ function Navbar() {
     );
 
     const handleClick = () => {
-      hamburger.classList.toggle("is-active");
-      nav.classList.toggle("is-active");
+      hamburger?.classList.toggle("is-active");
+      nav?.classList.toggle("is-active");
       tween1.restart();
       tween2.restart();
     };
@@ -53,12 +53,12 @@ function Navbar() {
     logoutLink?.addEventListener("click", handleClick);
 
     return () => {
-      // hamburger?.removeEventListener("click", handleClick);
-      // ornek?.addEventListener("click", handleClick);
-      // loginLink?.addEventListener("click", handleClick);
-      // registerLink?.addEventListener("click", handleClick);
-      // profileLink?.addEventListener("click", handleClick);
-      // logoutLink?.addEventListener("click", handleClick);
+      hamburger?.removeEventListener("click", handleClick);
+      ornek?.addEventListener("click", handleClick);
+      loginLink?.addEventListener("click", handleClick);
+      registerLink?.addEventListener("click", handleClick);
+      profileLink?.addEventListener("click", handleClick);
+      logoutLink?.addEventListener("click", handleClick);
     };
   }, []);
 
