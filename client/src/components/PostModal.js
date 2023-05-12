@@ -42,6 +42,7 @@ function PostModal({
         style={{
           backgroundColor: "#814256",
           border: "none",
+          borderRadius: "5px 5px 0 0 ",
         }}
       >
         <div style={{ backgroundColor: "#814256" }}>
@@ -117,6 +118,7 @@ function PostModal({
           backgroundColor: "#814256",
           color: "white",
           border: "none",
+          borderRadius: "0 0 5px 5px",
         }}
       >
         <div className="my-3">

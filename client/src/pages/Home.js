@@ -267,7 +267,21 @@ function About(selectedTags) {
     <>
       <main className="main">
         <div className="container">
-          <h1 className="text-center mb-4 pb-1">Your Local Forum</h1>
+          <div className="pb-4">
+            <a className="aNormal" href="/">
+              <img
+                style={{
+                  maxWidth: "15vw",
+                  minWidth: "150px",
+                  borderRadius: "50px",
+                  boxShadow: "0px 0px 10px 0px rgba(0, 0, 0, 0.2)",
+                }}
+                src="https://res.cloudinary.com/djgxiadrc/image/upload/v1677334203/communityWebApp/Beige_und_Grau_Minimalistisch_Zitat_Instagram-Beitrag_Kopyas%C4%B1_6_g2r1na.png"
+                alt="logo"
+              />
+            </a>
+          </div>
+          <h1 className="text-center mb-3 pb-1">Your Local Forum</h1>
           <div
             style={{
               backgroundColor: "#eccc6e",

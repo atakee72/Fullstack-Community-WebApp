@@ -63,12 +63,14 @@ function ForumSection({
             searchInputRef={searchInputRef}
           />
 
-          {loggedUser && (
-            <AddNewPost
-              handleShow={handleShow}
-              collectionType={collectionType}
-            />
-          )}
+          <div>
+            {loggedUser && (
+              <AddNewPost
+                handleShow={handleShow}
+                collectionType={collectionType}
+              />
+            )}
+          </div>
 
           <div>
             <PostModal

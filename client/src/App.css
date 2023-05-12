@@ -2,7 +2,6 @@
 
 header {
   background-color: #814256;
-  color: #eccc6e;
   /* padding: 2%; */
 }
 
@@ -55,12 +54,25 @@ nav ul {
   margin: 0;
   padding: 0;
   display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 20px;
+}
+
+nav ul div {
+  display: flex;
 }
 
 nav a {
   color: #eccc6e;
   text-decoration: none;
   margin-right: 20px;
+}
+
+nav a:hover {
+  background-color: #4b9aaa;
+  padding: 7px;
+  border-radius: 4px;
 }
 
 .card {
@@ -100,6 +112,10 @@ body {
 .container {
   max-width: 600px;
   margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
 }
 
 /* h1 {
@@ -412,3 +428,144 @@ label {
   display: inherit;
    }
 
+/* Navbar hover menu */
+
+body {
+  background-color: #ccc;
+  }
+  
+  .hamburger {
+  padding: 1rem;
+  }
+  
+  .hamburger-inner,
+  .hamburger-inner::before,
+  .hamburger-inner::after {
+  z-index: 4;
+  position: relative; /* changed from absolute */
+  }
+  
+  #navigation.is-active {
+  display: block;
+  }
+  
+  #navigation {
+  position: fixed;
+  top: 15%;
+  right: 10%;
+  left: 10%;
+  background-color: rgba(0, 0, 0, 0.8);;
+  width: 80vw;
+  height: 75vh;
+  display: none;
+  z-index: 3;
+  }
+  
+  #navigation ul {
+  margin-top: 7rem;
+  }
+  
+  #navigation li {
+  text-align: center;
+  padding: 3rem;
+  list-style: none;
+  }
+  
+  #navigation li a {
+  text-decoration: none;
+  color: #eccc6e;
+  }
+  
+  .hamburger {
+  padding: 1rem;
+  display: block; 
+  cursor: pointer;
+  transition: opacity 0.15s linear, filter 0.15s linear;
+  font: inherit;
+  color: inherit;
+  text-transform: none;
+  background-color: transparent;
+  border: 0;
+  margin: 0;
+  overflow: visible;
+  outline: none;
+  margin-left: 1rem; 
+  }
+  
+  .hamburger-inner,
+  .hamburger-inner::before,
+  .hamburger-inner::after {
+  background-color: #fff;
+  }
+  
+  .hamburger:hover {
+  opacity: 100;
+  }
+  
+  .hamburger:hover .hamburger-inner,
+  .hamburger:hover .hamburger-inner::before,
+  .hamburger:hover .hamburger-inner::after {
+  opacity: 100;
+  }
+  
+  .hamburger.is-active .hamburger-inner {
+  transform: rotate(45deg);
+  transition-delay: 0.12s;
+  }
+  
+  .hamburger.is-active .hamburger-inner::before {
+  top: 0;
+  transform: rotate(180deg);
+  transition-delay: 0.12s;
+  }
+  
+  .hamburger.is-active .hamburger-inner::after {
+  bottom: 0;
+  transform: rotate(90deg);
+  transition-delay: 0.12s;
+  }
+  
+  .hamburger-box {
+  width: 30px;
+  height: 12px;
+  display: inline-block;
+  position: relative;
+  }
+  
+  .hamburger-inner {
+  display: block;
+  top: 50%;
+  margin-top: -2px;
+  background-color: #eccc6e;
+
+  }
+  
+  .hamburger-inner,
+  .hamburger-inner::before,
+  .hamburger-inner::after {
+  width: 30px;
+  height: 2px;
+  border-radius: 4px;
+  position: relative; /* changed from absolute */
+  transition: transform 0.15s ease;
+  }
+  
+  .hamburger-inner::before,
+  .hamburger-inner::after {
+  content: "";
+  display: block;
+  width: 30px;
+  height: 2px;
+  background-color: #eccc6e;
+  border-radius: 4px;
+  position: absolute;
+  transition: transform 0.15s ease;
+  }
+  
+  .hamburger-inner::before {
+  top: -8px;
+  }
+  
+  .hamburger-inner::after {
+  bottom: -8px;
+  }

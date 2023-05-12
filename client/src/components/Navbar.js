@@ -1,37 +1,126 @@
-import React, { useEffect, useState, useContext } from "react";
+import React, { useEffect, useContext } from "react";
 import { NavLink } from "react-router-dom";
 import Logout from "./Logout";
 import { AuthContext } from "../store/AuthContext";
 import { getToken } from "../utils/getToken";
+import gsap from "gsap";
 
 function Navbar() {
-  const [windowWidth, setWindowWidth] = useState(window.innerWidth);
-  const [windowHeight, setWindowHeight] = useState(window.innerHeight);
   const { userId, loggedUser } = useContext(AuthContext);
-  // console.log("🚀 ~ Navbar ~ loggedUser:", loggedUser);
-
   const token = getToken();
-
-  const handleResize = () => {
-    setWindowWidth(window.innerWidth);
-    setWindowHeight(window.innerHeight);
-  };
+  const hamburger = document.querySelector(".hamburger");
+  const ornek = document.querySelector(".ornek");
+  const loginLink = document.querySelector(".loginLink");
+  const registerLink = document.querySelector(".registerLink");
+  const profileLink = document.querySelector(".profileLink");
+  const logoutLink = document.querySelector(".logoutLink");
+  const nav = document.querySelector("#navigation");
 
   useEffect(() => {
-    window.addEventListener("resize", handleResize);
+    const tween1 = gsap.fromTo(
+      "#navigation ul li",
+      {
+        y: 100,
+      },
+      {
+        y: 0,
+        duration: 1,
+      }
+    );
+    const tween2 = gsap.fromTo(
+      "#navigation",
+      {
+        opacity: 0,
+      },
+      {
+        opacity: 1,
+        duration: 0.5,
+      }
+    );
+
+    const handleClick = () => {
+      hamburger.classList.toggle("is-active");
+      nav.classList.toggle("is-active");
+      tween1.restart();
+      tween2.restart();
+    };
+
+    hamburger.addEventListener("click", handleClick);
+    ornek.addEventListener("click", handleClick);
+    loginLink.addEventListener("click", handleClick);
+    registerLink.addEventListener("click", handleClick);
+    profileLink.addEventListener("click", handleClick);
+    logoutLink.addEventListener("click", handleClick);
 
     return () => {
-      window.removeEventListener("resize", handleResize);
+      hamburger.removeEventListener("click", handleClick);
+      ornek.addEventListener("click", handleClick);
+      loginLink.addEventListener("click", handleClick);
+      registerLink.addEventListener("click", handleClick);
+      profileLink.addEventListener("click", handleClick);
+      logoutLink.addEventListener("click", handleClick);
     };
   }, []);
 
   return (
-    <nav style={{ padding: "2%" }}>
-      <div style={{ position: "absolute", right: "1%" }}>
+    <div>
+      <nav id="navigation">
+        <ul>
+          <div>
+            <li className="ornek">
+              <NavLink to="/">
+                <span>Home</span>
+              </NavLink>
+            </li>
+            <li className="loginLink">
+              <NavLink to="login">
+                <span>Login</span>
+              </NavLink>
+            </li>
+            <li className="registerLink">
+              <NavLink to="register">
+                <span>Register</span>
+              </NavLink>
+            </li>
+            {loggedUser && (
+              <li className="profileLink">
+                <NavLink to="userProfile">
+                  <span>User Profile</span>
+                </NavLink>
+              </li>
+            )}
+          </div>
+          {userId && (
+            <li className="logoutLink">
+              <Logout />
+            </li>
+          )}
+        </ul>
+      </nav>
+
+      <button
+        className="hamburger hamburger--spring"
+        type="button"
+        aria-label="Menu"
+        aria-controls="navigation"
+      >
+        <span className="hamburger-box">
+          <span className="hamburger-inner"></span>
+        </span>
+      </button>
+
+      <div
+        style={{
+          position: "fixed",
+          top: "45%",
+          right: "5%",
+          display: "flex",
+          flexDirection: "column",
+          alignItems: "center",
+        }}
+      >
         {token && (
-          <h2>
-            {" "}
-            {loggedUser.userName} &emsp;
+          <>
             <img
               className="loggedUserPic"
               style={{
@@ -43,67 +132,16 @@ function Navbar() {
                 boxShadow: "0px 0px 10px 0px rgba(0, 0, 0, 0.2)",
               }}
               src={loggedUser.picture}
-            ></img>{" "}
-          </h2>
+              alt={`${loggedUser.userName}'s profile picture`}
+            />
+            <h2 style={{ color: "#4b9aaa", fontSize: "1rem" }}>
+              {" "}
+              {loggedUser.userName}{" "}
+            </h2>
+          </>
         )}
-        {/* //! muss ich vielleicht den Loader benutzen? */}
-        &emsp;&emsp;&emsp;&emsp; {windowWidth} x {windowHeight}
       </div>
-      <div
-        style={{
-          display: "flex",
-          alignItems: "flex-end",
-          justifyContent: "space-between",
-        }}
-      >
-        <a className="aNormal" href="/">
-          <img
-            style={{
-              maxWidth: "15vw",
-              minWidth: "150px",
-              borderRadius: "50px",
-              boxShadow: "0px 0px 10px 0px rgba(0, 0, 0, 0.2)",
-            }}
-            src="https://res.cloudinary.com/djgxiadrc/image/upload/v1677334203/communityWebApp/Beige_und_Grau_Minimalistisch_Zitat_Instagram-Beitrag_Kopyas%C4%B1_6_g2r1na.png"
-            alt="logo"
-          />
-        </a>
-        <ul>
-          <li>
-            <NavLink to="/">
-              <span>Home</span>
-            </NavLink>{" "}
-          </li>
-          <li>
-            <NavLink to="login">
-              <span>Login</span>
-            </NavLink>{" "}
-          </li>
-          <li>
-            <NavLink to="register">
-              <span>Register</span>
-            </NavLink>{" "}
-          </li>
-          {loggedUser && (
-            <li>
-              <NavLink to="userProfile">
-                <span>User Profile</span>
-              </NavLink>{" "}
-            </li>
-          )}
-          {/* <li>
-            <NavLink to="landingPage">
-              <span>(Landing Page)</span>
-            </NavLink>{" "}
-          </li> */}
-          {userId && (
-            <li>
-              <Logout />
-            </li>
-          )}
-        </ul>
-      </div>
-    </nav>
+    </div>
   );
 }
 
