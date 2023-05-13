@@ -7,9 +7,23 @@ function Logout() {
 
   return (
     <>
-      <Button type="submit" value="Submit" variant="danger" onClick={logout}>
+      <button
+        type="submit"
+        value="Submit"
+        variant="danger"
+        onClick={logout}
+        style={{
+          color: "#eccc6e",
+          textDecoration: "none",
+          marginRight: "20px",
+          backgroundColor: "#814256",
+          padding: "7px",
+          borderRadius: "4px",
+          border: "none",
+        }}
+      >
         Logout!
-      </Button>{" "}
+      </button>{" "}
     </>
   );
 }
