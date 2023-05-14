@@ -41,7 +41,7 @@ function Navbar() {
     const handleClick = () => {
       hamburger?.classList.toggle("is-active");
       nav?.classList.toggle("is-active");
-      tween1.restart();
+      tween1?.restart();
       tween2.restart();
     };
 

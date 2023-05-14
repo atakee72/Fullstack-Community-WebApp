@@ -19,7 +19,7 @@ function Logout() {
           backgroundColor: "#814256",
           padding: "7px",
           borderRadius: "4px",
-          border: "none",
+          border: "1px solid #eccc6e",
         }}
       >
         Logout!

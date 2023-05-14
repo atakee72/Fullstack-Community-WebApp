@@ -70,6 +70,7 @@ nav a {
   background-color: #eccc6e;
   padding: 7px;
   border-radius: 4px;
+  border: 1px solid #814256;
 }
 
 nav a:hover {
@@ -458,11 +459,18 @@ body {
   top: 15%;
   right: 10%;
   left: 10%;
-  background-color: rgba(0, 0, 0, 0.8);;
+  /* background-color: #814256ce; */
   width: 80vw;
-  height: 75vh;
+  height: 60vh;
   display: none;
   z-index: 3;
+  /* border:1px solid #814256 */
+  background: #8142569f;
+box-shadow: 0 8px 32px 0 rgba( 31, 38, 135, 0.37 );
+backdrop-filter: blur( 10px );
+-webkit-backdrop-filter: blur( 10px );
+border-radius: 10px;
+border: 1px solid rgba( 255, 255, 255, 0.18 );
   }
   
   #navigation ul {
@@ -573,3 +581,7 @@ body {
   .hamburger-inner::after {
   bottom: -8px;
   }
+
+
+  /* ----------------------- */
+  
