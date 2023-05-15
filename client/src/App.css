@@ -1,7 +1,7 @@
 /* Landing Page */
 
 header {
-  background-color: #814256;
+  /* background-color: #814256; */
   /* padding: 2%; */
 }
 
@@ -49,12 +49,33 @@ footer {
 
 /* Navbar */
 
+.navContainer {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.5%;
+  background: #814256da;
+  position: fixed;
+  top: 0;
+  width: 100%;
+  z-index: 10;
+  backdrop-filter: blur( 4px );
+  -webkit-backdrop-filter: blur( 4px );
+  border-bottom: 1px solid #eccc6e;
+}
+
+nav {
+  display: flex;
+  justify-content:center;
+  align-items: center;
+
+}
+
 nav ul {
   list-style: none;
   margin: 0;
   padding: 0;
   display: flex;
-  flex-direction: column;
   align-items: center;
   gap: 1px;
 }
@@ -68,7 +89,7 @@ nav a {
   text-decoration: none;
   margin-right: 20px;
   background-color: #eccc6e;
-  padding: 7px;
+  padding: 5px;
   border-radius: 4px;
   border: 1px solid #814256;
 }
@@ -434,154 +455,3 @@ label {
    }
 
 /* Navbar hover menu */
-
-body {
-  background-color: #ccc;
-  }
-  
-  .hamburger {
-  padding: 1rem;
-  }
-  
-  .hamburger-inner,
-  .hamburger-inner::before,
-  .hamburger-inner::after {
-  z-index: 4;
-  position: relative; /* changed from absolute */
-  }
-  
-  #navigation.is-active {
-  display: block;
-  }
-  
-  #navigation {
-  position: fixed;
-  top: 15%;
-  right: 10%;
-  left: 10%;
-  /* background-color: #814256ce; */
-  width: 80vw;
-  height: 60vh;
-  display: none;
-  z-index: 3;
-  /* border:1px solid #814256 */
-  background: #8142569f;
-box-shadow: 0 8px 32px 0 rgba( 31, 38, 135, 0.37 );
-backdrop-filter: blur( 10px );
--webkit-backdrop-filter: blur( 10px );
-border-radius: 10px;
-border: 1px solid rgba( 255, 255, 255, 0.18 );
-  }
-  
-  #navigation ul {
-  margin-top: 7rem;
-  }
-  
-  #navigation li {
-  text-align: center;
-  padding: 3rem;
-  list-style: none;
-  }
-  
-  #navigation li a {
-  text-decoration: none;
-  color: #eccc6e;
-  }
-  
-  .hamburger {
-  padding: 1rem;
-  display: block; 
-  cursor: pointer;
-  transition: opacity 0.15s linear, filter 0.15s linear;
-  font: inherit;
-  color: inherit;
-  text-transform: none;
-  background-color: transparent;
-  border: 0;
-  margin: 0;
-  overflow: visible;
-  outline: none;
-  margin-left: 1rem; 
-  }
-  
-  .hamburger-inner,
-  .hamburger-inner::before,
-  .hamburger-inner::after {
-  background-color: #fff;
-  }
-  
-  .hamburger:hover {
-  opacity: 100;
-  }
-  
-  .hamburger:hover .hamburger-inner,
-  .hamburger:hover .hamburger-inner::before,
-  .hamburger:hover .hamburger-inner::after {
-  opacity: 100;
-  }
-  
-  .hamburger.is-active .hamburger-inner {
-  transform: rotate(45deg);
-  transition-delay: 0.12s;
-  }
-  
-  .hamburger.is-active .hamburger-inner::before {
-  top: 0;
-  transform: rotate(180deg);
-  transition-delay: 0.12s;
-  }
-  
-  .hamburger.is-active .hamburger-inner::after {
-  bottom: 0;
-  transform: rotate(90deg);
-  transition-delay: 0.12s;
-  }
-  
-  .hamburger-box {
-  width: 30px;
-  height: 12px;
-  display: inline-block;
-  position: relative;
-  }
-  
-  .hamburger-inner {
-  display: block;
-  top: 50%;
-  margin-top: -2px;
-  background-color: #eccc6e;
-
-  }
-  
-  .hamburger-inner,
-  .hamburger-inner::before,
-  .hamburger-inner::after {
-  width: 30px;
-  height: 2px;
-  border-radius: 4px;
-  position: relative; /* changed from absolute */
-  transition: transform 0.15s ease;
-  }
-  
-  .hamburger-inner::before,
-  .hamburger-inner::after {
-  content: "";
-  display: block;
-  width: 30px;
-  height: 2px;
-  background-color: #eccc6e;
-  border-radius: 4px;
-  position: absolute;
-  transition: transform 0.15s ease;
-  }
-  
-  .hamburger-inner::before {
-  top: -8px;
-  }
-  
-  .hamburger-inner::after {
-  bottom: -8px;
-  }
-
-
-  /* ----------------------- */
-  

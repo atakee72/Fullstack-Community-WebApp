@@ -3,68 +3,16 @@ import { NavLink } from "react-router-dom";
 import Logout from "./Logout";
 import { AuthContext } from "../store/AuthContext";
 import { getToken } from "../utils/getToken";
-import gsap from "gsap";
 
 function Navbar() {
   const { userId, loggedUser } = useContext(AuthContext);
   const token = getToken();
-  const hamburger = document.querySelector(".hamburger");
-  const ornek = document.querySelector(".ornek");
-  const loginLink = document.querySelector(".loginLink");
-  const registerLink = document.querySelector(".registerLink");
-  const profileLink = document.querySelector(".profileLink");
-  const logoutLink = document.querySelector(".logoutLink");
-  const nav = document.querySelector("#navigation");
 
-  useEffect(() => {
-    const tween1 = gsap.fromTo(
-      "#navigation ul li",
-      {
-        y: 100,
-      },
-      {
-        y: 0,
-        duration: 1,
-      }
-    );
-    const tween2 = gsap.fromTo(
-      "#navigation",
-      {
-        opacity: 0,
-      },
-      {
-        opacity: 1,
-        duration: 0.3,
-      }
-    );
-
-    const handleClick = () => {
-      hamburger?.classList.toggle("is-active");
-      nav?.classList.toggle("is-active");
-      tween1?.restart();
-      tween2.restart();
-    };
-
-    hamburger?.addEventListener("click", handleClick);
-    ornek?.addEventListener("click", handleClick);
-    loginLink?.addEventListener("click", handleClick);
-    registerLink?.addEventListener("click", handleClick);
-    profileLink?.addEventListener("click", handleClick);
-    logoutLink?.addEventListener("click", handleClick);
-
-    return () => {
-      hamburger?.removeEventListener("click", handleClick);
-      ornek?.addEventListener("click", handleClick);
-      loginLink?.addEventListener("click", handleClick);
-      registerLink?.addEventListener("click", handleClick);
-      profileLink?.addEventListener("click", handleClick);
-      logoutLink?.addEventListener("click", handleClick);
-    };
-  }, []);
+  // const nav = document.querySelector("#navigation");
 
   return (
-    <div>
-      <nav id="navigation">
+    <div className="navContainer">
+      <nav>
         <ul>
           <div>
             <li className="ornek">
@@ -98,7 +46,7 @@ function Navbar() {
         </ul>
       </nav>
 
-      <button
+      {/* <button
         className="hamburger hamburger--spring"
         type="button"
         aria-label="Menu"
@@ -107,7 +55,7 @@ function Navbar() {
         <span className="hamburger-box">
           <span className="hamburger-inner"></span>
         </span>
-      </button>
+      </button> */}
 
       <div
         style={{
