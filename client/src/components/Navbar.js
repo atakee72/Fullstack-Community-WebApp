@@ -69,19 +69,23 @@ function Navbar() {
       >
         {token && (
           <>
-            <img
-              className="loggedUserPic"
-              style={{
-                width: "60px",
-                height: "60px",
-                borderRadius: "30px",
-                objectFit: "cover",
-                background: "none",
-                boxShadow: "0px 0px 10px 0px rgba(0, 0, 0, 0.2)",
-              }}
-              src={loggedUser?.picture}
-              alt={`${loggedUser?.userName}'s profile picture`}
-            />
+            <NavLink to="userProfile">
+              <img
+                className="loggedUserPic"
+                style={{
+                  width: "60px",
+                  height: "60px",
+                  borderRadius: "30px",
+                  objectFit: "cover",
+                  background: "none",
+                  boxShadow: "0px 0px 10px 0px rgba(0, 0, 0, 0.2)",
+                  cursor: "pointer",
+                }}
+                src={loggedUser?.picture}
+                alt={`${loggedUser?.userName}'s profile picture`}
+              />
+            </NavLink>
+
             <h2 style={{ color: "#4b9aaa", fontSize: "1rem" }}>
               {" "}
               {loggedUser?.userName}{" "}
