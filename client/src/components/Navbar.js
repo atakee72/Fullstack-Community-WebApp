@@ -46,17 +46,6 @@ function Navbar() {
         </ul>
       </nav>
 
-      {/* <button
-        className="hamburger hamburger--spring"
-        type="button"
-        aria-label="Menu"
-        aria-controls="navigation"
-      >
-        <span className="hamburger-box">
-          <span className="hamburger-inner"></span>
-        </span>
-      </button> */}
-
       <div
         style={{
           position: "fixed",
