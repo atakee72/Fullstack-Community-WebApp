@@ -1,13 +1,13 @@
 import React from 'react'
 import Discussions from "...."
-import Announcments from "...."
-import Recopmmendations from "...."
+import Announcements from "...."
+import Recommmendations from "...."
 
 function Test() {
 
     const sections = {
         discussions: Discussions,
-        announcments: Announcments,
+        announcements: Announcements,
         recommendations: Recommendations
     }
 

@@ -116,7 +116,7 @@ function ForumSection({
         ) : (
           <h5 className="text-center mb-5 pt-4">
             Nothing to show here. There probably is an error with the data
-            fetching.
+            fetching. Are you logged in?
           </h5>
         )}
       </Card.Body>
